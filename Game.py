@@ -11,12 +11,12 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 # Delta time variables
 clock = pygame.time.Clock()
-max_tps = 20.0
+max_tps = 150.0  # temp: should be 20-30
 delta_time = 0
 
 # Entity variables
 box = pygame.Rect(10, 50, 50, 50)
-box_speed = 1
+box_speed = 4
 
 
 def main():
