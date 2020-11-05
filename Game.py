@@ -11,15 +11,24 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 # Delta time variables
 clock = pygame.time.Clock()
+max_tps = 20.0
+delta_time = 0
 
 # Entity variables
 box = pygame.Rect(10, 50, 50, 50)
+box_speed = 1
 
 
 def main():
+    global delta_time
     while True:
         event_handler()
-        update()
+
+        # Ticking
+        delta_time += clock.tick()/1000.0
+        while delta_time > 1/max_tps:
+            delta_time -= 1/max_tps
+            update()
         render()
 
 
@@ -43,13 +52,13 @@ def update():
     # WASD movement test
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        box.y = (box.y - 1) % screenHeight
+        box.y = (box.y - box_speed) % screenHeight
     if keys[pygame.K_a]:
-        box.x = (box.x - 1) % screenWidth
+        box.x = (box.x - box_speed) % screenWidth
     if keys[pygame.K_s]:
-        box.y = (box.y + 1) % screenHeight
+        box.y = (box.y + box_speed) % screenHeight
     if keys[pygame.K_d]:
-        box.x = (box.x + 1) % screenWidth
+        box.x = (box.x + box_speed) % screenWidth
 
 
 def render():
@@ -57,3 +66,5 @@ def render():
     pygame.draw.rect(screen, (200, 0, 0), box)
     pygame.display.flip()
 
+
+main()
