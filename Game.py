@@ -1,14 +1,18 @@
 import sys
 import pygame
 
+# Init
 pygame.init()
 
+# Screen variables
 screenWidth = 1280
 screenHeight = 720
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 
+# Delta time variables
 clock = pygame.time.Clock()
 
+# Entity variables
 box = pygame.Rect(10, 50, 50, 50)
 
 
