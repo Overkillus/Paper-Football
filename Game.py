@@ -18,16 +18,17 @@ box = pygame.Rect(10, 50, 50, 50)
 
 def main():
     while True:
-        # Event handler -----
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-            elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
-                sys.exit(0)
+        event_handler()
+        update()
+        render()
 
-        # Ticking -----
-        # dt = clock.tick()
-        # print(dt)
+
+def event_handler():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
+            sys.exit(0)
 
 
 def update():
