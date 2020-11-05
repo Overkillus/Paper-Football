@@ -2,27 +2,40 @@ import sys
 import pygame
 
 pygame.init()
+
 screenWidth = 1280
 screenHeight = 720
 screen = pygame.display.set_mode((screenWidth, screenHeight))
+
+clock = pygame.time.Clock()
+
 box = pygame.Rect(10, 50, 50, 50)
 
-while True:
-    # Event handler
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit(0)
-        elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
-            sys.exit(0)
 
-    # Update
+def main():
+    while True:
+        # Event handler -----
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit(0)
+            elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
+                sys.exit(0)
 
+        # Ticking -----
+        # dt = clock.tick()
+        # print(dt)
+
+
+def update():
+    # Auto movement test
     # box.x = (box.x + 1) % screenWidth
     # box.y = (box.y + 1) % screenHeight
 
+    # Mouse cursor movement test
     # box.x = pygame.mouse.get_pos()[0]
     # box.y = pygame.mouse.get_pos()[1]
 
+    # WASD movement test
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         box.y = (box.y - 1) % screenHeight
@@ -33,7 +46,9 @@ while True:
     if keys[pygame.K_d]:
         box.x = (box.x + 1) % screenWidth
 
-    # Drawing
+
+def render():
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (200, 0, 0), box)
     pygame.display.flip()
+
