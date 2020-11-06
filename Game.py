@@ -1,5 +1,6 @@
 import sys
 import pygame
+import numpy as np
 
 # Init
 pygame.init()
@@ -15,8 +16,11 @@ max_tps = 150.0  # temp: should be 20-30
 delta_time = 0
 
 # Entity variables
-box = pygame.Rect(10, 50, 50, 50)
+box = pygame.Rect(10, 400, 50, 50)
 box_speed = 4
+rows = 10
+columns = 6
+board = np.zeros((rows, columns))
 
 
 def main():
@@ -38,6 +42,12 @@ def event_handler():
             sys.exit(0)
         elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
             sys.exit(0)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            for i in range(rows):
+                for j in range(columns):
+                    cell = pygame.Rect(50 + i * 50, 50 + j * 50, 50, 50)
+                    if cell.collidepoint(pygame.mouse.get_pos()):
+                        board[i][j] = (board[i][j] + 1) % 2
 
 
 def update():
@@ -61,9 +71,17 @@ def update():
         box.x = (box.x + box_speed) % screenWidth
 
 
+
 def render():
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (200, 0, 0), box)
+    for i in range(rows):
+        for j in range(columns):
+            cell = pygame.Rect(50+i*50, 50+j*50, 50, 50)
+            if board[i][j] == 0:
+                pygame.draw.rect(screen, (255, 255, 255), cell)
+            else:
+                pygame.draw.rect(screen, (0, 200, 0), cell)
     pygame.display.flip()
 
 
