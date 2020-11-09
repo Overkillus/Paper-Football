@@ -21,13 +21,12 @@ delta_time = 0
 myBoard = Board(10, 6)
 board_distance = 50
 
-circle_radius = 8
+circle_radius = 10
 circle_hitbox_multiplier = 1.8
 
 
 def main():
     global delta_time
-    myBoard.add_connection(0,0,1,1)
     while True:
         event_handler()
 
@@ -69,14 +68,14 @@ def render():
     for i in range(myBoard.width):
         for j in range(myBoard.height):
             if myBoard.selected == (i, j):
-                pygame.draw.circle(screen, (255, 0, 0), (50+i*50, 50+j*50), circle_radius, circle_radius)
+                pygame.draw.circle(screen, (255, 0, 0), (board_distance+i*board_distance, board_distance+j*board_distance), circle_radius, circle_radius)
             else:
-                pygame.draw.circle(screen, (255, 255, 255), (50+i*50, 50+j*50), circle_radius, circle_radius)
+                pygame.draw.circle(screen, (255, 255, 255), (board_distance+i*board_distance, board_distance+j*board_distance), circle_radius, circle_radius)
 
     for connection in myBoard.connections:
         start = (board_distance + board_distance * connection[0][0], board_distance + board_distance * connection[0][1])
         end = (board_distance + board_distance * connection[1][0], board_distance + board_distance * connection[1][1])
-        pygame.draw.line(screen, (200, 200, 200), start, end)
+        pygame.draw.line(screen, (200, 200, 200), start, end, 5)
 
     pygame.display.flip()
 
