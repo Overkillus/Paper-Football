@@ -18,11 +18,8 @@ max_tps = 60.0
 delta_time = 0
 
 # Entity variables
-board_rows = 10
-board_columns = 6
+myBoard = Board(10, 6)
 board_distance = 50
-board = np.zeros((board_rows, board_columns))
-myBoard = Board(board_rows, board_columns)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
@@ -30,6 +27,7 @@ circle_hitbox_multiplier = 1.8
 
 def main():
     global delta_time
+    myBoard.add_connection(0,0,1,1)
     while True:
         event_handler()
 
@@ -48,8 +46,8 @@ def event_handler():
         elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
             sys.exit(0)
         elif event.type == pygame.MOUSEBUTTONUP:
-            for i in range(board_rows):
-                for j in range(board_columns):
+            for i in range(myBoard.width):
+                for j in range(myBoard.height):
                     # Square hitbox points in the board
                     hitbox = pygame.Rect(
                         board_distance + i * board_distance - circle_radius * circle_hitbox_multiplier,  # X
@@ -57,10 +55,9 @@ def event_handler():
                         circle_radius * circle_hitbox_multiplier * 2,  # width
                         circle_radius * circle_hitbox_multiplier * 2  # height
                     )
-                    if board[i][j] == 1:
-                        board[i][j] = 0
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
-                        board[i][j] = 1
+                        myBoard.add_connection(myBoard.selected[0], myBoard.selected[1], i, j)
+                        myBoard.selected = (i, j)
 
 
 def update():
@@ -69,12 +66,18 @@ def update():
 
 def render():
     screen.fill((0, 0, 0))
-    for i in range(board_rows):
-        for j in range(board_columns):
-            if board[i][j] == 0:
-                pygame.draw.circle(screen, (255, 255, 255), (50+i*50, 50+j*50), circle_radius, circle_radius)
+    for i in range(myBoard.width):
+        for j in range(myBoard.height):
+            if myBoard.selected == (i, j):
+                pygame.draw.circle(screen, (255, 0, 0), (50+i*50, 50+j*50), circle_radius, circle_radius)
             else:
-                pygame.draw.circle(screen, (255, 20, 20), (50+i*50, 50+j*50), circle_radius, circle_radius)
+                pygame.draw.circle(screen, (255, 255, 255), (50+i*50, 50+j*50), circle_radius, circle_radius)
+
+    for connection in myBoard.connections:
+        start = (board_distance + board_distance * connection[0][0], board_distance + board_distance * connection[0][1])
+        end = (board_distance + board_distance * connection[1][0], board_distance + board_distance * connection[1][1])
+        pygame.draw.line(screen, (200, 200, 200), start, end)
+
     pygame.display.flip()
 
 
