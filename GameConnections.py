@@ -18,7 +18,7 @@ max_tps = 60.0
 delta_time = 0
 
 # Entity variables
-myBoard = Board(10, 6)
+myBoard = Board(13, 9)
 board_distance = 50
 
 
@@ -56,7 +56,8 @@ def event_handler():
                         circle_radius * circle_hitbox_multiplier * 2  # height
                     )
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
-                        myBoard.add_connection(myBoard.selected[0], myBoard.selected[1], i, j)
+                        # myBoard.add_connection(myBoard.selected[0], myBoard.selected[1], i, j)
+                        myBoard.move(i, j)
                         myBoard.selected = (i, j)
 
 
@@ -70,7 +71,7 @@ def render():
     # Draw board points
     for i in range(myBoard.width):
         for j in range(myBoard.height):
-            if myBoard.selected == (i, j):
+            if myBoard.selected == (i, j) or myBoard.current == (i, j):
                 pygame.draw.circle(
                     screen,
                     (255, 0, 0),

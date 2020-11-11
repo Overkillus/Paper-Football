@@ -4,11 +4,11 @@ import numpy as np
 
 
 class Board:
-    def __init__(self, width=12, height=8):
+    def __init__(self, width=13, height=9):
         self.width = width
         self.height = height
         self.points = np.zeros((width, height))
-        self.current = (width/2, height/2)
+        self.current = (width//2, height//2)
         self.selected = (-1, -1)
         self.connections = set()
 
@@ -28,16 +28,30 @@ class Board:
         ab = (a, b)
         ba = (b, a)
 
-        # Invalid arguments check
+        # Invalid points check
         if not(self.__validate_point(a) and self.__validate_point(b)):
+            print("out of map")
             return False
+        # Invalid length check
         elif not self.__validate_connection_length(ab):
+            print("too long")
             return False
-
-        # Checking for mirror duplicates
-        elif not (ab in self.connections or ba in self.connections):
+        # Connection or mirror connection already exists
+        elif ab in self.connections or ba in self.connections:
+            print("already exists")
+            return False
+        # Add new connection
+        else:
+            print("added new")
             self.connections.add(ab)
-        return True
+            return True
+
+    def move(self, bx, by):
+        a = self.current
+        b = (bx, by)
+
+        if self.add_connection(a[0], a[1], b[0], b[1]):
+            self.current = b
 
     def remove_connection(self, ax, ay, bx, by):
         """
