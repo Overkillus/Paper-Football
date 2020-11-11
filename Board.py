@@ -121,6 +121,13 @@ class Board:
                 print(ax, ay, bx, by)
                 self.remove_connection(ax, ay, bx, by)
 
+                ax = j*2 + j*(self.width-3)
+                ay = self.height//2 - 1 + i
+                bx = j*2 + j*(self.width-3)
+                by = self.height//2 + i
+                print(ax, ay, bx, by)
+                self.add_connection(ax, ay, bx, by)
+
 
     def __validate_point(self, a):
         """
