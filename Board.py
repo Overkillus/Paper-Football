@@ -20,18 +20,22 @@ class Board:
         :param ay: y coordinate of point A
         :param bx: x coordinate of point B
         :param by: y coordinate of point B
-        :return: False if operation failed, True otherwise
+        :return: False if operation failed, True otherwise (or connection already exists)
         """
-        # Invalid arguments check
-        if self.__validate_point(ax, ay) or self.__validate_point(bx, by):
-            return False
         # Constructing connections (AB and BA)
         a = (ax, ay)
         b = (bx, by)
         ab = (a, b)
         ba = (b, a)
+
+        # Invalid arguments check
+        if not(self.__validate_point(a) and self.__validate_point(b)):
+            return False
+        elif not self.__validate_connection_length(ab):
+            return False
+
         # Checking for mirror duplicates
-        if not (ab in self.connections or ba in self.connections):
+        elif not (ab in self.connections or ba in self.connections):
             self.connections.add(ab)
         return True
 
@@ -58,14 +62,15 @@ class Board:
         self.connections.remove(ba)
         return True
 
-    def __validate_point(self, ax, ay):
+    def __validate_point(self, a):
         """
         Checks if a point is on the board
 
-        :param ax: x coordinate of point A
-        :param ay: y coordinate of point A
+        :param a: point defined by a tuple (x, y)
         :return: boolean
         """
+        ax = a[0]
+        ay = a[1]
         if self.width < ax or ax < 0 or self.height < ay or ay < 0:
             return False
         else:
