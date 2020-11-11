@@ -34,7 +34,7 @@ class Board:
             return False
         # Invalid length check
         elif not self.__validate_connection_length(ab):
-            print("too long")
+            print("wrong length")
             return False
         # Connection or mirror connection already exists
         elif ab in self.connections or ba in self.connections:
@@ -100,7 +100,7 @@ class Board:
         a = connection[0]
         b = connection[1]
         distance = math.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
-        if distance > 1.5:
+        if distance > 1.5 or distance == 0:
             return False
         else:
             return True
