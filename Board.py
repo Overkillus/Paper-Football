@@ -70,8 +70,8 @@ class Board:
         ab = (a, b)
         ba = (b, a)
 
-        # Invalid arguments check
-        if self.__validate_point(a) or self.__validate_point(b):
+        # Invalid points check
+        if not(self.__validate_point(a) and self.__validate_point(b)):
             return False
 
         self.connections.remove(ab)
@@ -112,6 +112,7 @@ class Board:
         ay = self.height//2 - 1
         bx = 1
         by = self.height//2
+        print(ax, ay, bx, by)
         self.remove_connection(ax, ay, bx, by)
 
     def __validate_point(self, a):
