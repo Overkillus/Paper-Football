@@ -11,6 +11,7 @@ class Board:
         self.current = (width//2, height//2)
         self.selected = (-1, -1)
         self.connections = set()
+        self.generate_walls()
 
     def add_connection(self, ax, ay, bx, by):
         """
@@ -63,18 +64,55 @@ class Board:
         :param by: y coordinate of point B
         :return: boolean: False if operation failed, True otherwise
         """
-        # Invalid arguments check
-        if self.__validate_point(ax, ay) or self.__validate_point(bx, by):
-            return False
         # Constructing connections (AB and BA)
         a = (ax, ay)
         b = (bx, by)
         ab = (a, b)
         ba = (b, a)
 
+        # Invalid arguments check
+        if self.__validate_point(a) or self.__validate_point(b):
+            return False
+
         self.connections.remove(ab)
         self.connections.remove(ba)
         return True
+
+    def generate_walls(self):
+        # Top and bottom wall
+        for i in range(1, self.width-2):
+            ax = i
+            ay = 0
+            bx = i+1
+            by = 0
+            self.add_connection(ax, ay, bx, by)
+
+            ax = i
+            ay = self.height-1
+            bx = i+1
+            by = self.height-1
+            self.add_connection(ax, ay, bx, by)
+
+        # Left and right wall
+        for i in range(self.height-1):
+            ax = 1
+            ay = i
+            bx = 1
+            by = i+1
+            self.add_connection(ax, ay, bx, by)
+
+            ax = self.width-2
+            ay = i
+            bx = self.width-2
+            by = i+1
+            self.add_connection(ax, ay, bx, by)
+
+        # Adding goals
+        ax = 1
+        ay = self.height//2 - 1
+        bx = 1
+        by = self.height//2
+        self.remove_connection(ax, ay, bx, by)
 
     def __validate_point(self, a):
         """

@@ -71,7 +71,14 @@ def render():
     # Draw board points
     for i in range(myBoard.width):
         for j in range(myBoard.height):
-            if myBoard.selected == (i, j) or myBoard.current == (i, j):
+            if myBoard.current == (i, j):
+                pygame.draw.circle(
+                    screen,
+                    (0, 255, 0),
+                    (board_distance+i*board_distance, board_distance+j*board_distance),
+                    circle_radius*1.5,
+                )
+            elif myBoard.selected == (i, j):
                 pygame.draw.circle(
                     screen,
                     (255, 0, 0),
