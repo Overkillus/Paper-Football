@@ -73,10 +73,14 @@ class Board:
         # Invalid points check
         if not(self.__validate_point(a) and self.__validate_point(b)):
             return False
-
-        self.connections.remove(ab)
-        self.connections.remove(ba)
-        return True
+        elif ab in self.connections:
+            self.connections.remove(ab)
+            return True
+        elif ba in self.connections:
+            self.connections.remove(ba)
+            return True
+        else:
+            return False
 
     def generate_walls(self):
         # Top and bottom wall
@@ -108,12 +112,15 @@ class Board:
             self.add_connection(ax, ay, bx, by)
 
         # Adding goals
-        ax = 1
-        ay = self.height//2 - 1
-        bx = 1
-        by = self.height//2
-        print(ax, ay, bx, by)
-        self.remove_connection(ax, ay, bx, by)
+        for i in range(2):
+            for j in range(2):
+                ax = 1 + j*(self.width-3)
+                ay = self.height//2 - 1 + i
+                bx = 1 + j*(self.width-3)
+                by = self.height//2 + i
+                print(ax, ay, bx, by)
+                self.remove_connection(ax, ay, bx, by)
+
 
     def __validate_point(self, a):
         """
