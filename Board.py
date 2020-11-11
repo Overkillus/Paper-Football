@@ -10,7 +10,7 @@ class Board:
         self.connections = set()
 
     def add_connection(self, ax, ay, bx, by):
-        if not self.__validate(ax, ay, bx, by):
+        if self.__validate_point(ax, ay) or self.__validate_point(bx, by):
             return False
         a = (ax, ay)
         b = (bx, by)
@@ -21,7 +21,7 @@ class Board:
         return True
 
     def remove_connection(self, ax, ay, bx, by):
-        if self.__validate(ax, ay, bx, by):
+        if self.__validate_point(ax, ay) or self.__validate_point(bx, by):
             return False
         a = (ax, ay)
         b = (bx, by)
@@ -31,11 +31,8 @@ class Board:
         self.connections.remove(ba)
         return True
 
-    def __validate(self, ax, ay, bx, by):
-        if (self.width < ax or ax < 0 or
-                self.width < bx or bx < 0 or
-                self.height < ay or ay < 0 or
-                self.height < by or by < 0):
+    def __validate_point(self, ax, ay):
+        if self.width < ax or ax < 0 or self.height < ay or ay < 0:
             return False
         else:
             return True
