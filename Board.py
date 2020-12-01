@@ -11,11 +11,7 @@ class Board:
         self.width = width
         self.height = height
         # 2D array representing the board
-        self.points = np.zeros((width, height))
-        for w in range(width):
-            for h in range(height):
-                self.points[w][h] = Point(w, h)
-
+        self.points = [[Point(w, h) for h in range(height)] for w in range(width)]
         self.points[width//2][height//2].is_ball = True
 
         self.connections = set()
@@ -56,7 +52,7 @@ class Board:
         :param b: point to move to
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
-        a = self.current
+        a = self.get_ball()
         # boolean
         result = self.add_connection(a, b)
         if result:
@@ -88,6 +84,12 @@ class Board:
             return True
         else:
             return False
+
+    def get_ball(self):
+        for w in range(self.width):
+            for h in range(self.height):
+                if self.points[w][h].is_ball:
+                    return self.points[w][h]
 
     def update_point_is_used(self, a):
         """
@@ -149,7 +151,7 @@ class Board:
                 # print(ax, ay, bx, by)
                 self.add_connection(a, b)
 
-    def add_long_connection(self, ax, ay, bx, by):
+    def add_long_connection(self, a, b):
         """
         Creates a straight long connection between two points A(ax, ay) and B(bx, by) by chaining unit connections between them.
 
@@ -160,48 +162,48 @@ class Board:
         :return: False if operation failed, True otherwise
         """
         # Points not in line
-        if ax != bx and ay != by:
+        if a.x != b.x and a.y != b.y:
             return False
         # Same points
-        elif ax == bx and ay == by:
+        elif a.x == b.x and a.y == b.y:
             return False
         else:
-            a = (ax, ay)
-            b = (bx, by)
             points = []
-            a_distance_from_origin = math.sqrt(ay**2 + ax**2)
-            b_distance_from_origin = math.sqrt(by**2 + bx**2)
+            a_distance_from_origin = math.sqrt(a.y**2 + a.x**2)
+            b_distance_from_origin = math.sqrt(b.y**2 + b.x**2)
 
             # Ensure a is closest to origin (0,0)
-            if a_distance_from_origin > b_distance_from_origin:
-                temp = a
-                a = b
-                b = temp
+            # if a_distance_from_origin > b_distance_from_origin:
+            #     first
+            #     a = b
+            #     b = temp
 
             # Starting point
             points.append(a)
             # Points between a and b
-            if ax == bx:
-                difference = by - ay
+            if a.x == b.x:
+                difference = b.y - a.y
                 if difference == 1:
-                    self.add_connection(a[0], a[1], b[0], b[1])
+                    self.add_connection(a, b)
                     return True
                 for i in range(1, difference):
-                    points.append((ax, ay + i))
-            elif ay == by:
-                difference = bx - ax
+                    point = self.points[a.x][a.y + i]
+                    points.append(point)
+            elif a.y == b.y:
+                difference = b.x - a.x
                 if difference == 1:
-                    self.add_connection(a[0], a[1], b[0], b[1])
+                    self.add_connection(a, b)
                     return True
                 for i in range(1, difference):
-                    points.append((ax + i, ay))
+                    point = self.points[a.x + i][a.y]
+                    points.append(point)
             # Ending point
             points.append(b)
 
             for i in range(len(points) - 1):
                 first = points[i]
                 second = points[i+1]
-                self.add_connection(first[0], first[1], second[0], second[1])
+                self.add_connection(first, second)
             return True
 
     def __validate_connection_length(self, connection):

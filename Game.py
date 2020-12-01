@@ -1,6 +1,5 @@
 import sys
 import pygame
-import numpy as np
 
 # Init
 from Board import Board
@@ -30,7 +29,6 @@ def main():
     global delta_time
     while True:
         event_handler()
-
         # Ticking
         delta_time += clock.tick()/1000.0
         while delta_time > 1/max_tps:
@@ -57,8 +55,16 @@ def event_handler():
                     )
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
                         # myBoard.add_connection(myBoard.selected[0], myBoard.selected[1], i, j)
-                        myBoard.move(i, j)
-                        myBoard.selected = (i, j)
+                        point = myBoard.points[i][j]
+                        myBoard.move(point)
+                        # for point in myBoard.points:
+                        #     point.is_selected = False
+                        # point.is_selected = True
+                        for w in range(myBoard.width):
+                            for h in range(myBoard.height):
+                                current_point = myBoard.points[w][h]
+                                current_point.is_selected = False
+                        point.is_selected = True
 
 
 def update():
@@ -71,21 +77,22 @@ def render():
     # Draw board points
     for i in range(myBoard.width):
         for j in range(myBoard.height):
-            if myBoard.current == (i, j):
+            point = myBoard.points[i][j]
+            if point.is_ball:
                 pygame.draw.circle(
                     screen,
                     (0, 255, 0),
                     (board_distance+i*board_distance, board_distance+j*board_distance),
                     circle_radius*1.5,
                 )
-            elif myBoard.selected == (i, j):
+            elif point.is_selected:
                 pygame.draw.circle(
                     screen,
                     (255, 0, 0),
                     (board_distance+i*board_distance, board_distance+j*board_distance),
                     circle_radius,
                 )
-            else:
+            elif point.is_legal:
                 pygame.draw.circle(
                     screen,
                     (255, 255, 255),
@@ -95,8 +102,10 @@ def render():
                 )
 
     for connection in myBoard.connections:
-        start = (board_distance + board_distance * connection[0][0], board_distance + board_distance * connection[0][1])
-        end = (board_distance + board_distance * connection[1][0], board_distance + board_distance * connection[1][1])
+        a = connection[0]
+        b = connection[1]
+        start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
+        end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
         pygame.draw.line(screen, (200, 200, 200), start, end, 4)
 
     pygame.display.flip()
