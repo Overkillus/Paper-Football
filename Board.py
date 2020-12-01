@@ -57,7 +57,12 @@ class Board:
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         a = self.current
-        return self.add_connection(a, b)
+        # boolean
+        result = self.add_connection(a, b)
+        if result:
+            a.is_ball = False
+            b.is_ball = True
+        return result
 
     def remove_connection(self, a, b):
         """
