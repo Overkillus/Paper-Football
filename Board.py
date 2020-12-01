@@ -1,13 +1,15 @@
 import math
-
 import numpy as np
 
 
 class Board:
+    """
+    Data structure class representing the current state of the board/field
+    """
     def __init__(self, width=13, height=9):
         self.width = width
         self.height = height
-        self.points = np.zeros((width, height))
+        # self.points = np.zeros((width, height))
         self.current = (width//2, height//2)
         self.selected = (-1, -1)
         self.connections = set()
@@ -48,6 +50,12 @@ class Board:
             return True
 
     def move(self, bx, by):
+        """
+        Tries to make a move to a selected point
+
+        :param bx: x coordinate of point
+        :param by: y coordinate of point A
+        """
         a = self.current
         b = (bx, by)
 
@@ -82,34 +90,27 @@ class Board:
         else:
             return False
 
+    def is_point_used(self, x, y):
+        """
+        Checks if a point was used before
+
+        return: boolean: True is point used before, False otherwise
+        """
+        for connection in self.connections:
+            a = connection[0]
+            b = connection[1]
+            if a == (x, y) or b == (x, y):
+                return True
+        return False
+
     def generate_walls(self):
         # Top and bottom wall
-        for i in range(1, self.width-2):
-            ax = i
-            ay = 0
-            bx = i+1
-            by = 0
-            self.add_connection(ax, ay, bx, by)
-
-            ax = i
-            ay = self.height-1
-            bx = i+1
-            by = self.height-1
-            self.add_connection(ax, ay, bx, by)
+        self.add_long_connection(1, 0, self.width-2, 0)
+        self.add_long_connection(1, self.height-1, self.width-2, self.height-1)
 
         # Left and right wall
-        for i in range(self.height-1):
-            ax = 1
-            ay = i
-            bx = 1
-            by = i+1
-            self.add_connection(ax, ay, bx, by)
-
-            ax = self.width-2
-            ay = i
-            bx = self.width-2
-            by = i+1
-            self.add_connection(ax, ay, bx, by)
+        self.add_long_connection(1, 0, 1, self.height-1)
+        self.add_long_connection(self.width-2, 0, self.width-2, self.height-1)
 
         # Adding goals
         for i in range(2):
@@ -135,6 +136,60 @@ class Board:
                 print(ax, ay, bx, by)
                 self.add_connection(ax, ay, bx, by)
 
+    def add_long_connection(self, ax, ay, bx, by):
+        """
+        Creates a straight long connection between two points A(ax, ay) and B(bx, by) by chaining unit connections between them.
+
+        :param ax: x coordinate of point A
+        :param ay: y coordinate of point A
+        :param bx: x coordinate of point B
+        :param by: y coordinate of point B
+        :return: False if operation failed, True otherwise
+        """
+        # Points not in line
+        if ax != bx and ay != by:
+            return False
+        # Same points
+        elif ax == bx and ay == by:
+            return False
+        else:
+            a = (ax, ay)
+            b = (bx, by)
+            points = []
+            a_distance_from_origin = math.sqrt(ay**2 + ax**2)
+            b_distance_from_origin = math.sqrt(by**2 + bx**2)
+
+            # Ensure a is closest to origin (0,0)
+            if a_distance_from_origin > b_distance_from_origin:
+                temp = a
+                a = b
+                b = temp
+
+            # Starting point
+            points.append(a)
+            # Points between a and b
+            if ax == bx:
+                difference = by - ay
+                if difference == 1:
+                    self.add_connection(a[0], a[1], b[0], b[1])
+                    return True
+                for i in range(1, difference):
+                    points.append((ax, ay + i))
+            elif ay == by:
+                difference = bx - ax
+                if difference == 1:
+                    self.add_connection(a[0], a[1], b[0], b[1])
+                    return True
+                for i in range(1, difference):
+                    points.append((ax + i, ay))
+            # Ending point
+            points.append(b)
+
+            for i in range(len(points) - 1):
+                first = points[i]
+                second = points[i+1]
+                self.add_connection(first[0], first[1], second[0], second[1])
+            return True
 
     def __validate_point(self, a):
         """
