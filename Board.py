@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from Point import Point
 
 
 class Board:
@@ -9,34 +10,31 @@ class Board:
     def __init__(self, width=13, height=9):
         self.width = width
         self.height = height
-        # self.points = np.zeros((width, height))
-        self.current = (width//2, height//2)
-        self.selected = (-1, -1)
+        # 2D array representing the board
+        self.points = np.zeros((width, height))
+        for w in range(width):
+            for h in range(height):
+                self.points[w][h] = Point(w, h)
+
+        self.points[width//2][height//2].is_ball = True
+
         self.connections = set()
         self.generate_walls()
 
-    def add_connection(self, ax, ay, bx, by):
+    def add_connection(self, a, b):
         """
-        Creates a connection between two points A(ax, ay) and B(bx, by) and adds it to a local set
+        Creates a connection between two points A and B and adds it to a local set
 
-        :param ax: x coordinate of point A
-        :param ay: y coordinate of point A
-        :param bx: x coordinate of point B
-        :param by: y coordinate of point B
+        :param a: point object A
+        :param b: point object B
         :return: False if operation failed, True otherwise (or connection already exists)
         """
         # Constructing connections (AB and BA)
-        a = (ax, ay)
-        b = (bx, by)
         ab = (a, b)
         ba = (b, a)
 
-        # Invalid points check
-        if not(self.__validate_point(a) and self.__validate_point(b)):
-            print("out of map")
-            return False
         # Invalid length check
-        elif not self.__validate_connection_length(ab):
+        if not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
@@ -47,6 +45,8 @@ class Board:
         else:
             print("added new")
             self.connections.add(ab)
+            self.points[a.x][a.y].is_used = True
+            self.points[b.x][b.y].is_used = True
             return True
 
     def move(self, bx, by):
@@ -209,12 +209,12 @@ class Board:
         """
         Checks if connection (A, B) is made between neighboring points
 
-        :param connection: (A, B) where A and B are points defined by a tuple (x, y)
+        :param connection: (A, B) where A and B are point objects
         :return: boolean
         """
         a = connection[0]
         b = connection[1]
-        distance = math.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
+        distance = math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
         if distance > 1.5 or distance == 0:
             return False
         else:
