@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from Point import Point
 
 
 class Board:
@@ -9,34 +10,27 @@ class Board:
     def __init__(self, width=13, height=9):
         self.width = width
         self.height = height
-        # self.points = np.zeros((width, height))
-        self.current = (width//2, height//2)
-        self.selected = (-1, -1)
+        # 2D array representing the board
+        self.points = [[Point(w, h) for h in range(height)] for w in range(width)]
+        self.points[width//2][height//2].is_ball = True
+
         self.connections = set()
         self.generate_walls()
 
-    def add_connection(self, ax, ay, bx, by):
+    def add_connection(self, a, b):
         """
-        Creates a connection between two points A(ax, ay) and B(bx, by) and adds it to a local set
+        Creates a connection between two points A and B and adds it to a local set
 
-        :param ax: x coordinate of point A
-        :param ay: y coordinate of point A
-        :param bx: x coordinate of point B
-        :param by: y coordinate of point B
-        :return: False if operation failed, True otherwise (or connection already exists)
+        :param a: point object A
+        :param b: point object B
+        :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         # Constructing connections (AB and BA)
-        a = (ax, ay)
-        b = (bx, by)
         ab = (a, b)
         ba = (b, a)
 
-        # Invalid points check
-        if not(self.__validate_point(a) and self.__validate_point(b)):
-            print("out of map")
-            return False
         # Invalid length check
-        elif not self.__validate_connection_length(ab):
+        if not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
@@ -47,70 +41,85 @@ class Board:
         else:
             print("added new")
             self.connections.add(ab)
+            a.is_used = True
+            b.is_used = True
             return True
 
-    def move(self, bx, by):
+    def move(self, b):
         """
         Tries to make a move to a selected point
 
-        :param bx: x coordinate of point
-        :param by: y coordinate of point A
+        :param b: point to move to
+        :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
-        a = self.current
-        b = (bx, by)
+        a = self.get_ball()
+        # boolean
+        result = self.add_connection(a, b)
+        if result:
+            a.is_ball = False
+            b.is_ball = True
+        return result
 
-        if self.add_connection(a[0], a[1], b[0], b[1]):
-            self.current = b
-
-    def remove_connection(self, ax, ay, bx, by):
+    def remove_connection(self, a, b):
         """
-        Removes a connection between A(ax, ay) and B(bx, by), non-directional
+        Removes a connection between A and B point objects, non-directional
 
-        :param ax: x coordinate of point A
-        :param ay: y coordinate of point A
-        :param bx: x coordinate of point B
-        :param by: y coordinate of point B
+        :param a: point A
+        :param b: point B
         :return: boolean: False if operation failed, True otherwise
         """
         # Constructing connections (AB and BA)
-        a = (ax, ay)
-        b = (bx, by)
         ab = (a, b)
         ba = (b, a)
 
-        # Invalid points check
-        if not(self.__validate_point(a) and self.__validate_point(b)):
-            return False
-        elif ab in self.connections:
+        if ab in self.connections:
             self.connections.remove(ab)
+            self.update_point_is_used(a)
+            self.update_point_is_used(b)
             return True
         elif ba in self.connections:
             self.connections.remove(ba)
+            self.update_point_is_used(a)
+            self.update_point_is_used(b)
             return True
         else:
             return False
 
-    def is_point_used(self, x, y):
-        """
-        Checks if a point was used before
+    def get_ball(self):
+        for w in range(self.width):
+            for h in range(self.height):
+                if self.points[w][h].is_ball:
+                    return self.points[w][h]
 
-        return: boolean: True is point used before, False otherwise
+    def update_point_is_used(self, a):
+        """
+        Updates point is_used based on current connections
+
+        :param a:
+        :return:
         """
         for connection in self.connections:
-            a = connection[0]
-            b = connection[1]
-            if a == (x, y) or b == (x, y):
-                return True
-        return False
+            if connection[0] == a or connection[1] == a:
+                a.is_used = True
+                break
+        a.is_used = False
 
     def generate_walls(self):
         # Top and bottom wall
-        self.add_long_connection(1, 0, self.width-2, 0)
-        self.add_long_connection(1, self.height-1, self.width-2, self.height-1)
+        a = self.points[1][0]
+        b = self.points[self.width-2][0]
+        self.add_long_connection(a, b)
+        a = self.points[1][self.height-1]
+        b = self.points[self.width-2][self.height-1]
+        self.add_long_connection(a, b)
 
         # Left and right wall
-        self.add_long_connection(1, 0, 1, self.height-1)
-        self.add_long_connection(self.width-2, 0, self.width-2, self.height-1)
+        a = self.points[1][0]
+        b = self.points[1][self.height-1]
+        self.add_long_connection(a, b)
+        a = self.points[self.width-2][0]
+        b = self.points[self.width-2][self.height-1]
+        self.add_long_connection(a, b)
 
         # Adding goals
         for i in range(2):
@@ -119,24 +128,30 @@ class Board:
                 ay = self.height//2 - 1 + i
                 bx = 1 + j*(self.width-3)
                 by = self.height//2 + i
-                print(ax, ay, bx, by)
-                self.remove_connection(ax, ay, bx, by)
+                a = self.points[ax][ay]
+                b = self.points[bx][by]
+                # print(ax, ay, bx, by)
+                self.remove_connection(a, b)
 
                 ax = j*2 + j*(self.width-3)
                 ay = self.height//2 - 1 + i
                 bx = j*2 + j*(self.width-3)
                 by = self.height//2 + i
-                print(ax, ay, bx, by)
-                self.add_connection(ax, ay, bx, by)
+                a = self.points[ax][ay]
+                b = self.points[bx][by]
+                # print(ax, ay, bx, by)
+                self.add_connection(a, b)
 
                 ax = j*2 + j*(self.width-3)
                 ay = self.height//2 - 1 + i
                 bx = j*2 + j*(self.width-3)
                 by = self.height//2 + i
-                print(ax, ay, bx, by)
-                self.add_connection(ax, ay, bx, by)
+                a = self.points[ax][ay]
+                b = self.points[bx][by]
+                # print(ax, ay, bx, by)
+                self.add_connection(a, b)
 
-    def add_long_connection(self, ax, ay, bx, by):
+    def add_long_connection(self, a, b):
         """
         Creates a straight long connection between two points A(ax, ay) and B(bx, by) by chaining unit connections between them.
 
@@ -147,74 +162,60 @@ class Board:
         :return: False if operation failed, True otherwise
         """
         # Points not in line
-        if ax != bx and ay != by:
+        if a.x != b.x and a.y != b.y:
             return False
         # Same points
-        elif ax == bx and ay == by:
+        elif a.x == b.x and a.y == b.y:
             return False
         else:
-            a = (ax, ay)
-            b = (bx, by)
             points = []
-            a_distance_from_origin = math.sqrt(ay**2 + ax**2)
-            b_distance_from_origin = math.sqrt(by**2 + bx**2)
+            a_distance_from_origin = math.sqrt(a.y**2 + a.x**2)
+            b_distance_from_origin = math.sqrt(b.y**2 + b.x**2)
 
             # Ensure a is closest to origin (0,0)
-            if a_distance_from_origin > b_distance_from_origin:
-                temp = a
-                a = b
-                b = temp
+            # if a_distance_from_origin > b_distance_from_origin:
+            #     first
+            #     a = b
+            #     b = temp
 
             # Starting point
             points.append(a)
             # Points between a and b
-            if ax == bx:
-                difference = by - ay
+            if a.x == b.x:
+                difference = b.y - a.y
                 if difference == 1:
-                    self.add_connection(a[0], a[1], b[0], b[1])
+                    self.add_connection(a, b)
                     return True
                 for i in range(1, difference):
-                    points.append((ax, ay + i))
-            elif ay == by:
-                difference = bx - ax
+                    point = self.points[a.x][a.y + i]
+                    points.append(point)
+            elif a.y == b.y:
+                difference = b.x - a.x
                 if difference == 1:
-                    self.add_connection(a[0], a[1], b[0], b[1])
+                    self.add_connection(a, b)
                     return True
                 for i in range(1, difference):
-                    points.append((ax + i, ay))
+                    point = self.points[a.x + i][a.y]
+                    points.append(point)
             # Ending point
             points.append(b)
 
             for i in range(len(points) - 1):
                 first = points[i]
                 second = points[i+1]
-                self.add_connection(first[0], first[1], second[0], second[1])
-            return True
-
-    def __validate_point(self, a):
-        """
-        Checks if a point is on the board
-
-        :param a: point defined by a tuple (x, y)
-        :return: boolean
-        """
-        ax = a[0]
-        ay = a[1]
-        if self.width < ax or ax < 0 or self.height < ay or ay < 0:
-            return False
-        else:
+                self.add_connection(first, second)
             return True
 
     def __validate_connection_length(self, connection):
         """
         Checks if connection (A, B) is made between neighboring points
 
-        :param connection: (A, B) where A and B are points defined by a tuple (x, y)
+        :param connection: (A, B) where A and B are point objects
         :return: boolean
         """
         a = connection[0]
         b = connection[1]
-        distance = math.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
+        distance = math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
         if distance > 1.5 or distance == 0:
             return False
         else:
