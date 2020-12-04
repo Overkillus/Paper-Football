@@ -79,36 +79,8 @@ def update():
 def render():
     # Clear screen
     screen.fill((0, 0, 0))
-    # Draw board points
-    for i in range(myBoard.width):
-        for j in range(myBoard.height):
-            point = myBoard.points[i][j]
-            point.draw(screen)
-            # if point.is_ball:
-            #     screen.blit(ballImg, (board_distance+i*board_distance - ballImg.get_width()/2, board_distance+j*board_distance - ballImg.get_height()/2))
-            #     # pygame.draw.circle(
-            #     #     screen,
-            #     #     (0, 255, 0),
-            #     #     (board_distance+i*board_distance, board_distance+j*board_distance),
-            #     #     circle_radius*1.5,
-            #     # )
-            #
-            # elif point.is_selected:
-            #     pygame.draw.circle(
-            #         screen,
-            #         (255, 0, 0),
-            #         (board_distance+i*board_distance, board_distance+j*board_distance),
-            #         circle_radius,
-            #     )
-            # elif point.is_legal:
-            #     pygame.draw.circle(
-            #         screen,
-            #         (255, 255, 255),
-            #         (board_distance+i*board_distance, board_distance+j*board_distance),
-            #         circle_radius,
-            #         circle_radius
-            #     )
 
+    # Draw connections
     for connection in myBoard.connections:
         a = connection[0]
         b = connection[1]
@@ -116,6 +88,14 @@ def render():
         end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
         pygame.draw.line(screen, (200, 200, 200), start, end, 4)
        # screen.blit(lineHImg, (start, end,)) # problem with using image instead of line
+
+    # Draw board points
+    for i in range(myBoard.width):
+        for j in range(myBoard.height):
+            point = myBoard.points[i][j]
+            point.draw(screen)
+
+
 
     screen.blit(boardImg, (0, 0))
     pygame.display.flip()
