@@ -87,6 +87,7 @@ def render():
         start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
         end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
         pygame.draw.line(screen, (200, 200, 200), start, end, 4)
+        connection.draw(screen)
        # screen.blit(lineHImg, (start, end,)) # problem with using image instead of line
 
     # Draw board points

@@ -152,14 +152,19 @@ class Board:
                 # print(ax, ay, bx, by)
                 self.add_connection(a, b)
 
-                ax = j*2 + j*(self.width-3)
-                ay = self.height//2 - 1 + i
-                bx = j*2 + j*(self.width-3)
-                by = self.height//2 + i
-                a = self.points[ax][ay]
-                b = self.points[bx][by]
-                # print(ax, ay, bx, by)
-                self.add_connection(a, b)
+        # Hardcoded walls for goals
+        self.add_connection(self.points[0][3], self.points[1][3])
+        self.add_connection(self.points[0][5], self.points[1][5])
+        self.add_connection(self.points[self.width-1][3], self.points[self.width-2][3])
+        self.add_connection(self.points[self.width-1][5], self.points[self.width-2][5])
+
+        # Hardcoded illegal points
+        for i in range(3):
+            self.points[0][i].is_legal = False
+            self.points[0][self.height-1-i].is_legal = False
+            self.points[self.width-1][i].is_legal = False
+            self.points[self.width-1][self.height-i-1].is_legal = False
+
 
     def add_long_connection(self, a, b):
         """
