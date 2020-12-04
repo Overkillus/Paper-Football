@@ -83,30 +83,31 @@ def render():
     for i in range(myBoard.width):
         for j in range(myBoard.height):
             point = myBoard.points[i][j]
-            if point.is_ball:
-                screen.blit(ballImg, (board_distance+i*board_distance - ballImg.get_width()/2, board_distance+j*board_distance - ballImg.get_height()/2))
-                # pygame.draw.circle(
-                #     screen,
-                #     (0, 255, 0),
-                #     (board_distance+i*board_distance, board_distance+j*board_distance),
-                #     circle_radius*1.5,
-                # )
-
-            elif point.is_selected:
-                pygame.draw.circle(
-                    screen,
-                    (255, 0, 0),
-                    (board_distance+i*board_distance, board_distance+j*board_distance),
-                    circle_radius,
-                )
-            elif point.is_legal:
-                pygame.draw.circle(
-                    screen,
-                    (255, 255, 255),
-                    (board_distance+i*board_distance, board_distance+j*board_distance),
-                    circle_radius,
-                    circle_radius
-                )
+            point.draw(screen)
+            # if point.is_ball:
+            #     screen.blit(ballImg, (board_distance+i*board_distance - ballImg.get_width()/2, board_distance+j*board_distance - ballImg.get_height()/2))
+            #     # pygame.draw.circle(
+            #     #     screen,
+            #     #     (0, 255, 0),
+            #     #     (board_distance+i*board_distance, board_distance+j*board_distance),
+            #     #     circle_radius*1.5,
+            #     # )
+            #
+            # elif point.is_selected:
+            #     pygame.draw.circle(
+            #         screen,
+            #         (255, 0, 0),
+            #         (board_distance+i*board_distance, board_distance+j*board_distance),
+            #         circle_radius,
+            #     )
+            # elif point.is_legal:
+            #     pygame.draw.circle(
+            #         screen,
+            #         (255, 255, 255),
+            #         (board_distance+i*board_distance, board_distance+j*board_distance),
+            #         circle_radius,
+            #         circle_radius
+            #     )
 
     for connection in myBoard.connections:
         a = connection[0]
