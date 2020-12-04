@@ -82,8 +82,8 @@ def render():
 
     # Draw connections
     for connection in myBoard.connections:
-        a = connection[0]
-        b = connection[1]
+        a = connection.a
+        b = connection.b
         start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
         end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
         pygame.draw.line(screen, (200, 200, 200), start, end, 4)

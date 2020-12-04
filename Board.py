@@ -31,17 +31,14 @@ class Board:
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         # Constructing connections (AB and BA)
-        ab = (a, b)
-        ba = (b, a)
-        # ab = Connection(a, b)
-        # ba = Connection(b, a)
+        ab = Connection(a, b)
 
         # Invalid length check
         if not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
-        elif ab in self.connections or ba in self.connections:
+        elif self.get_connection(a, b) is not None:
             print("already exists")
             return False
         # Add new connection
@@ -60,7 +57,7 @@ class Board:
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         a = self.get_ball()
-        # boolean
+        # Boolean
         result = self.add_connection(a, b)
         if result:
             a.is_ball = False
@@ -76,8 +73,8 @@ class Board:
         :return: boolean: False if operation failed, True otherwise
         """
         # Constructing connections (AB and BA)
-        ab = (a, b)
-        ba = (b, a)
+        ab = self.get_connection(a, b)
+        ba = self.get_connection(b, a)
 
         if ab in self.connections:
             self.connections.remove(ab)
@@ -98,6 +95,12 @@ class Board:
                 if self.points[w][h].is_ball:
                     return self.points[w][h]
 
+    def get_connection(self, a, b):
+        for connection in self.connections:
+            if (connection.a == a and connection.b == b) or (connection.a == b and connection.b == a):
+                return connection
+        return None
+
     def update_point_is_used(self, a):
         """
         Updates point is_used based on current connections
@@ -106,7 +109,7 @@ class Board:
         :return:
         """
         for connection in self.connections:
-            if connection[0] == a or connection[1] == a:
+            if connection.a == a or connection.b == a:
                 a.is_used = True
                 break
         a.is_used = False
@@ -220,8 +223,8 @@ class Board:
         :param connection: (A, B) where A and B are point objects
         :return: boolean
         """
-        a = connection[0]
-        b = connection[1]
+        a = connection.a
+        b = connection.b
         distance = math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
         if distance > 1.5 or distance == 0:
             return False
