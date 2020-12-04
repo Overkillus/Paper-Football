@@ -73,6 +73,7 @@ def event_handler():
                                 current_point.is_selected = False
                         point.is_selected = True
 
+# update player scores
 if ballImg.x >= 500:
     player1Score += 1
 if ballImg.x >= 20:
