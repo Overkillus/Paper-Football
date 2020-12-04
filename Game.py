@@ -74,10 +74,10 @@ def event_handler():
                         point.is_selected = True
 
 # update player scores
-if ballImg.x >= 500:
-    player1Score += 1
-if ballImg.x >= 20:
-    player2Score += 1
+# if ballImg.x >= 500:
+#     player1Score += 1
+# if ballImg.x >= 20:
+#     player2Score += 1
 
 def update():
     return True
@@ -89,13 +89,14 @@ def render():
 
     # Draw connections
     for connection in myBoard.connections:
-        a = connection.a
-        b = connection.b
-        start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
-        end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
-        pygame.draw.line(screen, (200, 200, 200), start, end, 4)
+
         connection.draw(screen)
-       # screen.blit(lineHImg, (start, end,)) # problem with using image instead of line
+        # Legacy solution
+        # a = connection.a
+        # b = connection.b
+        # start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
+        # end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
+        # pygame.draw.line(screen, (200, 200, 200), start, end, 4)
 
     # Draw board points
     for i in range(myBoard.width):
