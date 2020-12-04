@@ -29,6 +29,8 @@ lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
+player1Score = 0
+player2Score = 0
 
 def main():
     global delta_time
@@ -71,6 +73,10 @@ def event_handler():
                                 current_point.is_selected = False
                         point.is_selected = True
 
+if ballImg.x >= 500:
+    player1Score += 1
+if ballImg.x >= 20:
+    player2Score += 1
 
 def update():
     return True
