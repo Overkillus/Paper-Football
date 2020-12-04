@@ -101,7 +101,12 @@ def render():
             point = myBoard.points[i][j]
             point.draw(screen)
 
-
+    # Draw Scores
+    #font = pygame.font.Font()
+    #text = font.render(str(player1Score), 0, BLUE)
+    #screen.blit(text, (200, 20))
+    #text = font.render(str(player2Score), 0, BLUE)
+    #screen.blit(text, (400, 20))
 
     screen.blit(boardImg, (0, 0))
     pygame.display.flip()
