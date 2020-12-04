@@ -1,4 +1,8 @@
+import sys
+
 import pygame
+
+import Game
 
 font = pygame.font.SysFont(None, 50)
 
@@ -28,7 +32,7 @@ def main_menu():
         draw_text('start', font, (0, 0, 0), screen, 100, 100)
         draw_text('exit', font, (0, 0, 0), screen, 100, 200)
         if button_1.collidepoint(mouse) and click[0] == 1:
-            main()
+            Game.main()
 
         if button_2.collidepoint(mouse) and click[0] == 1:
             sys.exit(0)
