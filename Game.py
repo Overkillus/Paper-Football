@@ -48,7 +48,7 @@ def event_handler():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit(0)
-        elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
             sys.exit(0)
         elif event.type == pygame.MOUSEBUTTONUP:
             for i in range(myBoard.width):
@@ -113,4 +113,4 @@ def render():
     pygame.display.flip()
 
 
-main()
+#main()

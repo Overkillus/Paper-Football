@@ -4,6 +4,10 @@ import pygame
 
 import Game
 
+pygame.init()
+screenWidth = 1280
+screenHeight = 720
+screen = pygame.display.set_mode((screenWidth, screenHeight))
 font = pygame.font.SysFont(None, 50)
 
 
@@ -16,7 +20,7 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     while True:
-        event_handler()
+        Game.event_handler()
         click = pygame.mouse.get_pressed()
         mouse = pygame.mouse.get_pos()
 
@@ -38,7 +42,7 @@ def main_menu():
             sys.exit(0)
 
         pygame.display.update()
-        mainClock.tick(60)
+        Game.clock.tick(60)
 
 
 main_menu()
