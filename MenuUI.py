@@ -5,9 +5,7 @@ import pygame
 import Game
 
 
-screenWidth = 1280
-screenHeight = 720
-screen = pygame.display.set_mode((screenWidth, screenHeight))
+screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont(None, 50)
 
 
