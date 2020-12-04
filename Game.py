@@ -84,7 +84,7 @@ def render():
         for j in range(myBoard.height):
             point = myBoard.points[i][j]
             if point.is_ball:
-                screen.blit(ballImg, (board_distance+i*board_distance, board_distance+j*board_distance))
+                screen.blit(ballImg, (board_distance+i*board_distance - ballImg.get_width()/2, board_distance+j*board_distance - ballImg.get_height()/2))
                 # pygame.draw.circle(
                 #     screen,
                 #     (0, 255, 0),
