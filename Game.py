@@ -19,9 +19,14 @@ delta_time = 0
 # Entity variables
 myBoard = Board(13, 9)
 board_distance = 50
+boardImg = pygame.image.load("Art/board_and_lines_neon.png").convert_alpha()
+ballImg = pygame.image.load("Art/ball_green_glow.png").convert_alpha()
+lineHImg = pygame.image.load("Art/pink_neon_hor.png").convert_alpha()
+lineVImg = pygame.image.load("Art/pink_neon_vert.png").convert_alpha()
+lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure if diagonal is right
 
 
-circle_radius = 10
+circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
 
@@ -79,12 +84,14 @@ def render():
         for j in range(myBoard.height):
             point = myBoard.points[i][j]
             if point.is_ball:
-                pygame.draw.circle(
-                    screen,
-                    (0, 255, 0),
-                    (board_distance+i*board_distance, board_distance+j*board_distance),
-                    circle_radius*1.5,
-                )
+                screen.blit(ballImg, (board_distance+i*board_distance - ballImg.get_width()/2, board_distance+j*board_distance - ballImg.get_height()/2))
+                # pygame.draw.circle(
+                #     screen,
+                #     (0, 255, 0),
+                #     (board_distance+i*board_distance, board_distance+j*board_distance),
+                #     circle_radius*1.5,
+                # )
+
             elif point.is_selected:
                 pygame.draw.circle(
                     screen,
@@ -107,7 +114,9 @@ def render():
         start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
         end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
         pygame.draw.line(screen, (200, 200, 200), start, end, 4)
+       # screen.blit(lineHImg, (start, end,)) # problem with using image instead of line
 
+    screen.blit(boardImg, (0, 0))
     pygame.display.flip()
 
 
