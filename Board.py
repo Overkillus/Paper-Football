@@ -8,13 +8,16 @@ class Board:
     Data structure class representing the current state of the board/field
     """
     def __init__(self, width=13, height=9):
+        # Variables
         self.width = width
         self.height = height
         # 2D array representing the board
         self.points = [[Point(w, h) for h in range(height)] for w in range(width)]
+        # Places ball
         self.points[width//2][height//2].is_ball = True
-
+        # Set storing connections between points (connection holds pointers to point objects from points)
         self.connections = set()
+        # Populates map with default connections
         self.generate_walls()
 
     def add_connection(self, a, b):
