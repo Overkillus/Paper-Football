@@ -1,5 +1,7 @@
 import math
 import numpy as np
+
+from Connection import Connection
 from Point import Point
 
 
@@ -31,6 +33,8 @@ class Board:
         # Constructing connections (AB and BA)
         ab = (a, b)
         ba = (b, a)
+        # ab = Connection(a, b)
+        # ba = Connection(b, a)
 
         # Invalid length check
         if not self.__validate_connection_length(ab):
