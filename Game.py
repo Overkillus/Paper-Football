@@ -3,6 +3,7 @@ import pygame
 
 # Init
 from Board import Board
+from pygame import mixer
 
 pygame.init()
 
@@ -25,6 +26,10 @@ lineHImg = pygame.image.load("Art/pink_neon_hor.png").convert_alpha()
 lineVImg = pygame.image.load("Art/pink_neon_vert.png").convert_alpha()
 lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure if diagonal is right
 
+# Background music
+mixer.music.load('Sound/BackgroundMusic.wav')
+mixer.music.play(-1)
+mixer.music.set_volume(0.2)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
