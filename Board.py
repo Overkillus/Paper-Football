@@ -3,6 +3,7 @@ import numpy as np
 
 from Connection import Connection
 from Point import Point
+from pygame import mixer
 
 
 class Board:
@@ -44,6 +45,9 @@ class Board:
         # Add new connection
         else:
             print("added new")
+            connection_sound = mixer.Sound('Sound/tempSound.wav')
+            connection_sound.play()
+            connection_sound.set_volume(0.3)
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True
