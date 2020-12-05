@@ -3,6 +3,7 @@ import pygame
 
 # Init
 from Board import Board
+from pygame import mixer
 
 pygame.init()
 
@@ -25,13 +26,16 @@ lineHImg = pygame.image.load("Art/pink_neon_hor.png").convert_alpha()
 lineVImg = pygame.image.load("Art/pink_neon_vert.png").convert_alpha()
 lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure if diagonal is right
 
+# Background music
+mixer.music.load('Sound/BackgroundMusic.wav')
+mixer.music.play(-1)
+mixer.music.set_volume(0.2)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
 player1Score = 0
 player2Score = 0
-
 
 def main():
     global delta_time
@@ -49,7 +53,7 @@ def event_handler():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit(0)
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+        elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
             sys.exit(0)
         elif event.type == pygame.MOUSEBUTTONUP:
             for i in range(myBoard.width):
@@ -74,13 +78,11 @@ def event_handler():
                                 current_point.is_selected = False
                         point.is_selected = True
 
-
 # update player scores
-#if ballImg.x >= 500:
- #   player1Score += 1
-#if ballImg.x >= 20:
-#    player2Score += 1
-
+# if ballImg.x >= 500:
+#     player1Score += 1
+# if ballImg.x >= 20:
+#     player2Score += 1
 
 def update():
     return True
@@ -92,12 +94,14 @@ def render():
 
     # Draw connections
     for connection in myBoard.connections:
-        a = connection[0]
-        b = connection[1]
-        start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
-        end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
-        pygame.draw.line(screen, (200, 200, 200), start, end, 4)
-       # screen.blit(lineHImg, (start, end,)) # problem with using image instead of line
+
+        connection.draw(screen)
+        # Legacy solution
+        # a = connection.a
+        # b = connection.b
+        # start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
+        # end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
+        # pygame.draw.line(screen, (200, 200, 200), start, end, 4)
 
     # Draw board points
     for i in range(myBoard.width):
@@ -116,4 +120,4 @@ def render():
     pygame.display.flip()
 
 
-#main()
+main()
