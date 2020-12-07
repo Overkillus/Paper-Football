@@ -45,9 +45,10 @@ class Board:
         # Add new connection
         else:
             print("added new")
-            connection_sound = mixer.Sound('Sound/tempSound.wav')
+            # connection_sound = mixer.Sound('Sound/tempSound.wav')
+            connection_sound = mixer.Sound('Sound/jump.wav')  # Sound by SoundRobotFactory @ FreeSound
             connection_sound.play()
-            connection_sound.set_volume(0.3)
+            connection_sound.set_volume(0.1)
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True
@@ -168,7 +169,6 @@ class Board:
             self.points[0][self.height-1-i].is_legal = False
             self.points[self.width-1][i].is_legal = False
             self.points[self.width-1][self.height-i-1].is_legal = False
-
 
     def add_long_connection(self, a, b):
         """
