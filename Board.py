@@ -45,10 +45,6 @@ class Board:
         # Add new connection
         else:
             print("added new")
-            # connection_sound = mixer.Sound('Sound/tempSound.wav')
-            connection_sound = mixer.Sound('Sound/jump.wav')  # Sound by SoundRobotFactory @ FreeSound
-            connection_sound.play()
-            connection_sound.set_volume(0.1)
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True
@@ -65,8 +61,15 @@ class Board:
         # Boolean
         result = self.add_connection(a, b)
         if result:
+            connection_sound = mixer.Sound('Sound/jump.wav')  # Sound by LittleSoundRobotFactory @ FreeSound
+            connection_sound.play()
+            connection_sound.set_volume(0.1)
             a.is_ball = False
             b.is_ball = True
+        else:
+            connection_sound = mixer.Sound('Sound/fail.wav')  # Sound by LittleSoundRobotFactory @ FreeSound
+            connection_sound.play()
+            connection_sound.set_volume(0.2)
         return result
 
     def remove_connection(self, a, b):

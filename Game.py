@@ -29,7 +29,7 @@ lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure
 # Background music
 mixer.music.load('Sound/BackgroundMusic.wav')
 mixer.music.play(-1)
-mixer.music.set_volume(0.1)
+mixer.music.set_volume(0.08)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
