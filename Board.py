@@ -1,6 +1,9 @@
 import math
 import numpy as np
+
+from Connection import Connection
 from Point import Point
+from pygame import mixer
 
 
 class Board:
@@ -29,20 +32,23 @@ class Board:
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         # Constructing connections (AB and BA)
-        ab = (a, b)
-        ba = (b, a)
+        ab = Connection(a, b)
 
         # Invalid length check
         if not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
-        elif ab in self.connections or ba in self.connections:
+        elif self.get_connection(a, b) is not None:
             print("already exists")
             return False
         # Add new connection
         else:
             print("added new")
+            # connection_sound = mixer.Sound('Sound/tempSound.wav')
+            connection_sound = mixer.Sound('Sound/jump.wav')  # Sound by SoundRobotFactory @ FreeSound
+            connection_sound.play()
+            connection_sound.set_volume(0.1)
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True
@@ -56,7 +62,7 @@ class Board:
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         a = self.get_ball()
-        # boolean
+        # Boolean
         result = self.add_connection(a, b)
         if result:
             a.is_ball = False
@@ -72,8 +78,8 @@ class Board:
         :return: boolean: False if operation failed, True otherwise
         """
         # Constructing connections (AB and BA)
-        ab = (a, b)
-        ba = (b, a)
+        ab = self.get_connection(a, b)
+        ba = self.get_connection(b, a)
 
         if ab in self.connections:
             self.connections.remove(ab)
@@ -94,6 +100,12 @@ class Board:
                 if self.points[w][h].is_ball:
                     return self.points[w][h]
 
+    def get_connection(self, a, b):
+        for connection in self.connections:
+            if (connection.a == a and connection.b == b) or (connection.a == b and connection.b == a):
+                return connection
+        return None
+
     def update_point_is_used(self, a):
         """
         Updates point is_used based on current connections
@@ -102,7 +114,7 @@ class Board:
         :return:
         """
         for connection in self.connections:
-            if connection[0] == a or connection[1] == a:
+            if connection.a == a or connection.b == a:
                 a.is_used = True
                 break
         a.is_used = False
@@ -145,14 +157,18 @@ class Board:
                 # print(ax, ay, bx, by)
                 self.add_connection(a, b)
 
-                ax = j*2 + j*(self.width-3)
-                ay = self.height//2 - 1 + i
-                bx = j*2 + j*(self.width-3)
-                by = self.height//2 + i
-                a = self.points[ax][ay]
-                b = self.points[bx][by]
-                # print(ax, ay, bx, by)
-                self.add_connection(a, b)
+        # Hardcoded walls for goals
+        self.add_connection(self.points[0][3], self.points[1][3])
+        self.add_connection(self.points[0][5], self.points[1][5])
+        self.add_connection(self.points[self.width-1][3], self.points[self.width-2][3])
+        self.add_connection(self.points[self.width-1][5], self.points[self.width-2][5])
+
+        # Hardcoded illegal points
+        for i in range(3):
+            self.points[0][i].is_legal = False
+            self.points[0][self.height-1-i].is_legal = False
+            self.points[self.width-1][i].is_legal = False
+            self.points[self.width-1][self.height-i-1].is_legal = False
 
     def add_long_connection(self, a, b):
         """
@@ -216,8 +232,8 @@ class Board:
         :param connection: (A, B) where A and B are point objects
         :return: boolean
         """
-        a = connection[0]
-        b = connection[1]
+        a = connection.a
+        b = connection.b
         distance = math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
         if distance > 1.5 or distance == 0:
             return False
