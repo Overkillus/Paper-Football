@@ -5,6 +5,8 @@ import pygame
 from Board import Board
 from pygame import mixer
 
+from Player import Player
+
 pygame.init()
 
 # Screen variables
@@ -21,10 +23,6 @@ delta_time = 0
 myBoard = Board(13, 9)
 board_distance = 50
 boardImg = pygame.image.load("Art/board_and_lines_neon.png").convert_alpha()
-ballImg = pygame.image.load("Art/ball_green_glow.png").convert_alpha()
-lineHImg = pygame.image.load("Art/pink_neon_hor.png").convert_alpha()
-lineVImg = pygame.image.load("Art/pink_neon_vert.png").convert_alpha()
-lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure if diagonal is right
 
 # Background music
 mixer.music.load('Sound/BackgroundMusic.wav')
@@ -37,6 +35,11 @@ circle_hitbox_multiplier = 1.8
 player1Score = 0
 player2Score = 0
 
+players = []
+players.append(Player("Player One", (199, 36, 177)))
+players[0].turn = True
+players.append(Player("Player Two", (250, 237, 39)))
+
 
 def main():
     global delta_time
@@ -47,7 +50,7 @@ def main():
         while delta_time > 1/max_tps:
             delta_time -= 1/max_tps
             update()
-        render()
+            render()
 
 
 def event_handler():
@@ -68,7 +71,15 @@ def event_handler():
                     )
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
                         point = myBoard.points[i][j]
-                        myBoard.move(point)
+                        point_used = point.is_used
+                        current_player = [p for p in players if p.turn][0]
+                        current_index = players.index(current_player)
+                        result = myBoard.move(point, players[current_index])  # TEMP
+                        # If move made update turn for players
+                        if result and not point_used:
+                            current_player.turn = False
+                            players[(current_index+1) % 2].turn = True
+
                         for w in range(myBoard.width):
                             for h in range(myBoard.height):
                                 current_point = myBoard.points[w][h]
