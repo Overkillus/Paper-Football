@@ -4,6 +4,8 @@ import pygame
 
 import Game
 
+import tkinter as tk
+
 bg = pygame.image.load("Art/Neon_theme1.png").convert_alpha()
 bg = pygame.transform.scale(bg, (695, 500))
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
@@ -15,6 +17,7 @@ def draw_text(text, font, color, surface, x, y):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
+
 
 
 def main_menu():
