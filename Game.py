@@ -5,11 +5,13 @@ import pygame
 from Board import Board
 from pygame import mixer
 
+from Player import Player
+
 pygame.init()
 
 # Screen variables
-screenWidth = 1280
-screenHeight = 720
+screenWidth = 695
+screenHeight = 500
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 # Delta time variables
@@ -21,21 +23,26 @@ delta_time = 0
 myBoard = Board(13, 9)
 board_distance = 50
 boardImg = pygame.image.load("Art/board_and_lines_neon.png").convert_alpha()
-ballImg = pygame.image.load("Art/ball_green_glow.png").convert_alpha()
-lineHImg = pygame.image.load("Art/pink_neon_hor.png").convert_alpha()
-lineVImg = pygame.image.load("Art/pink_neon_vert.png").convert_alpha()
-lineDImg = pygame.image.load("Art/pink_neon_dia.png").convert_alpha() # not sure if diagonal is right
 
 # Background music
-mixer.music.load('Sound/BackgroundMusic.wav')
+mixer.music.load('Sound/background.wav')
 mixer.music.play(-1)
-mixer.music.set_volume(0.2)
+mixer.music.set_volume(0.08)
+
+# Colours
+White = (255, 255, 255)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
 player1Score = 0
 player2Score = 0
+
+players = []
+players.append(Player("Player One", (199, 36, 177)))
+players[0].turn = True
+players.append(Player("Player Two", (250, 237, 39)))
+
 
 def main():
     global delta_time
@@ -46,7 +53,7 @@ def main():
         while delta_time > 1/max_tps:
             delta_time -= 1/max_tps
             update()
-        render()
+            render()
 
 
 def event_handler():
@@ -66,12 +73,16 @@ def event_handler():
                         circle_radius * circle_hitbox_multiplier * 2  # height
                     )
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
-                        # myBoard.add_connection(myBoard.selected[0], myBoard.selected[1], i, j)
                         point = myBoard.points[i][j]
-                        myBoard.move(point)
-                        # for point in myBoard.points:
-                        #     point.is_selected = False
-                        # point.is_selected = True
+                        point_used = point.is_used
+                        current_player = [p for p in players if p.turn][0]
+                        current_index = players.index(current_player)
+                        result = myBoard.move(point, players[current_index])  # TEMP
+                        # If move made update turn for players
+                        if result and not point_used:
+                            current_player.turn = False
+                            players[(current_index+1) % 2].turn = True
+
                         for w in range(myBoard.width):
                             for h in range(myBoard.height):
                                 current_point = myBoard.points[w][h]
@@ -84,6 +95,7 @@ def event_handler():
 # if ballImg.x >= 20:
 #     player2Score += 1
 
+
 def update():
     return True
 
@@ -94,14 +106,7 @@ def render():
 
     # Draw connections
     for connection in myBoard.connections:
-
         connection.draw(screen)
-        # Legacy solution
-        # a = connection.a
-        # b = connection.b
-        # start = (board_distance + board_distance * a.x, board_distance + board_distance * a.y)
-        # end = (board_distance + board_distance * b.x, board_distance + board_distance * b.y)
-        # pygame.draw.line(screen, (200, 200, 200), start, end, 4)
 
     # Draw board points
     for i in range(myBoard.width):
@@ -110,11 +115,11 @@ def render():
             point.draw(screen)
 
     # Draw Scores
-    #font = pygame.font.Font()
-    #text = font.render(str(player1Score), 0, BLUE)
-    #screen.blit(text, (200, 20))
-    #text = font.render(str(player2Score), 0, BLUE)
-    #screen.blit(text, (400, 20))
+    font = pygame.font.Font(None, 60)
+    score1 = font.render(str(player1Score), True, White)
+    screen.blit(score1, (35, 70))
+    score2 = font.render(str(player2Score), True, White)
+    screen.blit(score2, (640, 70))
 
     screen.blit(boardImg, (0, 0))
     pygame.display.flip()

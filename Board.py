@@ -23,16 +23,17 @@ class Board:
         # Populates map with default connections
         self.generate_walls()
 
-    def add_connection(self, a, b):
+    def add_connection(self, a, b, player=None):
         """
         Creates a connection between two points A and B and adds it to a local set
 
         :param a: point object A
         :param b: point object B
+        :param player: player that made the connection (None if connection is wall)
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         # Constructing connections (AB and BA)
-        ab = Connection(a, b)
+        ab = Connection(a, b, False, player)
 
         # Invalid length check
         if not self.__validate_connection_length(ab):
@@ -45,27 +46,32 @@ class Board:
         # Add new connection
         else:
             print("added new")
-            connection_sound = mixer.Sound('Sound/tempSound.wav')
-            connection_sound.play()
-            connection_sound.set_volume(0.3)
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True
             return True
 
-    def move(self, b):
+    def move(self, b, player):
         """
         Tries to make a move to a selected point
 
         :param b: point to move to
+        :param player: player making a move
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
         a = self.get_ball()
         # Boolean
-        result = self.add_connection(a, b)
+        result = self.add_connection(a, b, player)
         if result:
+            connection_sound = mixer.Sound('Sound/moving_effect.mp3')  # Sound by LittleSoundRobotFactory @ FreeSound
+            connection_sound.play()
+            connection_sound.set_volume(0.1)
             a.is_ball = False
             b.is_ball = True
+        else:
+            fail_sound = mixer.Sound('Sound/fail.wav')  # Sound by LittleSoundRobotFactory @ FreeSound
+            fail_sound.play()
+            fail_sound.set_volume(0.2)
         return result
 
     def remove_connection(self, a, b):
@@ -168,7 +174,6 @@ class Board:
             self.points[0][self.height-1-i].is_legal = False
             self.points[self.width-1][i].is_legal = False
             self.points[self.width-1][self.height-i-1].is_legal = False
-
 
     def add_long_connection(self, a, b):
         """
