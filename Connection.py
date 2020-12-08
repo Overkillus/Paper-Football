@@ -13,16 +13,24 @@ class Connection:
     lineDLImg = pygame.image.load("Art/pink_neon_dia.png")
     lineDRImg = pygame.transform.flip(lineDLImg, False, True)
 
-    def __init__(self, a, b, is_wall=False):
+    def __init__(self, a, b, is_wall=False, player=None):
         self.a = a
         self.b = b
         self.is_wall = is_wall
+        self.player = player
 
     def draw(self, screen):
+
         lineHImg = self.lineHImg.convert_alpha()
         lineVImg = self.lineVImg.convert_alpha()
         lineDLImg = self.lineDLImg.convert_alpha()
         lineDRImg = self.lineDRImg.convert_alpha()
+        if self.player is not None:
+            color = self.player.color
+            self.__saturate(lineHImg, color)
+            self.__saturate(lineVImg, color)
+            self.__saturate(lineDLImg, color)
+            self.__saturate(lineDRImg, color)
 
         a = self.a
         b = self.b
@@ -72,3 +80,8 @@ class Connection:
                          self.board_distance + self.a.y * self.board_distance - lineHImg.get_height()/2)
                         )
 
+    def __saturate(self, image, color):
+        # zero out RGB values
+        image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+        # add in new RGB values
+        image.fill(color[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
