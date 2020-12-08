@@ -31,6 +31,9 @@ mixer.music.load('Sound/BackgroundMusic.wav')
 mixer.music.play(-1)
 mixer.music.set_volume(0.1)
 
+# Colours
+White = (255, 255, 255)
+
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
@@ -101,11 +104,11 @@ def render():
             point.draw(screen)
 
     # Draw Scores
-    # font = pygame.font.Font()
-    # text = font.render(str(player1Score), 0, BLUE)
-    # screen.blit(text, (200, 20))
-    # text = font.render(str(player2Score), 0, BLUE)
-    # screen.blit(text, (400, 20))
+    font = pygame.font.Font(None, 60)
+    score1 = font.render(str(player1Score), True, White)
+    screen.blit(score1, (35, 70))
+    score2 = font.render(str(player2Score), True, White)
+    screen.blit(score2, (640, 70))
 
     screen.blit(boardImg, (0, 0))
     pygame.display.flip()
