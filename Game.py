@@ -125,4 +125,4 @@ def render():
     pygame.display.flip()
 
 
-main()
+#main()
