@@ -8,6 +8,8 @@ import tkinter as tk
 
 bg = pygame.image.load("Art/Neon_theme1.png").convert_alpha()
 bg = pygame.transform.scale(bg, (695, 500))
+title = pygame.image.load("Art/paperTitle.png").convert_alpha()
+title = pygame.transform.scale(title, (500, 80))
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont("comicsansms", 20)
 
@@ -19,7 +21,6 @@ def draw_text(text, font, color, surface, x, y):
     surface.blit(textobj, textrect)
 
 
-
 def main_menu():
     while True:
         Game.event_handler()
@@ -27,6 +28,7 @@ def main_menu():
         mouse = pygame.mouse.get_pos()
 
         screen.blit(bg, (0, 0))
+        screen.blit(title, (100, 0))
         # draw_text('main menu test', font, (255, 255, 255), screen, 600, 20)
 
         button_1 = pygame.Rect(40, 80, 80, 30)
