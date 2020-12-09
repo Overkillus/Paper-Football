@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 # Delta time variables
 clock = pygame.time.Clock()
-max_tps = 60.0
+max_tps = 24.0
 delta_time = 0
 
 # Entity variables

@@ -1,5 +1,8 @@
 import pygame
 
+from Connection import Connection
+
+
 class Player:
     """
     Class containing player details
@@ -12,9 +15,9 @@ class Player:
         self.score = score
 
         # Player unique sprites
-        self.lineHImg = pygame.image.load("Art/pink_neon_hor.png")
+        self.lineHImg = Connection.lineHImg
         self.lineVImg = pygame.transform.rotate(self.lineHImg, 90)
-        self.lineDLImg = pygame.image.load("Art/pink_neon_dia.png")
+        self.lineDLImg = Connection.lineDLImg
         self.lineDRImg = pygame.transform.flip(self.lineDLImg, False, True)
         self.__saturate(self.lineHImg, color)
         self.__saturate(self.lineVImg, color)
