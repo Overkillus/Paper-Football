@@ -4,7 +4,14 @@ import pygame
 
 import Game
 
-font = pygame.font.SysFont(None, 50)
+import tkinter as tk
+
+bg = pygame.image.load("Art/Neon_theme1.png").convert_alpha()
+bg = pygame.transform.scale(bg, (695, 500))
+title = pygame.image.load("Art/paperTitle.png").convert_alpha()
+title = pygame.transform.scale(title, (500, 80))
+screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
+font = pygame.font.SysFont("comicsansms", 20)
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -16,21 +23,23 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     while True:
-        event_handler()
+        Game.event_handler()
         click = pygame.mouse.get_pressed()
         mouse = pygame.mouse.get_pos()
 
-        screen.fill((0, 0, 0))
-        draw_text('main menu test', font, (255, 255, 255), screen, 600, 20)
+        screen.blit(bg, (0, 0))
+        screen.blit(title, (100, 0))
+        # draw_text('main menu test', font, (255, 255, 255), screen, 600, 20)
 
-        button_1 = pygame.Rect(50, 100, 200, 50)
-        button_2 = pygame.Rect(50, 200, 200, 50)
-        button_3 = pygame.Rect(50, 300, 200, 50)
+        button_1 = pygame.Rect(40, 80, 80, 30)
+        button_2 = pygame.Rect(40, 130, 80, 30)
+        button_3 = pygame.Rect(570, 80, 80, 30)
         pygame.draw.rect(screen, (255, 0, 0), button_1)
         pygame.draw.rect(screen, (0, 255, 0), button_2)
         pygame.draw.rect(screen, (0, 0, 255), button_3)
-        draw_text('start', font, (0, 0, 0), screen, 100, 100)
-        draw_text('exit', font, (0, 0, 0), screen, 100, 200)
+        draw_text('Start', font, (0, 0, 0), screen, button_1.x+10, button_1.y)
+        draw_text('Exit', font, (0, 0, 0), screen, button_2.x+10, button_2.y)
+        draw_text('options', font, (0, 0, 0), screen, button_3.x+10, button_3.y)
         if button_1.collidepoint(mouse) and click[0] == 1:
             Game.main()
 
@@ -38,7 +47,7 @@ def main_menu():
             sys.exit(0)
 
         pygame.display.update()
-        mainClock.tick(60)
+        Game.clock.tick(60)
 
 
 main_menu()
