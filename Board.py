@@ -124,6 +124,10 @@ class Board:
                 break
         a.is_used = False
 
+    def set_board_distance(self, distance):
+        Point.board_distance = distance
+        Connection.board_distance = distance
+
     def generate_walls(self):
         # Top and bottom wall
         a = self.points[1][0]

@@ -8,6 +8,10 @@ class Connection:
     Class representing a connection between two points on the field
     """
     board_distance = 50
+    lineHImg = pygame.image.load("Art/white_neon_hor.png")
+    lineVImg = pygame.transform.rotate(lineHImg, 90)
+    lineDLImg = pygame.image.load("Art/white_neon_dia.png")
+    lineDRImg = pygame.transform.flip(lineDLImg, False, True)
 
     def __init__(self, a, b, is_wall=False, player=None):
         self.a = a
@@ -18,13 +22,17 @@ class Connection:
     def draw(self, screen):
 
         # Omit drawing non player lines TODO different connection type
-        if self.player is None:
-            return False
-        # Importing player unique sprites
-        lineHImg = self.player.lineHImg
-        lineVImg = self.player.lineVImg
-        lineDLImg = self.player.lineDLImg
-        lineDRImg = self.player.lineDRImg
+        if self.player is not None:
+            # Importing player unique sprites
+            lineHImg = self.player.lineHImg
+            lineVImg = self.player.lineVImg
+            lineDLImg = self.player.lineDLImg
+            lineDRImg = self.player.lineDRImg
+        else:
+            lineHImg = self.lineHImg
+            lineVImg = self.lineVImg
+            lineDLImg = self.lineDLImg
+            lineDRImg = self.lineDRImg
 
         a = self.a
         b = self.b
