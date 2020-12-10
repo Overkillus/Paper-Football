@@ -123,7 +123,9 @@ class Client:
 
 
 # - your own code after here! -
+'''
 client = Client(socket.gethostname(), 2000)
+# just make ^that^ object (with right server and port) and u can do server-client stuff
 
 # i'm doing a basic menu to showcase entering and leaving the server via ServerManager
 def choiceMaker(options):
@@ -171,3 +173,4 @@ while client.connected:
         lobby()
 
 # honestly not proud of the use of time.sleep to wait for thread to die and messages to send.
+'''
