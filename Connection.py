@@ -8,9 +8,9 @@ class Connection:
     Class representing a connection between two points on the field
     """
     board_distance = 50
-    lineHImg = pygame.image.load("Art/pink_neon_hor.png")
+    lineHImg = pygame.image.load("Art/white_neon_hor.png")
     lineVImg = pygame.transform.rotate(lineHImg, 90)
-    lineDLImg = pygame.image.load("Art/pink_neon_dia.png")
+    lineDLImg = pygame.image.load("Art/white_neon_dia.png")
     lineDRImg = pygame.transform.flip(lineDLImg, False, True)
 
     def __init__(self, a, b, is_wall=False, player=None):
