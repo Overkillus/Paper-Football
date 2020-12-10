@@ -15,9 +15,9 @@ class Player:
         self.score = score
 
         # Player unique sprites
-        self.lineHImg = Connection.lineHImg
+        self.lineHImg = Connection.lineHImg.copy()
         self.lineVImg = pygame.transform.rotate(self.lineHImg, 90)
-        self.lineDLImg = Connection.lineDLImg
+        self.lineDLImg = Connection.lineDLImg.copy()
         self.lineDRImg = pygame.transform.flip(self.lineDLImg, False, True)
         self.__saturate(self.lineHImg, color)
         self.__saturate(self.lineVImg, color)

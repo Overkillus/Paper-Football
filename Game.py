@@ -22,6 +22,7 @@ delta_time = 0
 # Entity variables
 myBoard = Board(13, 9)
 board_distance = 50
+myBoard.set_board_distance(board_distance)
 boardImg = pygame.image.load("Art/board_and_lines_neon.png").convert_alpha()
 
 # Background music
@@ -34,9 +35,6 @@ White = (255, 255, 255)
 
 circle_radius = 8
 circle_hitbox_multiplier = 1.8
-
-player1Score = 0
-player2Score = 0
 
 players = []
 players.append(Player("Player One", (199, 36, 177)))
@@ -72,6 +70,7 @@ def event_handler():
                         circle_radius * circle_hitbox_multiplier * 2,  # width
                         circle_radius * circle_hitbox_multiplier * 2  # height
                     )
+                    # If point clicked
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
                         point = myBoard.points[i][j]
                         point_used = point.is_used
@@ -83,9 +82,8 @@ def event_handler():
                             current_player.turn = False
                             players[(current_index+1) % 2].turn = True
 
-                        for w in range(myBoard.width):
-                            for h in range(myBoard.height):
-                                current_point = myBoard.points[w][h]
+                        for row in myBoard.points:
+                            for current_point in row:
                                 current_point.is_selected = False
                         point.is_selected = True
 
@@ -109,19 +107,21 @@ def render():
         connection.draw(screen)
 
     # Draw board points
-    for i in range(myBoard.width):
-        for j in range(myBoard.height):
-            point = myBoard.points[i][j]
+    for row in myBoard.points:
+        for point in row:
             point.draw(screen)
 
     # Draw Scores
     font = pygame.font.Font(None, 60)
-    score1 = font.render(str(player1Score), True, White)
+    score1 = font.render(str(players[0].score), True, White)
     screen.blit(score1, (35, 70))
-    score2 = font.render(str(player2Score), True, White)
+    score2 = font.render(str(players[1].score), True, White)
     screen.blit(score2, (640, 70))
 
+    # Draw background
     screen.blit(boardImg, (0, 0))
+
+    # Show new frame
     pygame.display.flip()
 
 
