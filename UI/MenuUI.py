@@ -29,6 +29,18 @@ class MenuUI:
     def __init__(self):
         True
 
+    def main(self):
+        True
+
+    def even_handler(self):
+        True
+
+    def update(self):
+        True
+
+    def render(self):
+        True
+
 
 
 
