@@ -2,6 +2,7 @@ import sys
 import pygame
 
 # Init
+import Colours
 from Board import Board
 from pygame import mixer
 
@@ -37,9 +38,9 @@ circle_radius = 8
 circle_hitbox_multiplier = 1.8
 
 players = []
-players.append(Player("Player One", (199, 36, 177)))
+players.append(Player("Player One", Colours.PURPLE))
 players[0].turn = True
-players.append(Player("Player Two", (250, 237, 39)))
+players.append(Player("Player Two", Colours.WHITE))
 
 
 def main():

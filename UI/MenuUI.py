@@ -1,7 +1,5 @@
 import sys
-
 import pygame
-
 import Game
 from pygame import mixer
 
@@ -24,6 +22,7 @@ font = pygame.font.SysFont("arialbold", 30)
 
 # Sound
 mixer.music.load('Sound/background.wav')
+
 
 class MenuUI:
     def __init__(self):
