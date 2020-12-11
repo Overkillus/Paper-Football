@@ -3,6 +3,7 @@ import sys
 import pygame
 
 import Game
+from pygame import mixer
 
 import tkinter as tk #tkinter is used for GUI. Probably will have to use it at some point for any input
 
@@ -14,8 +15,16 @@ title = pygame.image.load("Art/logo_small.png").convert_alpha()
 #title = pygame.transform.scale(title, (500, 80))
 settings_icon = pygame.image.load("Art/settings.png") #TODO implement functionality to adjust various settings
 sound_icon = pygame.image.load("Art/sound.png") #TODO implement functionality to mute sound when clicked
+sound_icon_off = pygame.image.load("Art/sound_off.png")
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont("arialbold", 30)
+
+#getting the x,y of the icon placed at specific coordinates
+sound_rect = sound_icon.get_rect(topleft=(75, 430))
+
+# Background music
+mixer.music.load('Sound/background.wav')
+sound_on = True
 
 button_w = 100
 button_h = 40
@@ -27,6 +36,12 @@ GREEN = (13,255,0)
 WHITE = (255,255,255)
 
 
+if sound_on == True:
+    mixer.music.play(-1)
+    mixer.music.set_volume(0.08)
+
+
+
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -36,6 +51,7 @@ def draw_text(text, font, color, surface, x, y):
 
 
 def main_menu():
+    global sound_on
     while True:
         Game.event_handler()
         click = pygame.mouse.get_pressed()
@@ -44,7 +60,14 @@ def main_menu():
         screen.blit(bg, (0, 0))
         screen.blit(title, (screen.get_width()/2-140, 20))
         screen.blit(settings_icon,(15, 430))
-        screen.blit(sound_icon,(75, 430))
+
+        if sound_on == False:
+            screen.blit(sound_icon_off,(75, 430))
+        else:
+            screen.blit(sound_icon,(75,430))
+
+
+
         # draw_text('main menu test', font, (255, 255, 255), screen, 600, 20)
 
         button_1 = pygame.Rect(button_x, button_y, button_w, button_h)
@@ -59,8 +82,17 @@ def main_menu():
         if button_1.collidepoint(mouse) and click[0] == 1:
             Game.main()
 
+
         if button_2.collidepoint(mouse) and click[0] == 1:
             sys.exit(0)
+
+        if sound_rect.collidepoint(mouse) and click[0] == 1:
+            sound_on = False
+            mixer.music.pause()
+        # else: #TODO need to finish so it shows correct icon and music plays again
+        #     sound_on = True
+        #     mixer.music.unpause()
+
 
         pygame.display.update()
         Game.clock.tick(60)
