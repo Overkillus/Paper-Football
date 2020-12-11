@@ -21,7 +21,7 @@ class MenuUI:
     sound_icon_off = pygame.image.load("Art/sound_off.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
-    screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
+    screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
     font = pygame.font.SysFont("arialbold", 30)
 
     # Sound
@@ -66,13 +66,12 @@ class MenuUI:
             # Mouse click
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click details
-                click = pygame.mouse.get_pressed(3)
                 mouse_pos = pygame.mouse.get_pos()
                 # Toggle mute
-                if self.sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
+                if self.sound_rect.collidepoint(mouse_pos) and Settings.sound_muted:
                     Settings.sound_muted = False
                     mixer.music.unpause()
-                elif self.sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
+                elif self.sound_rect.collidepoint(mouse_pos) and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
 
