@@ -1,31 +1,12 @@
 import sys
 import pygame
-
 import Colours
 import Game
 from pygame import mixer
-
+import Settings
 import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
-import Settings
 
-# Art
-background = pygame.image.load("Art/lobby3_bg.png")
-background = pygame.transform.scale(background, (Settings.screen_width, Settings.screen_height))
-title = pygame.image.load("Art/logo_small.png")
-# title = pygame.transform.scale(title, (250, 80))
-settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
-sound_icon = pygame.image.load("Art/sound.png")
-sound_icon_off = pygame.image.load("Art/sound_off.png")
-button1_glow = pygame.image.load("Art/start_glow.png")
-button2_glow = pygame.image.load("Art/quit_glow.png")
-screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
-font = pygame.font.SysFont("arialbold", 30)
-
-# Sound
-mixer.music.load('Sound/background.wav')
-
-# -------------------------------------------------------------------------------------------------------
 class MenuUI:
     """
     Class representing menu view
@@ -98,40 +79,40 @@ class MenuUI:
         click = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
         if self.button_2.collidepoint(mouse_pos):
-            screen.blit(button2_glow, (365, 145))
+            self.screen.blit(self.button2_glow, (365, 145))
             if self.button_2.collidepoint(mouse_pos) and click[0] == 1:
                 sys.exit(0)
 
         elif self.button_1.collidepoint(mouse_pos):
-            screen.blit(button1_glow, (225, 145))
+            self.screen.blit(self.button1_glow, (225, 145))
             if self.button_1.collidepoint(mouse_pos) and click[0] == 1:
                 Game.main()
         else:
-            pygame.draw.rect(screen, Colours.CYAN, self.button_1)
-            self.__draw_text('START', font, Colours.WHITE, screen, self.button_1.x + 18, self.button_1.y + 10)
+            pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
+            self.__draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
 
     def update(self):
         mixer.music.set_volume(Settings.sound_volume)
 
     def render(self):
         # Clear screen
-        screen.fill((0, 0, 0))
+        self.screen.fill((0, 0, 0))
         # Background
-        screen.blit(background, (0, 0))
+        self.screen.blit(self.background, (0, 0))
         # Title
-        screen.blit(title, (screen.get_width() / 2 - 140, 20))
+        self.screen.blit(self.title, (self.screen.get_width() / 2 - 140, 20))
         # Settings
-        screen.blit(settings_icon, (15, 430))
+        self.screen.blit(self.settings_icon, (15, 430))
         # Mute toggle
         if Settings.sound_muted:
-            screen.blit(sound_icon_off, (75, 430))
+            self.screen.blit(self.sound_icon_off, (75, 430))
         else:
-            screen.blit(sound_icon, (75, 430))
+            self.screen.blit(self.sound_icon, (75, 430))
         # Start and Exit buttons
-        pygame.draw.rect(screen, Colours.CYAN, self.button_1)
-        pygame.draw.rect(screen, Colours.PINK, self.button_2)
-        self.__draw_text('START', font, Colours.WHITE, screen, self.button_1.x + 18, self.button_1.y + 10)
-        self.__draw_text('QUIT', font, Colours.WHITE, screen, self.button_2.x + 25, self.button_2.y + 10)
+        pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
+        pygame.draw.rect(self.screen, Colours.PINK, self.button_2)
+        self.__draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
+        self.__draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
 
         # Show new frame
         pygame.display.flip()
