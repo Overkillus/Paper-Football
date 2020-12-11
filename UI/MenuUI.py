@@ -25,7 +25,7 @@ font = pygame.font.SysFont("arialbold", 30)
 # Sound
 mixer.music.load('Sound/background.wav')
 
-
+# -------------------------------------------------------------------------------------------------------
 class MenuUI:
     """
     Class representing menu view
@@ -53,15 +53,48 @@ class MenuUI:
         True
 
     def even_handler(self):
-        True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit(0)
+            elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
+                sys.exit(0)
+            # Mouse click
+            elif event.type == pygame.MOUSEBUTTONUP:
+                # Mouse click details
+                click = pygame.mouse.get_pressed()
+                mouse_pos = pygame.mouse.get_pos()
+
+                # Toggle mute
+                if sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
+                    Settings.sound_muted = False
+                    mixer.music.unpause()
+                elif sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
+                    Settings.sound_muted = True
+                    mixer.music.pause()
 
     def update(self):
         True
 
     def render(self):
-        True
+        # Background
+        screen.blit(background, (0, 0))
+        # Title
+        screen.blit(title, (screen.get_width() / 2 - 140, 20))
+        # Settings
+        screen.blit(settings_icon, (15, 430))
+        # Mute toggle
+        if Settings.sound_muted:
+            screen.blit(sound_icon_off, (75, 430))
+        else:
+            screen.blit(sound_icon, (75, 430))
 
+    def __draw_text(self, text, font, color, surface, x, y):
+        text_object = font.render(text, 1, color)
+        text_rect = text_object.get_rect()
+        text_rect.topleft = (x, y)
+        surface.blit(text_object, text_rect)
 
+# -------------------------------------------------------------------------------------------------------
 
 
 
@@ -70,10 +103,6 @@ sound_rect = sound_icon.get_rect(topleft=(75, 430))
 settings_rect = settings_icon.get_rect(topleft=(15, 430))
 
 
-
-# Background music
-
-# sound_on = True
 
 
 button_w = 100
@@ -97,22 +126,24 @@ def main_menu():
 
     while True:
         # Game.event_handler()
+        click = pygame.mouse.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
             elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
                 sys.exit(0)
             elif event.type == pygame.MOUSEBUTTONUP:
+                # Mute toggle
                 if sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
                     Settings.sound_muted = False
                     mixer.music.unpause()
-
                 elif sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
 
-        click = pygame.mouse.get_pressed()
-        mouse_pos = pygame.mouse.get_pos()
+
 
         screen.blit(background, (0, 0))
         screen.blit(title, (screen.get_width() / 2 - 140, 20))
