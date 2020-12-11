@@ -46,13 +46,37 @@ class MenuUI:
     # Sound
     mixer.music.load('Sound/background.wav')
 
+    # TODO find a place for those
+    sound_rect = sound_icon.get_rect(topleft=(75, 430))
+    settings_rect = settings_icon.get_rect(topleft=(15, 430))
+    button_w = 100
+    button_h = 40
+    button_y = 150
+    button_x = 230
+    button_1 = pygame.Rect(button_x, button_y, button_w, button_h)
+    button_2 = pygame.Rect(button_x + 140, button_y, button_w, button_h)
+    # Delta time variables
+    clock = pygame.time.Clock()
+    delta_time = 0
+
     def __init__(self):
-        True
+        # Initiating sound
+        if not Settings.sound_muted:
+            mixer.music.play(-1)
+            mixer.music.set_volume(Settings.sound_volume)
 
     def main(self):
-        True
+        global delta_time
+        while True:
+            self.event_handler()
+            # Ticking
+            delta_time += self.clock.tick() / 1000.0
+            while delta_time > 1 / Settings.max_tps:
+                delta_time -= 1 / Settings.max_tps
+                self.update()
+                self.render()
 
-    def even_handler(self):
+    def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
@@ -63,7 +87,6 @@ class MenuUI:
                 # Mouse click details
                 click = pygame.mouse.get_pressed()
                 mouse_pos = pygame.mouse.get_pos()
-
                 # Toggle mute
                 if sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
                     Settings.sound_muted = False
@@ -71,11 +94,28 @@ class MenuUI:
                 elif sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
+        # TEMP TODO
+        click = pygame.mouse.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+        if self.button_2.collidepoint(mouse_pos):
+            screen.blit(button2_glow, (365, 145))
+            if self.button_2.collidepoint(mouse_pos) and click[0] == 1:
+                sys.exit(0)
+
+        elif self.button_1.collidepoint(mouse_pos):
+            screen.blit(button1_glow, (225, 145))
+            if self.button_1.collidepoint(mouse_pos) and click[0] == 1:
+                Game.main()
+        else:
+            pygame.draw.rect(screen, Colours.CYAN, self.button_1)
+            draw_text('START', font, Colours.WHITE, screen, self.button_1.x + 18, self.button_1.y + 10)
 
     def update(self):
-        True
+        mixer.music.set_volume(Settings.sound_volume)
 
     def render(self):
+        # Clear screen
+        screen.fill((0, 0, 0))
         # Background
         screen.blit(background, (0, 0))
         # Title
@@ -87,6 +127,14 @@ class MenuUI:
             screen.blit(sound_icon_off, (75, 430))
         else:
             screen.blit(sound_icon, (75, 430))
+        # Start and Exit buttons
+        pygame.draw.rect(screen, Colours.CYAN, self.button_1)
+        pygame.draw.rect(screen, Colours.PINK, self.button_2)
+        draw_text('START', font, Colours.WHITE, screen, self.button_1.x + 18, self.button_1.y + 10)
+        draw_text('QUIT', font, Colours.WHITE, screen, self.button_2.x + 25, self.button_2.y + 10)
+
+        # Show new frame
+        pygame.display.flip()
 
     def __draw_text(self, text, font, color, surface, x, y):
         text_object = font.render(text, 1, color)
@@ -179,10 +227,5 @@ def main_menu():
             draw_text('START', font, Colours.WHITE, screen, button_1.x + 18, button_1.y + 10)
 
 
-
-
-
-
-
         pygame.display.update()
-        Game.clock.tick(60)
+        # Game.clock.tick(60)
