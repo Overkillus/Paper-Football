@@ -25,10 +25,10 @@ board_distance = 50
 myBoard.set_board_distance(board_distance)
 boardImg = pygame.image.load("Art/board_and_lines_neon.png").convert_alpha()
 
-# Background music
-mixer.music.load('Sound/background.wav')
-mixer.music.play(-1)
-mixer.music.set_volume(0.08)
+# # Background music # moved this to MenuUI class
+# mixer.music.load('Sound/background.wav')
+# mixer.music.play(-1)
+# mixer.music.set_volume(0.08)
 
 # Colours
 White = (255, 255, 255)
