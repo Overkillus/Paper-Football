@@ -4,7 +4,7 @@ import Colours
 import Game
 from pygame import mixer
 import Settings
-import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
+# import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
 
 class MenuUI:
@@ -66,7 +66,7 @@ class MenuUI:
             # Mouse click
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click details
-                click = pygame.mouse.get_pressed()
+                click = pygame.mouse.get_pressed(3)
                 mouse_pos = pygame.mouse.get_pos()
                 # Toggle mute
                 if self.sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
@@ -77,7 +77,7 @@ class MenuUI:
                     mixer.music.pause()
 
         # TODO adjust to event based workflow (like higher)
-        click = pygame.mouse.get_pressed()
+        click = pygame.mouse.get_pressed(3)
         mouse_pos = pygame.mouse.get_pos()
         if self.button_2.collidepoint(mouse_pos):
             self.screen.blit(self.button2_glow, (365, 145))
