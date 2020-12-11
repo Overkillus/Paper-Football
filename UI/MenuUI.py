@@ -21,7 +21,7 @@ class MenuUI:
     sound_icon_off = pygame.image.load("Art/sound_off.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
-    screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
+    # screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
     font = pygame.font.SysFont("arialbold", 30)
 
     # Sound
@@ -40,7 +40,8 @@ class MenuUI:
     clock = pygame.time.Clock()
     delta_time = 0
 
-    def __init__(self):
+    def __init__(self, screen):
+        self.screen = screen
         # Initiating sound
         if not Settings.sound_muted:
             mixer.music.play(-1)
@@ -114,11 +115,11 @@ class MenuUI:
         pygame.draw.rect(self.screen, Colours.PINK, self.button_2)
         draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
         draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
-
         # Show new frame
         pygame.display.flip()
 
 
+# Helper function
 def draw_text(text, font, color, surface, x, y):
     text_object = font.render(text, 1, color)
     text_rect = text_object.get_rect()

@@ -1,7 +1,7 @@
 
 import pygame
 
-
+import Game
 import Settings
 from UI.MenuUI import MenuUI
 
@@ -14,7 +14,7 @@ class Controller:
         pygame.init()
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
         pygame.display.set_caption('Paper Football')
-        menuUI = MenuUI()
+        menuUI = MenuUI(self.screen)
         menuUI.main()
 
 Controller()
