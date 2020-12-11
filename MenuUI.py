@@ -16,15 +16,21 @@ title = pygame.image.load("Art/logo_small.png").convert_alpha()
 settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
 sound_icon = pygame.image.load("Art/sound.png")  # TODO implement functionality to mute sound when clicked
 sound_icon_off = pygame.image.load("Art/sound_off.png")
+button1_glow = pygame.image.load("Art/start_glow.png")
+button2_glow = pygame.image.load("Art/quit_glow.png")
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont("arialbold", 30)
 
 # getting the x,y of the icon placed at specific coordinates
 sound_rect = sound_icon.get_rect(topleft=(75, 430))
+settings_rect = settings_icon.get_rect(topleft=(15, 430))
+
+
 
 # Background music
 mixer.music.load('Sound/background.wav')
 sound_on = True
+
 
 button_w = 100
 button_h = 40
@@ -49,6 +55,7 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     global sound_on
+
     while True:
         # Game.event_handler()
         for event in pygame.event.get():
@@ -56,9 +63,17 @@ def main_menu():
                 sys.exit(0)
             elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
                 sys.exit(0)
-            else:
-                click = pygame.mouse.get_pressed()
-                mouse = pygame.mouse.get_pos()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if sound_rect.collidepoint(mouse_pos) and click[0] and sound_on:
+                    sound_on = False
+                    mixer.music.pause()
+
+                elif sound_rect.collidepoint(mouse_pos) and (click[0] and sound_on == False):
+                    sound_on = True
+                    mixer.music.unpause()
+
+        click = pygame.mouse.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
 
         screen.blit(bg, (0, 0))
         screen.blit(title, (screen.get_width() / 2 - 140, 20))
@@ -78,20 +93,25 @@ def main_menu():
         pygame.draw.rect(screen, PINK, button_2)
 
         draw_text('START', font, WHITE, screen, button_1.x + 18, button_1.y + 10)
-        draw_text('EXIT', font, WHITE, screen, button_2.x + 25, button_2.y + 10)
+        draw_text('QUIT', font, WHITE, screen, button_2.x + 25, button_2.y + 10)
 
-        if button_1.collidepoint(mouse) and click[0] == 1:
-            Game.main()
+        if button_2.collidepoint(mouse_pos):
+            screen.blit(button2_glow, (365, 145))
+            if button_2.collidepoint(mouse_pos) and click[0] == 1:
+                sys.exit(0)
 
-        if button_2.collidepoint(mouse) and click[0] == 1:
-            sys.exit(0)
+        elif button_1.collidepoint(mouse_pos):
+            screen.blit(button1_glow, (225, 145))
+            if button_1.collidepoint(mouse_pos) and click[0] == 1:
+                Game.main()
+        else:
+            pygame.draw.rect(screen, CYAN, button_1)
+            draw_text('START', font, WHITE, screen, button_1.x + 18, button_1.y + 10)
 
-        elif sound_rect.collidepoint(mouse) and click[0] == 1 and sound_on:
-            sound_on = False
-            mixer.music.pause()
-        elif sound_rect.collidepoint(mouse) and (click[0] == 1 and sound_on == False):
-            sound_on = True
-            mixer.music.unpause()
+
+
+
+
 
 
         pygame.display.update()
