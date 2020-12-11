@@ -40,7 +40,7 @@ circle_hitbox_multiplier = 1.8
 players = []
 players.append(Player("Player One", Colours.PURPLE))
 players[0].turn = True
-players.append(Player("Player Two", Colours.WHITE))
+players.append(Player("Player Two", Colours.YELLOW))
 
 
 def main():

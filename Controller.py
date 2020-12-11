@@ -1,9 +1,9 @@
-import sys
+
 import pygame
-from pygame import mixer
 
-import Settings, Game, UI.MenuUI, UI.SettingsUI
 
+import Settings
+from UI import MenuUI
 
 
 class Controller:
@@ -14,5 +14,6 @@ class Controller:
         pygame.init()
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
         pygame.display.set_caption('Paper Football')
+        MenuUI.main_menu()
 
 Controller()
