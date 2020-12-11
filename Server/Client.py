@@ -17,7 +17,7 @@ class Client:
         self.connected = False
         self.sock = None
 
-        self.exchangeServer(self.PORT)  # basically a start() function
+        #self.start() # commented out so u can start whenever u like
 
     # server - client stuff.
     def send_to_server(self, msg):
@@ -121,11 +121,14 @@ class Client:
         else: # return to lobby
             self.exchangeServer(self.PORT) # would this work if it's disconnecting from nothing?
 
+    def start(self):
+        self.exchangeServer(2000)
 
 # - your own code after here! -
 '''
 client = Client(socket.gethostname(), 2000)
 # just make ^that^ object (with right server and port) and u can do server-client stuff
+client.start() # you can put this wherever u like
 
 # i'm doing a basic menu to showcase entering and leaving the server via ServerManager
 def choiceMaker(options):
