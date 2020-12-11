@@ -68,7 +68,7 @@ def main_menu():
                     sound_on = False
                     mixer.music.pause()
 
-                elif sound_rect.collidepoint(mouse_pos) and (click[0] and sound_on == False):
+                elif sound_rect.collidepoint(mouse_pos) and (click[0] and not sound_on):
                     sound_on = True
                     mixer.music.unpause()
 
