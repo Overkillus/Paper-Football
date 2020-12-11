@@ -37,7 +37,7 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     while True:
-        Game.event_handler()
+        pygame.event.get()
         click = pygame.mouse.get_pressed()
         mouse = pygame.mouse.get_pos()
 
