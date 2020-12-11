@@ -15,13 +15,15 @@ background = pygame.transform.scale(background, (Settings.screen_width, Settings
 title = pygame.image.load("Art/logo_small.png")
 # title = pygame.transform.scale(title, (250, 80))
 settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
-sound_icon = pygame.image.load("Art/sound.png")  # TODO implement functionality to mute sound when clicked
+sound_icon = pygame.image.load("Art/sound.png")
 sound_icon_off = pygame.image.load("Art/sound_off.png")
 button1_glow = pygame.image.load("Art/start_glow.png")
 button2_glow = pygame.image.load("Art/quit_glow.png")
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont("arialbold", 30)
+
 # Sound
+mixer.music.load('Sound/background.wav')
 
 class MenuUI:
     def __init__(self):
@@ -38,8 +40,8 @@ settings_rect = settings_icon.get_rect(topleft=(15, 430))
 
 
 # Background music
-mixer.music.load('Sound/background.wav')
-sound_on = True
+
+# sound_on = True
 
 
 button_w = 100
@@ -51,9 +53,9 @@ PINK = (255, 0, 208)
 GREEN = (13, 255, 0)
 WHITE = (255, 255, 255)
 
-if sound_on == True:
+if not Settings.sound_muted:
     mixer.music.play(-1)
-    mixer.music.set_volume(0.08)
+    mixer.music.set_volume(Settings.sound_volume)
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -64,7 +66,6 @@ def draw_text(text, font, color, surface, x, y):
 
 
 def main_menu():
-    global sound_on
 
     while True:
         # Game.event_handler()
@@ -74,13 +75,13 @@ def main_menu():
             elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
                 sys.exit(0)
             elif event.type == pygame.MOUSEBUTTONUP:
-                if sound_rect.collidepoint(mouse_pos) and click[0] and sound_on:
-                    sound_on = False
-                    mixer.music.pause()
-
-                elif sound_rect.collidepoint(mouse_pos) and (click[0] and sound_on == False):
-                    sound_on = True
+                if sound_rect.collidepoint(mouse_pos) and click[0] and Settings.sound_muted:
+                    Settings.sound_muted = False
                     mixer.music.unpause()
+
+                elif sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
+                    Settings.sound_muted = True
+                    mixer.music.pause()
 
         click = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
@@ -89,7 +90,7 @@ def main_menu():
         screen.blit(title, (screen.get_width() / 2 - 140, 20))
         screen.blit(settings_icon, (15, 430))
 
-        if sound_on == False:
+        if Settings.sound_muted:
             screen.blit(sound_icon_off, (75, 430))
         else:
             screen.blit(sound_icon, (75, 430))
