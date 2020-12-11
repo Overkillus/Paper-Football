@@ -86,12 +86,13 @@ def main_menu():
         if button_2.collidepoint(mouse) and click[0] == 1:
             sys.exit(0)
 
-        if sound_rect.collidepoint(mouse) and click[0] == 1:
-            sound_on = False
-            mixer.music.pause()
-        # else: #TODO need to finish so it shows correct icon and music plays again
-        #     sound_on = True
-        #     mixer.music.unpause()
+        if sound_rect.collidepoint(mouse) and click[0] == 1:  # TODO button up should be checked, not button hold nor click
+            if sound_on:
+                sound_on = False
+                mixer.music.pause()
+            else:
+                sound_on = True
+                mixer.music.unpause()
 
 
         pygame.display.update()
