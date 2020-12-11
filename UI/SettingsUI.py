@@ -64,7 +64,7 @@ def play_btn():
 
 
 def pause_btn():
-    mixer.music.load('Sound/background.wav')
+    mixer.music.load('../Sound/background.wav')
     mixer.music.stop()
     statusbar['text'] = "Paper football: music paused"
 
@@ -83,13 +83,13 @@ middleframe = Frame(root, relief=RAISED, borderwidth=0)
 middleframe.pack()
 
 # Volume 1
-volume1Photo = PhotoImage(file='Art/sound.png')
+volume1Photo = PhotoImage(file='../Art/sound.png')
 volume1Btn = Button(image=volume1Photo, command=mute_music)
 volume1Btn.pack()
-mutePhoto = PhotoImage(file='Art/sound_off.png')
+mutePhoto = PhotoImage(file='../Art/sound_off.png')
 
 # Volume button
-volumePhoto = PhotoImage(file='Art/sound.png')
+volumePhoto = PhotoImage(file='../Art/sound.png')
 play_btn = Button(middleframe, image=volumePhoto, command=play_btn)
 play_btn.pack(pady=5, padx=10)
 
@@ -102,7 +102,7 @@ mixer.music.set_volume(50)
 scale.pack()
 
 # Exit button
-exitPhoto = PhotoImage(file='Art/exit.png')
+exitPhoto = PhotoImage(file='../Art/exit.png')
 exit_btn = Button(middleframe, image=exitPhoto, command=exit_btn)
 exit_btn.pack(pady=5, padx=10)
 

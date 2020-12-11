@@ -7,17 +7,23 @@ from pygame import mixer
 
 import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
-pygame.display.set_caption('Paper-Football')
+class MenuUI:
+    def __init__(self):
+        True
 
-bg = pygame.image.load("Art/lobby3_bg.png").convert_alpha()
+
+
+# pygame.display.set_caption('Paper-Football')
+
+bg = pygame.image.load("../Art/lobby3_bg.png").convert_alpha()
 # bg = pygame.transform.scale(bg, (695, 500))
-title = pygame.image.load("Art/logo_small.png").convert_alpha()
+title = pygame.image.load("../Art/logo_small.png").convert_alpha()
 # title = pygame.transform.scale(title, (500, 80))
-settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
-sound_icon = pygame.image.load("Art/sound.png")  # TODO implement functionality to mute sound when clicked
-sound_icon_off = pygame.image.load("Art/sound_off.png")
-button1_glow = pygame.image.load("Art/start_glow.png")
-button2_glow = pygame.image.load("Art/quit_glow.png")
+settings_icon = pygame.image.load("../Art/settings.png")  # TODO implement functionality to adjust various settings
+sound_icon = pygame.image.load("../Art/sound.png")  # TODO implement functionality to mute sound when clicked
+sound_icon_off = pygame.image.load("../Art/sound_off.png")
+button1_glow = pygame.image.load("../Art/start_glow.png")
+button2_glow = pygame.image.load("../Art/quit_glow.png")
 screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
 font = pygame.font.SysFont("arialbold", 30)
 
@@ -28,7 +34,7 @@ settings_rect = settings_icon.get_rect(topleft=(15, 430))
 
 
 # Background music
-mixer.music.load('Sound/background.wav')
+mixer.music.load('../Sound/background.wav')
 sound_on = True
 
 
