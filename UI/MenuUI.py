@@ -77,18 +77,18 @@ class MenuUI:
                     mixer.music.pause()
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
-                    self.screen.blit(self.button2_glow, (365, 145))
-                    if self.button_2.collidepoint(mouse_pos):
-                        sys.exit(0)
+                    sys.exit(0)
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
-                    self.screen.blit(self.button1_glow, (225, 145))
-                    if self.button_1.collidepoint(mouse_pos):
-                        Game.main()
+                    Game.main()
 
     def update(self):
         True  # Placeholder
         # mixer.music.set_volume(Settings.sound_volume)
+        # self.screen.blit(self.button1_glow, (225, 145))
+        # if self.button_1.collidepoint(mouse_pos):
+        # self.screen.blit(self.button2_glow, (365, 145))
+        # if self.button_2.collidepoint(mouse_pos):
 
     def render(self):
         # Clear screen
@@ -109,6 +109,10 @@ class MenuUI:
         pygame.draw.rect(self.screen, Colours.PINK, self.button_2)
         draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
         draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
+        if self.button_1.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.button1_glow, (225, 145))
+        if self.button_2.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.button2_glow, (365, 145))
         # Show new frame
         pygame.display.flip()
 
