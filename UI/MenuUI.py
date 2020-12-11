@@ -75,7 +75,8 @@ class MenuUI:
                 elif self.sound_rect.collidepoint(mouse_pos) and click[0] and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
-        # TEMP TODO
+
+        # TODO adjust to event based workflow (like higher)
         click = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
         if self.button_2.collidepoint(mouse_pos):
@@ -89,10 +90,11 @@ class MenuUI:
                 Game.main()
         else:
             pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
-            self.__draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
+            draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
 
     def update(self):
-        mixer.music.set_volume(Settings.sound_volume)
+        True  # Placeholder
+        # mixer.music.set_volume(Settings.sound_volume)
 
     def render(self):
         # Clear screen
@@ -111,14 +113,15 @@ class MenuUI:
         # Start and Exit buttons
         pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
         pygame.draw.rect(self.screen, Colours.PINK, self.button_2)
-        self.__draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
-        self.__draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
+        draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
+        draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
 
         # Show new frame
         pygame.display.flip()
 
-    def __draw_text(self, text, font, color, surface, x, y):
-        text_object = font.render(text, 1, color)
-        text_rect = text_object.get_rect()
-        text_rect.topleft = (x, y)
-        surface.blit(text_object, text_rect)
+
+def draw_text(text, font, color, surface, x, y):
+    text_object = font.render(text, 1, color)
+    text_rect = text_object.get_rect()
+    text_rect.topleft = (x, y)
+    surface.blit(text_object, text_rect)
