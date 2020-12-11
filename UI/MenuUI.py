@@ -7,25 +7,29 @@ from pygame import mixer
 
 import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
+import Settings
+
+# Art
+background = pygame.image.load("Art/lobby3_bg.png")
+background = pygame.transform.scale(background, (Settings.screen_width, Settings.screen_height))
+title = pygame.image.load("Art/logo_small.png")
+# title = pygame.transform.scale(title, (250, 80))
+settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
+sound_icon = pygame.image.load("Art/sound.png")  # TODO implement functionality to mute sound when clicked
+sound_icon_off = pygame.image.load("Art/sound_off.png")
+button1_glow = pygame.image.load("Art/start_glow.png")
+button2_glow = pygame.image.load("Art/quit_glow.png")
+screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
+font = pygame.font.SysFont("arialbold", 30)
+# Sound
+
 class MenuUI:
     def __init__(self):
         True
 
 
 
-# pygame.display.set_caption('Paper-Football')
 
-bg = pygame.image.load("../Art/lobby3_bg.png").convert_alpha()
-# bg = pygame.transform.scale(bg, (695, 500))
-title = pygame.image.load("../Art/logo_small.png").convert_alpha()
-# title = pygame.transform.scale(title, (500, 80))
-settings_icon = pygame.image.load("../Art/settings.png")  # TODO implement functionality to adjust various settings
-sound_icon = pygame.image.load("../Art/sound.png")  # TODO implement functionality to mute sound when clicked
-sound_icon_off = pygame.image.load("../Art/sound_off.png")
-button1_glow = pygame.image.load("../Art/start_glow.png")
-button2_glow = pygame.image.load("../Art/quit_glow.png")
-screen = pygame.display.set_mode((Game.screenWidth, Game.screenHeight))
-font = pygame.font.SysFont("arialbold", 30)
 
 # getting the x,y of the icon placed at specific coordinates
 sound_rect = sound_icon.get_rect(topleft=(75, 430))
@@ -34,7 +38,7 @@ settings_rect = settings_icon.get_rect(topleft=(15, 430))
 
 
 # Background music
-mixer.music.load('../Sound/background.wav')
+mixer.music.load('Sound/background.wav')
 sound_on = True
 
 
@@ -81,7 +85,7 @@ def main_menu():
         click = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
 
-        screen.blit(bg, (0, 0))
+        screen.blit(background, (0, 0))
         screen.blit(title, (screen.get_width() / 2 - 140, 20))
         screen.blit(settings_icon, (15, 430))
 
