@@ -75,22 +75,16 @@ class MenuUI:
                 elif self.sound_rect.collidepoint(mouse_pos) and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
-
-        # TODO adjust to event based workflow (like higher)
-        click = pygame.mouse.get_pressed(3)
-        mouse_pos = pygame.mouse.get_pos()
-        if self.button_2.collidepoint(mouse_pos):
-            self.screen.blit(self.button2_glow, (365, 145))
-            if self.button_2.collidepoint(mouse_pos) and click[0] == 1:
-                sys.exit(0)
-
-        elif self.button_1.collidepoint(mouse_pos):
-            self.screen.blit(self.button1_glow, (225, 145))
-            if self.button_1.collidepoint(mouse_pos) and click[0] == 1:
-                Game.main()
-        else:
-            pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
-            draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
+                # Exit button
+                elif self.button_2.collidepoint(mouse_pos):
+                    self.screen.blit(self.button2_glow, (365, 145))
+                    if self.button_2.collidepoint(mouse_pos):
+                        sys.exit(0)
+                # Start button
+                elif self.button_1.collidepoint(mouse_pos):
+                    self.screen.blit(self.button1_glow, (225, 145))
+                    if self.button_1.collidepoint(mouse_pos):
+                        Game.main()
 
     def update(self):
         True  # Placeholder
@@ -102,7 +96,7 @@ class MenuUI:
         # Background
         self.screen.blit(self.background, (0, 0))
         # Title
-        self.screen.blit(self.title, (self.screen.get_width() / 2 - 140, 20))
+        self.screen.blit(self.title, (self.screen.get_width()/2 - self.title.get_width()/2, self.screen.get_height()/10))
         # Settings
         self.screen.blit(self.settings_icon, (15, 430))
         # Mute toggle
