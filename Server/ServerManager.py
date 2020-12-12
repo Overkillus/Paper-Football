@@ -12,12 +12,20 @@ class ServerManager(Server):
 
     def remove_empty_servers(self):
         empty_counter = 0
+        servers_for_deletion = [] # to delete outside initial for loop.
+
         for k, serv in self.SERVERS.items():
             self.console(serv)
             if serv.return_players() <= 0:
                 serv.close_server()
-                self.SERVERS[k] = None # fuhggedaboutit
+                servers_for_deletion.append(k) # fuhggedaboutit
                 empty_counter += 1
+
+        # for loop exceptions when u remove a dictionary item during the loop (fair enough).
+        # this da work around.
+        for k in servers_for_deletion:
+            self.SERVERS.pop(k, None)
+
         self.console(f"{empty_counter} empty server(s) removed")
 
     def create_server(self, connection, address):
