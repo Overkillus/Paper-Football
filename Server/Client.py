@@ -1,9 +1,13 @@
-import socket, threading, pickle, time
+import pickle
+import socket
+import threading
+import time
+
 
 class Client:
     def __init__(self, server, port):
         self.SERVER = server
-        self.PORT = port # this is the main lobby port.
+        self.PORT = port  # this is the main lobby port.
 
         self.HEADER_SIZE = 10
         self.FORMAT = "utf-8"

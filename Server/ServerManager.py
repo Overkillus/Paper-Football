@@ -1,5 +1,5 @@
-from BaseServer import Server
-from GameServer import GameServer
+from Server.BaseServer import Server
+from Server.GameServer import GameServer
 
 class ServerManager(Server):
     def __init__(self, server, port):

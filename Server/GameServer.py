@@ -1,5 +1,8 @@
-import random, string
-from BaseServer import Server
+import random
+import string
+
+from Server.BaseServer import Server
+
 
 class GameServer(Server):
     def __init__(self, server, port):
