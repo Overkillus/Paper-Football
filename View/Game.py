@@ -35,7 +35,6 @@ class Game:
         self.players.append(Player("Player Two", Colours.YELLOW))
 
     def main(self):
-        # while self.is_running:
         self.event_handler()
         # Ticking
         self.controller.delta_time += self.controller.clock.tick() / 1000.0

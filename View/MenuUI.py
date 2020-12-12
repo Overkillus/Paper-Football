@@ -57,7 +57,6 @@ class MenuUI:
             mixer.music.set_volume(Settings.sound_volume)
 
     def main(self):
-        # while self.is_running:
         self.event_handler()
         # Ticking
         self.controller.delta_time += self.controller.clock.tick() / 1000.0
