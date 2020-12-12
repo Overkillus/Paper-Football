@@ -27,21 +27,23 @@ class MenuUI:
     # Sound
     mixer.music.load('Sound/background.wav')
 
-    # TODO find a place for those
-    sound_rect = sound_icon.get_rect(topleft=(75, 430))
-    settings_rect = settings_icon.get_rect(topleft=(15, 430))
-    button_w = 100
-    button_h = 40
-    button_y = 150
-    button_x = 230
-    button_1 = pygame.Rect(button_x, button_y, button_w, button_h)
-    button_2 = pygame.Rect(button_x + 140, button_y, button_w, button_h)
-    # Delta time variables
+    # Delta time variables # TODO not sure if it belongs here (maybe a unified delta time for the whole program?)
     clock = pygame.time.Clock()
     delta_time = 0
 
     def __init__(self, screen):
         self.screen = screen
+        # Sound button
+        self.sound_rect = self.sound_icon.get_rect(topleft=(75, 430))
+        # Settings button
+        self.settings_rect = self.settings_icon.get_rect(topleft=(15, 430))
+        # Start and exit buttons
+        button_w = 100
+        button_h = 40
+        button_y = 150
+        button_x = 230
+        self.button_1 = pygame.Rect(button_x, button_y, button_w, button_h)
+        self.button_2 = pygame.Rect(button_x + 140, button_y, button_w, button_h)
         # Initiating sound
         if not Settings.sound_muted:
             mixer.music.play(-1)
