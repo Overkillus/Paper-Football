@@ -119,22 +119,23 @@ class Client:
 
             time.sleep(0.5)
 
-            self.send_to_server(self.GAMEQUESTION_MSG) # is this a game?
+            self.send_to_server(self.GAMEQUESTION_MSG)  # is this a game?
 
         else: # return to lobby
-            self.exchange_server(self.PORT) # would this work if it's disconnecting from nothing?
+            self.exchange_server(self.PORT)  # would this work if it's disconnecting from nothing?
 
     def start(self):
         self.exchange_server(2000)
 
+
 # - your own code after here! -
-'''
 client = Client(socket.gethostname(), 2000)
 # just make ^that^ object (with right server and port) and u can do server-client stuff
-client.start() # you can put this wherever u like
+client.start()  # you can put this wherever u like
+
 
 # i'm doing a basic menu to showcase entering and leaving the server via ServerManager
-def choiceMaker(options):
+def choice_maker(options):
     print(f"You have {len(options)} options:")
     i = 0
     for o in options:
@@ -147,8 +148,9 @@ def choiceMaker(options):
         option = 0
     return option
 
+
 def lobby():
-    option = choiceMaker(["Create a server", "Join a server"])
+    option = choice_maker(["Create a server", "Join a server"])
 
     if option == 1:
         print("creating server...")
@@ -159,18 +161,19 @@ def lobby():
     else:
         print("invalid option - leaving lobby.")
         client.disconnect()
-
     time.sleep(3)
+
 
 def game():
     text = input("type whatever u want: ")
-    # if u type !backtolobby, it runs exchange_server(2000)?
+    # if u type !leave, it runs exchange_server(2000)
     if text == "!leave":
         client.exchange_server(client.PORT)
     else:
         client.send_to_server(text)
 
     time.sleep(3)
+
 
 while client.connected:
     if client.IN_GAME:
@@ -179,4 +182,3 @@ while client.connected:
         lobby()
 
 # honestly not proud of the use of time.sleep to wait for thread to die and messages to send.
-'''
