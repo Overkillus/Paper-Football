@@ -43,10 +43,14 @@ class Game:
             self.update()
             self.render()
 
+    def closeGame(self):
+        self.controller.client.disconnect()
+        sys.exit(0)
+
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit(0)
+                self.closeGame()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.game.is_running = False
                 self.controller.menuUI.is_running = True
