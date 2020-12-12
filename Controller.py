@@ -1,4 +1,8 @@
+import socket
+
 import pygame
+
+from Server.Client import Client
 from View.Game import Game
 import Settings
 from View.MenuUI import MenuUI
@@ -13,6 +17,10 @@ class Controller:
     def __init__(self):
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
         pygame.display.set_caption('Paper Football')
+
+        # Client (connection)
+        self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
+        # self.client.start()  #temp
 
         # Clock
         self.clock = pygame.time.Clock()

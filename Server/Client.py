@@ -128,57 +128,57 @@ class Client:
         self.exchange_server(2000)
 
 
-# - your own code after here! -
-client = Client(socket.gethostname(), 2000)
-# just make ^that^ object (with right server and port) and u can do server-client stuff
-client.start()  # you can put this wherever u like
-
-
-# i'm doing a basic menu to showcase entering and leaving the server via ServerManager
-def choice_maker(options):
-    print(f"You have {len(options)} options:")
-    i = 0
-    for o in options:
-        i += 1
-        print(f"\t{i}. {o}")
-    option = input("enter your option: ")
-    try:
-        option = int(option)
-    except:
-        option = 0
-    return option
-
-
-def lobby():
-    option = choice_maker(["Create a server", "Join a server"])
-
-    if option == 1:
-        print("creating server...")
-        client.send_create_server_request()
-    elif option == 2:
-        print("joining server... ")
-        client.send_join_server_request(input("enter the key for that server: "))
-    else:
-        print("invalid option - leaving lobby.")
-        client.disconnect()
-    time.sleep(3)
-
-
-def game():
-    text = input("type whatever u want: ")
-    # if u type !leave, it runs exchange_server(2000)
-    if text == "!leave":
-        client.exchange_server(client.PORT)
-    else:
-        client.send_to_server(text)
-
-    time.sleep(3)
-
-
-while client.connected:
-    if client.IN_GAME:
-        game()
-    else:
-        lobby()
-
+# # - your own code after here! -
+# client = Client(socket.gethostname(), 2000)
+# # just make ^that^ object (with right server and port) and u can do server-client stuff
+# client.start()  # you can put this wherever u like
+#
+#
+# # i'm doing a basic menu to showcase entering and leaving the server via ServerManager
+# def choice_maker(options):
+#     print(f"You have {len(options)} options:")
+#     i = 0
+#     for o in options:
+#         i += 1
+#         print(f"\t{i}. {o}")
+#     option = input("enter your option: ")
+#     try:
+#         option = int(option)
+#     except:
+#         option = 0
+#     return option
+#
+#
+# def lobby():
+#     option = choice_maker(["Create a server", "Join a server"])
+#
+#     if option == 1:
+#         print("creating server...")
+#         client.send_create_server_request()
+#     elif option == 2:
+#         print("joining server... ")
+#         client.send_join_server_request(input("enter the key for that server: "))
+#     else:
+#         print("invalid option - leaving lobby.")
+#         client.disconnect()
+#     time.sleep(1)
+#
+#
+# def game():
+#     text = input("type whatever u want: ")
+#     # if u type !leave, it runs exchange_server(2000)
+#     if text == "!leave":
+#         client.exchange_server(client.PORT)
+#     else:
+#         client.send_to_server(text)
+#
+#     time.sleep(3)
+#
+#
+# while client.connected:
+#     if client.IN_GAME:
+#         game()
+#     else:
+#         lobby()
+#
 # honestly not proud of the use of time.sleep to wait for thread to die and messages to send.

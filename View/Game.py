@@ -67,6 +67,11 @@ class Game:
                             current_player = [p for p in self.players if p.turn][0]
                             current_index = self.players.index(current_player)
                             result = self.myBoard.move(point, self.players[current_index])  # TEMP
+
+                            # # TODO temp
+                            # if result:
+                            #     self.controller.client.send_to_server((i, j))
+
                             # If move made update turn for players
                             if result and not point_used:
                                 current_player.turn = False

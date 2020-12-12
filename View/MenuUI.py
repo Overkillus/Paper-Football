@@ -89,8 +89,7 @@ class MenuUI:
                 elif self.button_1.collidepoint(mouse_pos):
                     # Swap to game
                     self.controller.game.is_running = True
-                    # self.controller.menuUI.is_running = False
-                    self.is_running = False
+                    self.controller.menuUI.is_running = False
 
     def update(self):
         True  # Placeholder
