@@ -20,7 +20,7 @@ class Controller:
 
         # Client (connection)
         self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
-        # self.client.start()  #temp
+        self.client.start()  #temp
 
         # Clock
         self.clock = pygame.time.Clock()

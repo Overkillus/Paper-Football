@@ -57,7 +57,8 @@ class Client:
                 self.handle_server_messages(msg)
 
     def disconnect(self):
-        self.send_to_server(self.DISCONNECT_MSG)
+        if self.connected: # maybe slap this in send_to_server instead?
+            self.send_to_server(self.DISCONNECT_MSG)
 
     def console(self, msg):
         print("[CLIENT]:", msg)
