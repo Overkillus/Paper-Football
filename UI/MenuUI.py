@@ -1,7 +1,6 @@
 import sys
 import pygame
 import Colours
-import Game
 from pygame import mixer
 import Settings
 # import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
@@ -29,12 +28,12 @@ class MenuUI:
     # Sound
     mixer.music.load('Sound/background.wav')
 
-    # Delta time variables # TODO not sure if it belongs here (maybe a unified delta time for the whole program?)
-    clock = pygame.time.Clock()
+    is_running = False
 
-    def __init__(self, screen):
-        self.is_running = False
+    def __init__(self, screen, controller):
+
         self.screen = screen
+        self.controller = controller
         # Sound button
         self.sound_rect = self.sound_icon.get_rect(topleft=(75, 430))
         # Settings button
@@ -52,16 +51,14 @@ class MenuUI:
             mixer.music.set_volume(Settings.sound_volume)
 
     def main(self):
-        delta_time = 0
-        while self.is_running:
-            # print("beep")
-            self.event_handler()
-            # Ticking
-            delta_time += self.clock.tick() / 1000.0
-            while delta_time > 1 / Settings.max_tps:
-                delta_time -= 1 / Settings.max_tps
-                self.update()
-                self.render()
+        # while self.is_running:
+        self.event_handler()
+        # Ticking
+        self.controller.delta_time += self.controller.clock.tick() / 1000.0
+        while self.controller.delta_time > 1 / Settings.max_tps:
+            self.controller.delta_time -= 1 / Settings.max_tps
+            self.update()
+            self.render()
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -85,7 +82,10 @@ class MenuUI:
                     sys.exit(0)
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
-                    Game.main()
+                    # Swap to game
+                    self.controller.game.is_running = True
+                    # self.controller.menuUI.is_running = False
+                    self.is_running = False
 
     def update(self):
         True  # Placeholder

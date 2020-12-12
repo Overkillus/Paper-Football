@@ -13,12 +13,12 @@ class Game:
     # Art
     boardImg = pygame.image.load("Art/board_and_lines_neon.png")
 
-    # Delta time variables
-    clock = pygame.time.Clock()
+    is_running = False
 
-    def __init__(self, screen):
-        self.is_running = False
+    def __init__(self, screen, controller):
+
         self.screen = screen
+        self.controller = controller
 
         # Entity variables
         self.myBoard = Board(13, 9)
@@ -34,22 +34,22 @@ class Game:
         self.players.append(Player("Player Two", Colours.YELLOW))
 
     def main(self):
-        delta_time = 0
-        while self.is_running:
-            self.event_handler()
-            # Ticking
-            delta_time += self.clock.tick() / 1000.0
-            while delta_time > 1 / Settings.max_tps:
-                delta_time -= 1 / Settings.max_tps
-                self.update()
-                self.render()
+        # while self.is_running:
+        self.event_handler()
+        # Ticking
+        self.controller.delta_time += self.controller.clock.tick() / 1000.0
+        while self.controller.delta_time > 1 / Settings.max_tps:
+            self.controller.delta_time -= 1 / Settings.max_tps
+            self.update()
+            self.render()
 
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
-            elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
-                sys.exit(0)
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.controller.game.is_running = False
+                self.controller.menuUI.is_running = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
