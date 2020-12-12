@@ -84,11 +84,6 @@ class MenuUI:
 
     def update(self):
         True  # Placeholder
-        # mixer.music.set_volume(Settings.sound_volume)
-        # self.screen.blit(self.button1_glow, (225, 145))
-        # if self.button_1.collidepoint(mouse_pos):
-        # self.screen.blit(self.button2_glow, (365, 145))
-        # if self.button_2.collidepoint(mouse_pos):
 
     def render(self):
         # Clear screen
