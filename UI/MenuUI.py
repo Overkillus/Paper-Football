@@ -6,11 +6,13 @@ from pygame import mixer
 import Settings
 # import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
+pygame.init()
 
 class MenuUI:
     """
     Class representing menu view
     """
+
     # Art
     background = pygame.image.load("Art/lobby3_bg.png")
     background = pygame.transform.scale(background, (Settings.screen_width, Settings.screen_height))
@@ -22,16 +24,16 @@ class MenuUI:
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
     # screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
-    font = pygame.font.SysFont("arialbold", 30)
+    font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
     mixer.music.load('Sound/background.wav')
 
     # Delta time variables # TODO not sure if it belongs here (maybe a unified delta time for the whole program?)
     clock = pygame.time.Clock()
-    delta_time = 0
 
     def __init__(self, screen):
+        self.is_running = False
         self.screen = screen
         # Sound button
         self.sound_rect = self.sound_icon.get_rect(topleft=(75, 430))
@@ -51,7 +53,7 @@ class MenuUI:
 
     def main(self):
         delta_time = 0
-        while True:
+        while self.is_running:
             # print("beep")
             self.event_handler()
             # Ticking
