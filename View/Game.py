@@ -13,11 +13,12 @@ class Game:
     # Art
     boardImg = pygame.image.load("Art/board_and_lines_neon.png")
 
-    is_running = False
+    def __init__(self, controller):
+        # State
+        self.is_running = False
 
-    def __init__(self, screen, controller):
-
-        self.screen = screen
+        # Context
+        self.screen = controller.screen
         self.controller = controller
 
         # Entity variables

@@ -7,6 +7,7 @@ import Settings
 
 pygame.init()
 
+
 class MenuUI:
     """
     Class representing menu view
@@ -28,16 +29,20 @@ class MenuUI:
     # Sound
     mixer.music.load('Sound/background.wav')
 
-    is_running = False
+    def __init__(self, controller):
+        # State
+        self.is_running = False
 
-    def __init__(self, screen, controller):
-
-        self.screen = screen
+        # Context
+        self.screen = controller.screen
         self.controller = controller
+
         # Sound button
         self.sound_rect = self.sound_icon.get_rect(topleft=(75, 430))
+
         # Settings button
         self.settings_rect = self.settings_icon.get_rect(topleft=(15, 430))
+
         # Start and exit buttons
         button_w = 100
         button_h = 40
@@ -45,6 +50,7 @@ class MenuUI:
         button_x = 230
         self.button_1 = pygame.Rect(button_x, button_y, button_w, button_h)
         self.button_2 = pygame.Rect(button_x + 140, button_y, button_w, button_h)
+
         # Initiating sound
         if not Settings.sound_muted:
             mixer.music.play(-1)

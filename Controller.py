@@ -1,7 +1,7 @@
 import pygame
-from Game import Game
+from View.Game import Game
 import Settings
-from UI.MenuUI import MenuUI
+from View.MenuUI import MenuUI
 
 pygame.init()
 
@@ -10,18 +10,22 @@ class Controller:
     """
     Class managing different views and controlling interactions between modules.
     """
-    clock = pygame.time.Clock()
-    delta_time = 0
-
     def __init__(self):
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
         pygame.display.set_caption('Paper Football')
 
-        self.menuUI = MenuUI(self.screen, self)
-        MenuUI.is_running = True
+        # Clock
+        self.clock = pygame.time.Clock()
+        self.delta_time = 0
 
-        self.game = Game(self.screen, self)
+        # Views
+        self.menuUI = MenuUI(self)
+        self.game = Game(self)
 
+        # Initial state
+        self.menuUI.is_running = True
+
+        # Start
         self.run()
 
     def run(self):
