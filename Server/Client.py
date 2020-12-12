@@ -21,7 +21,7 @@ class Client:
         self.connected = False
         self.sock = None
 
-        #self.start() # commented out so u can start whenever u like
+        # self.start() # commented out so u can start whenever u like
 
     # server - client stuff.
     def send_to_server(self, msg):
@@ -35,7 +35,7 @@ class Client:
         self.sock.send(send_len)
         self.sock.send(message)
 
-    def expectMessage(self):
+    def expect_message(self):
         self.connected = True
         while self.connected:
             # first message = length of message
@@ -54,7 +54,7 @@ class Client:
                     self.connected = False
                     self.console("you've been disconnected.")
                 # any other specific messages, send to another function.
-                self.handleServerMessages(msg)
+                self.handle_server_messages(msg)
 
     def disconnect(self):
         self.send_to_server(self.DISCONNECT_MSG)
@@ -63,7 +63,7 @@ class Client:
         print("[CLIENT]:", msg)
 
     # game server functions.
-    def handleServerMessages(self, msg):
+    def handle_server_messages(self, msg):
         if "[SERVER" in msg: # ignore reposts.
             return
 
@@ -75,7 +75,7 @@ class Client:
             game_port = msg[len(self.ENTERGAME_MSG)+1:]
             self.console(f"your server port is {game_port}")
             # v basically is starting the client afresh with a new connection really.
-            threading.Thread(target=self.exchangeServer, args=(game_port,)).start()
+            threading.Thread(target=self.exchange_server, args=(game_port,)).start()
         elif self.GAMEQUESTION_MSG in msg: # this is a game server.
             self.IN_GAME = True
             self.console("you're in a game.")
@@ -84,21 +84,20 @@ class Client:
         self.console("server creation asked. you should join it automatically.")
         self.send_to_server(self.CREATESERVER_MSG)
         # ask ServerManager to create server. have it return key to you.
-        # the key is returned and joinServer() runs.
+        # the key is returned and join_server() runs.
 
     def send_join_server_request(self, key):
         self.console("attempt to join server. if nothing happens, server doesn't exist.")
         self.send_to_server(f"{self.JOINSERVER_MSG} {key}")
         # ask ServerManager to join server with given key. it returns to you the port.
-        # you autojoin with that port.
+        # you auto join with that port.
 
-    def exchangeServer(self, new_port):
+    def exchange_server(self, new_port):
         if self.connected:
             self.disconnect()
             # ima keep for now, cuz of weird python message bug when u print after thread
             while self.connected:
                 time.sleep(.01)  # wait for the disconnect message from server.
-
 
         self.IN_GAME = False
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -108,14 +107,14 @@ class Client:
         try:
             self.sock.connect((self.SERVER, int(new_port)))
             connect_state = "connected"
-        except: # cannot connect
+        except:  # cannot connect
             self.console(f"FAILED connecting to server: {new_port}")
             connect_state = "failed"
 
         if connect_state == "connected":
             # pass state.
             self.console("connected.")
-            thread = threading.Thread(target=self.expectMessage)
+            thread = threading.Thread(target=self.expect_message)
             thread.start()
 
             time.sleep(0.5)
@@ -123,10 +122,10 @@ class Client:
             self.send_to_server(self.GAMEQUESTION_MSG) # is this a game?
 
         else: # return to lobby
-            self.exchangeServer(self.PORT) # would this work if it's disconnecting from nothing?
+            self.exchange_server(self.PORT) # would this work if it's disconnecting from nothing?
 
     def start(self):
-        self.exchangeServer(2000)
+        self.exchange_server(2000)
 
 # - your own code after here! -
 '''
@@ -165,9 +164,9 @@ def lobby():
 
 def game():
     text = input("type whatever u want: ")
-    # if u type !backtolobby, it runs exchangeServer(2000)?
+    # if u type !backtolobby, it runs exchange_server(2000)?
     if text == "!leave":
-        client.exchangeServer(client.PORT)
+        client.exchange_server(client.PORT)
     else:
         client.send_to_server(text)
 

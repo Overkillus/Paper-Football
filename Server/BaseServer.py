@@ -42,7 +42,7 @@ class Server:
         connection.send(message)
 
     # any other specific messages. overriden by children.
-    def handleClientMessages(self, connection, address, msg):
+    def handle_client_messages(self, connection, address, msg):
         pass
 
     # handles individual connections
@@ -65,7 +65,7 @@ class Server:
                         self.send_to_client(connection, self.DISCONNECT_MSG)
                         self.console(f"[{address}] has disconnected")
                     # handle any other messages.
-                    self.handleClientMessages(connection, address, msg)
+                    self.handle_client_messages(connection, address, msg)
 
                     counter += 1
                     #self.send_to_client(connection, f"msg received ({counter})")
