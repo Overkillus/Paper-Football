@@ -42,10 +42,11 @@ players.append(Player("Player One", Colours.PURPLE))
 players[0].turn = True
 players.append(Player("Player Two", Colours.YELLOW))
 
+is_running = True
 
 def main():
     global delta_time
-    while True:
+    while is_running:
         event_handler()
         # Ticking
         delta_time += clock.tick()/1000.0
@@ -73,6 +74,9 @@ def event_handler():
                     )
                     # If point clicked
                     if hitbox.collidepoint(pygame.mouse.get_pos()):
+                        # if i == 4 and j == 4:  # Temporary
+                        #     global is_running
+                        #     is_running = False
                         point = myBoard.points[i][j]
                         point_used = point.is_used
                         current_player = [p for p in players if p.turn][0]

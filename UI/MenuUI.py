@@ -52,6 +52,7 @@ class MenuUI:
     def main(self):
         delta_time = 0
         while True:
+            # print("beep")
             self.event_handler()
             # Ticking
             delta_time += self.clock.tick() / 1000.0
