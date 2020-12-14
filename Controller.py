@@ -1,4 +1,5 @@
 import socket
+import sys
 
 import pygame
 
@@ -20,7 +21,7 @@ class Controller:
 
         # Client (connection)
         self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
-        self.client.start()  #temp
+        # self.client.start()  #temp
 
         # Clock
         self.clock = pygame.time.Clock()
@@ -42,6 +43,11 @@ class Controller:
                 self.menuUI.main()
             if self.game.is_running:
                 self.game.main()
+
+    def close_game(self):
+        if self.client.connected:
+            self.client.disconnect()
+        sys.exit(0)
 
 
 Controller()

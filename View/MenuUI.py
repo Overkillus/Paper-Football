@@ -65,16 +65,12 @@ class MenuUI:
             self.update()
             self.render()
 
-    def closeGame(self):
-        self.controller.client.disconnect()
-        sys.exit(0)
-
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.closeGame()
+                self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
-                self.closeGame()
+                self.controller.close_game()
             # Mouse click
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click details
@@ -88,10 +84,11 @@ class MenuUI:
                     mixer.music.pause()
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
-                    self.closeGame()
+                    self.controller.close_game()
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
                     # Swap to game
+                    self.controller.client.start()
                     self.controller.game.is_running = True
                     self.controller.menuUI.is_running = False
 
