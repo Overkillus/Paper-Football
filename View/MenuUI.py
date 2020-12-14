@@ -88,12 +88,13 @@ class MenuUI:
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
                     # Swap to game
-                    self.controller.client.start()
-                    self.controller.game.is_running = True
-                    self.controller.menuUI.is_running = False
+                    if not self.controller.client.connected:
+                        self.controller.client.start()
+                    if self.controller.client.connected:
+                        self.controller.change_view(self.controller.game)
 
     def update(self):
-        True  # Placeholder
+        pass
 
     def render(self):
         # Clear screen

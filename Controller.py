@@ -19,6 +19,9 @@ class Controller:
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
         pygame.display.set_caption('Paper Football')
 
+        # # State
+        # self.in_session = False
+
         # Client (connection)
         self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
         # self.client.start()  #temp
@@ -30,6 +33,7 @@ class Controller:
         # Views
         self.menuUI = MenuUI(self)
         self.game = Game(self)
+        self.views = [self.menuUI, self.game]
 
         # Initial state
         self.menuUI.is_running = True
@@ -48,6 +52,14 @@ class Controller:
         if self.client.connected:
             self.client.disconnect()
         sys.exit(0)
+
+    def change_view(self, view):
+        if view not in self.views:
+            return False
+        else:
+            for v in self.views:
+                v.is_running = False
+            view.is_running = True
 
 
 Controller()

@@ -48,8 +48,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.controller.game.is_running = False
-                self.controller.menuUI.is_running = True
+                self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
@@ -83,7 +82,7 @@ class Game:
                             point.is_selected = True
 
     def update(self):
-        True
+        pass
 
     def render(self):
         # Clear screen

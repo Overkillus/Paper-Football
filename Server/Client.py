@@ -118,12 +118,13 @@ class Client:
             thread = threading.Thread(target=self.expect_message)
             thread.start()
 
-            time.sleep(0.5)
+            time.sleep(0.01)
 
             self.send_to_server(self.GAMEQUESTION_MSG)  # is this a game?
 
-        else: # return to lobby
-            self.exchange_server(self.PORT)  # would this work if it's disconnecting from nothing?
+        # Loop attempting to keep trying to connect
+        # else: # return to lobby
+        #     self.exchange_server(self.PORT)  # would this work if it's disconnecting from nothing?
 
     def start(self):
         self.exchange_server(2000)
