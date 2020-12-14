@@ -23,6 +23,7 @@ class Client:
 
         self.IN_GAME = False
         self.connected = False
+        self.changing_server = False
         self.sock = None
 
         # self.start() # commented out so u can start whenever u like
@@ -107,9 +108,12 @@ class Client:
         self.send_to_server(self.QUICKJOINSERVER_MSG)
 
     def exchange_server(self, new_port): # eh, i cba changing fucntion names and stuff
-        threading.Thread(target=self.exchange_server_THREAD, args=(new_port,)).start()
+        if not self.changing_server:
+            threading.Thread(target=self.exchange_server_THREAD, args=(new_port,)).start()
 
     def exchange_server_THREAD(self, new_port):
+        self.changing_server = True
+
         if self.connected:
             self.disconnect()
             # ima keep for now, cuz of weird python message bug when u print after thread
@@ -137,6 +141,8 @@ class Client:
             time.sleep(0.01)
 
             self.send_to_server(self.GAMEQUESTION_MSG)  # is this a game?
+
+        self.changing_server = False # completed exchange_server pretty much.
 
         # Loop attempting to keep trying to connect
         # else: # return to lobby
