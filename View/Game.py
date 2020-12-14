@@ -11,7 +11,8 @@ from Player import Player
 class Game:
 
     # Art
-    boardImg = pygame.image.load("Art/board_and_lines_neon.png")
+    boardImg = pygame.image.load("Art/board_lines.png")
+    boardWalls = pygame.image.load("Art/board_walls.png")
 
     def __init__(self, controller):
         # State
@@ -84,6 +85,8 @@ class Game:
         # Clear screen
         self.screen.fill((0, 0, 0))
 
+        # Draw lines of the board
+        self.screen.blit(self.boardImg, (0, 0))
         # Draw connections
         for connection in self.myBoard.connections:
             connection.draw(self.screen)
@@ -100,8 +103,8 @@ class Game:
         score2 = font.render(str(self.players[1].score), True, Colours.WHITE)
         self.screen.blit(score2, (640, 70))
 
-        # Draw background
-        self.screen.blit(self.boardImg, (0, 0))
+        # Draw background (board walls)
+        self.screen.blit(self.boardWalls, (0, 0))
 
         # Show new frame
         pygame.display.flip()
