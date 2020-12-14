@@ -69,7 +69,7 @@ class Game:
 
                             # # TODO temp
                             if result:
-                                self.controller.client.send_to_server((i, j))
+                                self.controller.client.send_to_server(("!MOVE", (i, j)))
 
                             # If move made update turn for players
                             if result and not point_used:
@@ -82,7 +82,13 @@ class Game:
                             point.is_selected = True
 
     def update(self):
-        pass
+        if self.controller.client.pending_move is not None:
+            pending_move = self.controller.client.pending_move
+            self.controller.client.pending_move = None
+            point = self.myBoard.points[pending_move[0]][pending_move[1]]
+            current_player = [p for p in self.players if p.turn][0]
+            current_index = self.players.index(current_player)
+            self.myBoard.move(point, self.players[current_index])
 
     def render(self):
         # Clear screen

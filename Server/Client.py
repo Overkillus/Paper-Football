@@ -16,6 +16,9 @@ class Client:
         self.JOINSERVER_MSG = "!JOINSERVER"
         self.ENTERGAME_MSG = "!ENTERGAME"
         self.GAMEQUESTION_MSG = "!ISGAME"
+        self.MOVE_MSG = "!MOVE"
+
+        self.pending_move = None
 
         self.IN_GAME = False
         self.connected = False
@@ -80,6 +83,9 @@ class Client:
         elif self.GAMEQUESTION_MSG in msg:  # this is a game server.
             self.IN_GAME = True
             self.console("you're in a game.")
+        elif self.MOVE_MSG in msg:
+            move = msg[1]
+            self.pending_move = move
 
     def send_create_server_request(self):
         self.console("server creation asked. you should join it automatically.")
@@ -134,6 +140,33 @@ class Client:
         Joins first available server or creates a new server
         """
         pass
+
+    def choice_maker(self, options):
+        print(f"You have {len(options)} options:")
+        i = 0
+        for o in options:
+            i += 1
+            print(f"\t{i}. {o}")
+        option = input("enter your option: ")
+        try:
+            option = int(option)
+        except:
+            option = 0
+        return option
+
+    def lobby(self):
+        option = self.choice_maker(["Create a server", "Join a server"])
+
+        if option == 1:
+            print("creating server...")
+            self.send_create_server_request()
+        elif option == 2:
+            print("joining server... ")
+            self.send_join_server_request(input("enter the key for that server: "))
+        else:
+            print("invalid option - leaving lobby.")
+            self.disconnect()
+        time.sleep(1)
 
 # # - your own code after here! -
 # client = Client(socket.gethostname(), 2000)

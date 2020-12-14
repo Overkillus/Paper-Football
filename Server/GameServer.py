@@ -23,6 +23,8 @@ class GameServer(Server):
     def handle_client_messages(self, connection, address, msg):
         if self.GAMEQUESTION_MSG in msg:
             self.send_to_client(connection, self.GAMEQUESTION_MSG)
+        if "!MOVE" in msg:
+            self.send_to_all_clients(msg)
 
     def console(self, msg):
         new_msg = (f"[SERVER-{self.PORT}]: {msg}")

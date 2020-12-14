@@ -90,7 +90,8 @@ class MenuUI:
                     # Ensure connection, host server, join hosted server
                     if not self.controller.client.connected:
                         self.controller.client.start()
-                        self.controller.client.send_create_server_request()
+                        # self.controller.client.send_create_server_request()
+                        self.controller.client.lobby()
                     # Swap to game
                     if self.controller.client.connected:
                         self.controller.change_view(self.controller.game)
