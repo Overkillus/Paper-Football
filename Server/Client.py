@@ -44,8 +44,8 @@ class Client:
             if msg_len:
                 msg_len = int(msg_len)
                 msg = self.sock.recv(msg_len)
-                #print(msg_len)
-                #print(msg)
+                # print(msg_len)
+                # print(msg)
                 msg = pickle.loads(msg)
                 print(f"[SERVER]: {msg}") # test.
 
@@ -65,19 +65,19 @@ class Client:
 
     # game server functions.
     def handle_server_messages(self, msg):
-        if "[SERVER" in msg: # ignore reposts.
+        if "[SERVER" in msg:  # ignore reposts.
             return
 
-        if self.JOINSERVER_MSG in msg: # end of server creation process.
-            key = msg[len(self.JOINSERVER_MSG)+1:] # key received.
+        if self.JOINSERVER_MSG in msg:  # end of server creation process.
+            key = msg[len(self.JOINSERVER_MSG)+1:]  # key received.
             self.console(f"you got the key: {key}")
             self.send_join_server_request(key)
-        elif self.ENTERGAME_MSG in msg: # end of server join process
+        elif self.ENTERGAME_MSG in msg:  # end of server join process
             game_port = msg[len(self.ENTERGAME_MSG)+1:]
             self.console(f"your server port is {game_port}")
             # v basically is starting the client afresh with a new connection really.
             threading.Thread(target=self.exchange_server, args=(game_port,)).start()
-        elif self.GAMEQUESTION_MSG in msg: # this is a game server.
+        elif self.GAMEQUESTION_MSG in msg:  # this is a game server.
             self.IN_GAME = True
             self.console("you're in a game.")
 
@@ -129,6 +129,11 @@ class Client:
     def start(self):
         self.exchange_server(2000)
 
+    def quick_join(self):
+        """
+        Joins first available server or creates a new server
+        """
+        pass
 
 # # - your own code after here! -
 # client = Client(socket.gethostname(), 2000)

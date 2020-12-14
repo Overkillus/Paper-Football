@@ -87,9 +87,11 @@ class MenuUI:
                     self.controller.close_game()
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
-                    # Swap to game
+                    # Ensure connection, host server, join hosted server
                     if not self.controller.client.connected:
                         self.controller.client.start()
+                        self.controller.client.send_create_server_request()
+                    # Swap to game
                     if self.controller.client.connected:
                         self.controller.change_view(self.controller.game)
 
