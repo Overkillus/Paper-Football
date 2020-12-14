@@ -106,7 +106,10 @@ class Client:
         self.console("quick joining server. will find one available or make a new one...")
         self.send_to_server(self.QUICKJOINSERVER_MSG)
 
-    def exchange_server(self, new_port):
+    def exchange_server(self, new_port): # eh, i cba changing fucntion names and stuff
+        threading.Thread(target=self.exchange_server_THREAD, args=(new_port,)).start()
+
+    def exchange_server_THREAD(self, new_port):
         if self.connected:
             self.disconnect()
             # ima keep for now, cuz of weird python message bug when u print after thread
