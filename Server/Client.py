@@ -16,6 +16,7 @@ class Client:
         self.JOINSERVER_MSG = "!JOINSERVER"
         self.ENTERGAME_MSG = "!ENTERGAME"
         self.GAMEQUESTION_MSG = "!ISGAME"
+        self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
         self.MOVE_MSG = "!MOVE"
 
         self.pending_move = None
@@ -74,7 +75,7 @@ class Client:
         if self.JOINSERVER_MSG in msg:  # end of server creation process.
             key = msg[len(self.JOINSERVER_MSG)+1:]  # key received.
             self.console(f"you got the key: {key}")
-            self.send_join_server_request(key)
+            self.join_server(key)
         elif self.ENTERGAME_MSG in msg:  # end of server join process
             game_port = msg[len(self.ENTERGAME_MSG)+1:]
             self.console(f"your server port is {game_port}")
@@ -87,17 +88,23 @@ class Client:
             move = msg[1]
             self.pending_move = move
 
-    def send_create_server_request(self):
+    # server joining requests
+    def create_server(self):
         self.console("server creation asked. you should join it automatically.")
         self.send_to_server(self.CREATESERVER_MSG)
         # ask ServerManager to create server. have it return key to you.
         # the key is returned and join_server() runs.
 
-    def send_join_server_request(self, key):
+    def join_server(self, key):
         self.console("attempt to join server. if nothing happens, server doesn't exist.")
         self.send_to_server(f"{self.JOINSERVER_MSG} {key}")
         # ask ServerManager to join server with given key. it returns to you the port.
         # you auto join with that port.
+
+    def quick_join(self):
+        #Joins first available server or creates a new server
+        self.console("quick joining server. will find one available or make a new one...")
+        self.send_to_server(self.QUICKJOINSERVER_MSG)
 
     def exchange_server(self, new_port):
         if self.connected:
@@ -135,12 +142,6 @@ class Client:
     def start(self):
         self.exchange_server(2000)
 
-    def quick_join(self):
-        """
-        Joins first available server or creates a new server
-        """
-        pass
-
     def choice_maker(self, options):
         print(f"You have {len(options)} options:")
         i = 0
@@ -159,10 +160,10 @@ class Client:
 
         if option == 1:
             print("creating server...")
-            self.send_create_server_request()
+            self.create_server()
         elif option == 2:
             print("joining server... ")
-            self.send_join_server_request(input("enter the key for that server: "))
+            self.join_server(input("enter the key for that server: "))
         else:
             print("invalid option - leaving lobby.")
             self.disconnect()
@@ -194,10 +195,10 @@ class Client:
 #
 #     if option == 1:
 #         print("creating server...")
-#         client.send_create_server_request()
+#         client.create_server()
 #     elif option == 2:
 #         print("joining server... ")
-#         client.send_join_server_request(input("enter the key for that server: "))
+#         client.join_server(input("enter the key for that server: "))
 #     else:
 #         print("invalid option - leaving lobby.")
 #         client.disconnect()
