@@ -1,4 +1,7 @@
-import socket, threading, pickle
+import pickle
+import socket
+import threading
+
 
 class Server:
 
@@ -13,6 +16,9 @@ class Server:
         self.JOINSERVER_MSG = "!JOINSERVER"
         self.ENTERGAME_MSG = "!ENTERGAME"
         self.GAMEQUESTION_MSG = "!ISGAME"
+        self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
+        self.MOVE_MSG = "!MOVE"
+        self.SYNCHRONISE_MSG = "!SYNCHRONISE"
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.
@@ -39,7 +45,7 @@ class Server:
         connection.send(message)
 
     # any other specific messages. overriden by children.
-    def handleClientMessages(self, connection, address, msg):
+    def handle_client_messages(self, connection, address, msg):
         pass
 
     # handles individual connections
@@ -62,7 +68,7 @@ class Server:
                         self.send_to_client(connection, self.DISCONNECT_MSG)
                         self.console(f"[{address}] has disconnected")
                     # handle any other messages.
-                    self.handleClientMessages(connection, address, msg)
+                    self.handle_client_messages(connection, address, msg)
 
                     counter += 1
                     #self.send_to_client(connection, f"msg received ({counter})")
@@ -81,6 +87,16 @@ class Server:
             else:
                 if msg != None: # useful just to clean up all_connections
                     self.send_to_client(con, msg)
+
+    def send_to_all_clients_except(self, msg, client):
+        for con in self.all_connections:
+            if con != client:
+                # if connection exists, send. if not, delete it.
+                if con.fileno() == -1:
+                    self.all_connections.remove(con)
+                else:
+                    if msg != None: # useful just to clean up all_connections
+                        self.send_to_client(con, msg)
 
     # handles new connections
     def start(self):

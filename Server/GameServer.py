@@ -1,5 +1,8 @@
-import random, string
-from BaseServer import Server
+import random
+import string
+
+from Server.BaseServer import Server
+
 
 class GameServer(Server):
     def __init__(self, server, port):
@@ -17,9 +20,13 @@ class GameServer(Server):
         super().__init__(server, port)
 
     #
-    def handleClientMessages(self, connection, address, msg):
+    def handle_client_messages(self, connection, address, msg):
         if self.GAMEQUESTION_MSG in msg:
             self.send_to_client(connection, self.GAMEQUESTION_MSG)
+        if self.MOVE_MSG in msg:
+            self.send_to_all_clients_except(msg, connection)
+        if self.SYNCHRONISE_MSG in msg:
+            self.send_to_all_clients(msg)
 
     def console(self, msg):
         new_msg = (f"[SERVER-{self.PORT}]: {msg}")
@@ -28,22 +35,22 @@ class GameServer(Server):
         # to make things cleaner, GameServer output are sent to clients.
         self.send_to_all_clients(new_msg)
 
-    def closeServer(self): # this function is only useful for gameservers, tbh.
+    def close_server(self): # this function is only useful for gameservers, tbh.
         self.send_to_all_clients(f"{self.ENTERGAME_MSG} {2000}") # exchangeServers(2000)
         self.SERVER_ON = False # close start() thread
 
     # return functions.
-    def returnPort(self):
+    def return_port(self):
         return self.PORT
 
-    def returnKey(self):
+    def return_key(self):
         # used to be one time use, but realised that only the server can use this
         return self.KEY
 
-    def returnPlayers(self):
+    def return_players(self):
         return len(self.all_connections)
 
-    def returnMaxPlayers(self):
+    def return_max_players(self):
         return self.MAX_PLAYERS
 
 

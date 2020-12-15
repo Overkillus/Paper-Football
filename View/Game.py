@@ -47,10 +47,9 @@ class Game:
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit(0)
+                self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.controller.game.is_running = False
-                self.controller.menuUI.is_running = True
+                self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
@@ -68,6 +67,12 @@ class Game:
                             current_player = [p for p in self.players if p.turn][0]
                             current_index = self.players.index(current_player)
                             result = self.myBoard.move(point, self.players[current_index])  # TEMP
+
+                            # # TODO temp
+                            if result:
+                                self.controller.client.send_to_server(("!MOVE", (i, j)))
+                                # self.controller.client.send_to_server(("!SYNCHRONISE", self.myBoard))
+
                             # If move made update turn for players
                             if result and not point_used:
                                 current_player.turn = False
@@ -79,7 +84,29 @@ class Game:
                             point.is_selected = True
 
     def update(self):
-        True
+        # Update pending opponent moves
+        if self.controller.client.pending_move is not None:
+            pending_move = self.controller.client.pending_move
+            self.controller.client.pending_move = None
+            point = self.myBoard.points[pending_move[0]][pending_move[1]]
+            point_used = point.is_used
+            current_player = [p for p in self.players if p.turn][0]
+            current_index = self.players.index(current_player)
+            result = self.myBoard.move(point, self.players[current_index])
+            for row in self.myBoard.points:
+                for current_point in row:
+                    current_point.is_selected = False
+
+            # If move made update turn for players
+            if result and not point_used:
+                current_player.turn = False
+                self.players[(current_index + 1) % 2].turn = True
+
+        if self.controller.client.pending_board is not None:
+            pending_board = self.controller.client.pending_board
+            self.controller.client.pending_board = None
+            self.myBoard = pending_board
+
 
     def render(self):
         # Clear screen

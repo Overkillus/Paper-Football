@@ -3,9 +3,7 @@ import pygame
 import Colours
 from pygame import mixer
 import Settings
-#import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
-#from tkinter import *
-#import tkinter.messagebox
+# import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
 pygame.init()
 
@@ -70,9 +68,9 @@ class MenuUI:
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit(0)
+                self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
-                sys.exit(0)
+                self.controller.close_game()
             # Mouse click
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click details
@@ -86,29 +84,20 @@ class MenuUI:
                     mixer.music.pause()
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
-                    sys.exit(0)
+                    self.controller.close_game()
                 # Start button
                 elif self.button_1.collidepoint(mouse_pos):
-                # Swap to game
-                    self.controller.game.is_running = True
-                #     #self.controller.menuUI.is_running = False # do we need this?
-                    self.is_running = False
-                # elif self.button_1.collidepoint(mouse_pos):
-                #     #login screen window loop
-                #     login_screen()
-                # elif self.button_1.collidepoint(mouse_pos) and token_valid:
-                #         print("yo")
-                #         self.controller.game.is_running = True
-                #         self.is_running = False
-                #print(event)
-               # print(token_valid)
-
-
-
-
+                    # Ensure connection, host server, join hosted server
+                    if not self.controller.client.connected:
+                        self.controller.client.start()
+                        if self.controller.client.connected:
+                            self.controller.client.quick_join()
+                    # Swap to game
+                    if self.controller.client.connected:
+                        self.controller.change_view(self.controller.game)
 
     def update(self):
-        True  # Placeholder
+        pass
 
     def render(self):
         # Clear screen
@@ -143,38 +132,3 @@ def draw_text(text, font, color, surface, x, y):
     text_rect = text_object.get_rect()
     text_rect.topleft = (x, y)
     surface.blit(text_object, text_rect)
-
-
-#joining screen
-# window = tkinter.Tk()
-# window.geometry('500x400')
-# window.title("Login Screen")
-# token_valid = False
-#
-# entry_widget = tk.Entry(window)
-# tk.Label(window, text="Enter token:").grid(row=0)
-# entry = tk.Entry(window)
-# entry.grid(row=0, column=1)
-#
-# def get_token():
-#     token = entry.get()
-#     print(token)
-#
-#     if token == "test":
-#         token_valid = True
-#         print(token_valid)
-#         window.quit()
-#
-#     else:
-#         print("token not valid")
-#
-#
-#
-# button_widget = tkinter.Button(window, text="Join", command=get_token).grid(row=1)
-#
-#
-# def login_screen():
-#     window.mainloop()
-
-
-
