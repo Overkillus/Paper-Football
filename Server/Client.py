@@ -18,8 +18,10 @@ class Client:
         self.GAMEQUESTION_MSG = "!ISGAME"
         self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
         self.MOVE_MSG = "!MOVE"
+        self.SYNCHRONISE_MSG = "!SYNCHRONISE"
 
         self.pending_move = None
+        self.pending_board = None
 
         self.IN_GAME = False
         self.connected = False
@@ -88,6 +90,9 @@ class Client:
         elif self.MOVE_MSG in msg:
             move = msg[1]
             self.pending_move = move
+        elif self.SYNCHRONISE_MSG in msg:
+            board = msg[1]
+            self.pending_board = board
 
     # server joining requests
     def create_server(self):
@@ -107,7 +112,7 @@ class Client:
         self.console("quick joining server. will find one available or make a new one...")
         self.send_to_server(self.QUICKJOINSERVER_MSG)
 
-    def exchange_server(self, new_port): # eh, i cba changing fucntion names and stuff
+    def exchange_server(self, new_port): # eh, i cba changing function names and stuff
         if not self.changing_server:
             threading.Thread(target=self.exchange_server_THREAD, args=(new_port,)).start()
 
@@ -149,34 +154,34 @@ class Client:
         #     self.exchange_server(self.PORT)  # would this work if it's disconnecting from nothing?
 
     def start(self):
-        self.exchange_server(2000)
+        self.exchange_server_THREAD(2000)
 
-    def choice_maker(self, options):
-        print(f"You have {len(options)} options:")
-        i = 0
-        for o in options:
-            i += 1
-            print(f"\t{i}. {o}")
-        option = input("enter your option: ")
-        try:
-            option = int(option)
-        except:
-            option = 0
-        return option
-
-    def lobby(self):
-        option = self.choice_maker(["Create a server", "Join a server"])
-
-        if option == 1:
-            print("creating server...")
-            self.create_server()
-        elif option == 2:
-            print("joining server... ")
-            self.join_server(input("enter the key for that server: "))
-        else:
-            print("invalid option - leaving lobby.")
-            self.disconnect()
-        time.sleep(1)
+    # def choice_maker(self, options):
+    #     print(f"You have {len(options)} options:")
+    #     i = 0
+    #     for o in options:
+    #         i += 1
+    #         print(f"\t{i}. {o}")
+    #     option = input("enter your option: ")
+    #     try:
+    #         option = int(option)
+    #     except:
+    #         option = 0
+    #     return option
+    #
+    # def lobby(self):
+    #     option = self.choice_maker(["Create a server", "Join a server"])
+    #
+    #     if option == 1:
+    #         print("creating server...")
+    #         self.create_server()
+    #     elif option == 2:
+    #         print("joining server... ")
+    #         self.join_server(input("enter the key for that server: "))
+    #     else:
+    #         print("invalid option - leaving lobby.")
+    #         self.disconnect()
+    #     time.sleep(1)
 
 # # - your own code after here! -
 # client = Client(socket.gethostname(), 2000)

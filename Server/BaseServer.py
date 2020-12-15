@@ -17,6 +17,8 @@ class Server:
         self.ENTERGAME_MSG = "!ENTERGAME"
         self.GAMEQUESTION_MSG = "!ISGAME"
         self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
+        self.MOVE_MSG = "!MOVE"
+        self.SYNCHRONISE_MSG = "!SYNCHRONISE"
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.

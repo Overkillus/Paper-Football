@@ -70,6 +70,7 @@ class Game:
                             # # TODO temp
                             if result:
                                 self.controller.client.send_to_server(("!MOVE", (i, j)))
+                                # self.controller.client.send_to_server(("!SYNCHRONISE", self.myBoard))
 
                             # If move made update turn for players
                             if result and not point_used:
@@ -82,13 +83,26 @@ class Game:
                             point.is_selected = True
 
     def update(self):
+        # Update pending opponent moves
         if self.controller.client.pending_move is not None:
             pending_move = self.controller.client.pending_move
             self.controller.client.pending_move = None
             point = self.myBoard.points[pending_move[0]][pending_move[1]]
+            point_used = point.is_used
             current_player = [p for p in self.players if p.turn][0]
             current_index = self.players.index(current_player)
-            self.myBoard.move(point, self.players[current_index])
+            result = self.myBoard.move(point, self.players[current_index])
+
+            # If move made update turn for players
+            if result and not point_used:
+                current_player.turn = False
+                self.players[(current_index + 1) % 2].turn = True
+
+        if self.controller.client.pending_board is not None:
+            pending_board = self.controller.client.pending_board
+            self.controller.client.pending_board = None
+            self.myBoard = pending_board
+
 
     def render(self):
         # Clear screen
