@@ -53,7 +53,7 @@ class Game:
             elif event.type == pygame.MOUSEBUTTONUP:
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
-                        if self.players[0].turn:
+                        if self.players[0].turn and self.controller.client.current_population == 2:
                             # Square hitbox points in the board
                             hitbox = pygame.Rect(
                                 self.board_distance + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
