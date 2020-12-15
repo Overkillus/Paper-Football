@@ -43,7 +43,7 @@ class ServerManager(Server):
         # client gets key, and performs join function by themselves automatically.
 
     def join_server(self, connection, address, msg):
-        self.remove_empty_servers() # slapped here too, why not.
+        #self.remove_empty_servers() # slapped here too, why not.
 
         key = msg[len(self.JOINSERVER_MSG) + 1:]
         self.console(f"[{address}] wants to join ({key})")
