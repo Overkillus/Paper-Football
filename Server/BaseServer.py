@@ -88,6 +88,16 @@ class Server:
                 if msg != None: # useful just to clean up all_connections
                     self.send_to_client(con, msg)
 
+    def send_to_all_clients_except(self, msg, client):
+        for con in self.all_connections:
+            if con != client:
+                # if connection exists, send. if not, delete it.
+                if con.fileno() == -1:
+                    self.all_connections.remove(con)
+                else:
+                    if msg != None: # useful just to clean up all_connections
+                        self.send_to_client(con, msg)
+
     # handles new connections
     def start(self):
         self.sock.listen()

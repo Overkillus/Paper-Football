@@ -24,10 +24,7 @@ class GameServer(Server):
         if self.GAMEQUESTION_MSG in msg:
             self.send_to_client(connection, self.GAMEQUESTION_MSG)
         if self.MOVE_MSG in msg:
-            # for c in self.all_connections:
-            #     if connection != c:
-            #         self.send_to_client(self, c, msg)
-            self.send_to_all_clients(msg)
+            self.send_to_all_clients_except(msg, connection)
         if self.SYNCHRONISE_MSG in msg:
             self.send_to_all_clients(msg)
 
