@@ -60,6 +60,8 @@ class ServerManager(Server):
         # send server !QUICKJOIN, and server looks for non-full games. send first one found.
         # if none found, create new server.
 
+        self.remove_empty_servers() # slapped here too, why not.
+
         server_to_join = 0
         for k, serv in self.SERVERS.items():
             if serv.return_players() < serv.return_max_players():
