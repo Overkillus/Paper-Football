@@ -59,9 +59,6 @@ class Board:
         :param player: player making a move
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
-
-        # if
-
         a = self.get_ball()
         # Boolean
         result = self.add_connection(a, b, player)

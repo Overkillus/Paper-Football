@@ -53,7 +53,7 @@ class Game:
             elif event.type == pygame.MOUSEBUTTONUP:
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
-                        if self.players[0].turn:
+                        if self.players[0].turn and self.controller.client.current_population == 2:
                             # Square hitbox points in the board
                             hitbox = pygame.Rect(
                                 self.board_distance + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
@@ -70,7 +70,10 @@ class Game:
 
                                 # # TODO temp
                                 if result:
-                                    self.controller.client.send_to_server(("!MOVE", (i, j)))
+                                    x = i - (self.myBoard.width-1)
+                                    x = -x
+
+                                    self.controller.client.send_to_server(("!MOVE", (x, j)))
                                     # self.controller.client.send_to_server(("!SYNCHRONISE", self.myBoard))
 
                                 # If move made update turn for players
@@ -106,6 +109,15 @@ class Game:
             self.controller.client.pending_board = None
             self.myBoard = pending_board
 
+        # Check for goal
+        for row in self.myBoard.points:
+            for current_point in row:
+                if current_point.is_goal and current_point.is_ball:
+                    for p in self.players:
+                        if p.turn:
+                            p.score += 1
+                    self.myBoard = Board()
+
 
     def render(self):
         # Clear screen
@@ -124,9 +136,9 @@ class Game:
 
         # Draw Scores
         font = pygame.font.Font(None, 60)
-        score1 = font.render(str(self.players[0].score), True, Colours.WHITE)
+        score1 = font.render(str(self.players[0].score), True, Colours.PURPLE)
         self.screen.blit(score1, (35, 70))
-        score2 = font.render(str(self.players[1].score), True, Colours.WHITE)
+        score2 = font.render(str(self.players[1].score), True, Colours.YELLOW)
         self.screen.blit(score2, (640, 70))
 
         # Draw background (board walls)
