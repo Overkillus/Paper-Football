@@ -59,6 +59,9 @@ class Board:
         :param player: player making a move
         :return: boolean: False if operation failed, True otherwise (or connection already exists)
         """
+
+        # if
+
         a = self.get_ball()
         # Boolean
         result = self.add_connection(a, b, player)
@@ -178,6 +181,11 @@ class Board:
             self.points[0][self.height-1-i].is_legal = False
             self.points[self.width-1][i].is_legal = False
             self.points[self.width-1][self.height-i-1].is_legal = False
+
+        # Hardcoded goal points
+        for j in range(3, 6):
+            self.points[0][j].is_goal = True
+            self.points[self.width-1][j].is_goal = True
 
     def add_long_connection(self, a, b):
         """

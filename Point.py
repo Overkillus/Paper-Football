@@ -5,7 +5,6 @@ class Point:
     """
     Class representing a single point in the field
     """
-    ball_img = pygame.image.load("Art/ball_green_glow.png")
     circle_radius = 6
     board_distance = 50
 
@@ -20,11 +19,12 @@ class Point:
 
     def draw(self, screen):
         if self.is_ball:
-            screen.blit(self.ball_img.convert_alpha(),
-                        (self.board_distance + self.x * self.board_distance - self.ball_img.get_width() / 2,
-                        self.board_distance + self.y * self.board_distance - self.ball_img.get_height() / 2))
+            ball_img = pygame.image.load("Art/ball_green_glow.png")
+            screen.blit(ball_img.convert_alpha(),
+                        (self.board_distance + self.x * self.board_distance - ball_img.get_width() / 2,
+                        self.board_distance + self.y * self.board_distance - ball_img.get_height() / 2))
 
-        elif self.is_selected:
+        elif self.is_selected or self.is_goal:
             pygame.draw.circle(
                 screen,
                 (255, 0, 0),

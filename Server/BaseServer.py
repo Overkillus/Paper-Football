@@ -16,6 +16,9 @@ class Server:
         self.JOINSERVER_MSG = "!JOINSERVER"
         self.ENTERGAME_MSG = "!ENTERGAME"
         self.GAMEQUESTION_MSG = "!ISGAME"
+        self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
+        self.MOVE_MSG = "!MOVE"
+        self.SYNCHRONISE_MSG = "!SYNCHRONISE"
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.
@@ -84,6 +87,16 @@ class Server:
             else:
                 if msg != None: # useful just to clean up all_connections
                     self.send_to_client(con, msg)
+
+    def send_to_all_clients_except(self, msg, client):
+        for con in self.all_connections:
+            if con != client:
+                # if connection exists, send. if not, delete it.
+                if con.fileno() == -1:
+                    self.all_connections.remove(con)
+                else:
+                    if msg != None: # useful just to clean up all_connections
+                        self.send_to_client(con, msg)
 
     # handles new connections
     def start(self):
