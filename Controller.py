@@ -23,8 +23,8 @@ class Controller:
         # self.in_session = False
 
         # Client (connection)
-        self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
-        # self.client = Client("139.162.219.137", 2000)
+        # self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
+        self.client = Client("139.162.219.137", 2000)
         # self.client.start()  #temp
 
         # Clock

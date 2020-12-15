@@ -36,7 +36,9 @@ class Board:
         ab = Connection(a, b, False, player)
 
         # Invalid length check
-        if not self.__validate_connection_length(ab):
+        if not b.is_legal or not a.is_legal:
+            return False
+        elif not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
