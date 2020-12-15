@@ -13,6 +13,7 @@ class Game:
     # Art
     boardImg = pygame.image.load("Art/board_lines.png")
     boardWalls = pygame.image.load("Art/board_walls.png")
+    waitingPlayer = pygame.image.load("Art/waiting.png")
 
     def __init__(self, controller):
         # State
@@ -68,7 +69,7 @@ class Game:
                                 player = self.players[0]
                                 result = self.myBoard.move(point, player)  # TEMP
 
-                                # # TODO temp
+                                # Send move to opponent
                                 if result:
                                     x = i - (self.myBoard.width-1)
                                     x = -x
@@ -116,6 +117,9 @@ class Game:
                     for p in self.players:
                         if p.turn:
                             p.score += 1
+                    connection_sound = pygame.mixer.Sound('Sound/goal.mp3')
+                    connection_sound.play()
+                    connection_sound.set_volume(0.1)
                     self.myBoard = Board()
 
 
@@ -132,7 +136,8 @@ class Game:
         # Draw board points
         for row in self.myBoard.points:
             for point in row:
-                point.draw(self.screen)
+                if not point.is_ball:
+                    point.draw(self.screen)
 
         # Draw Scores
         font = pygame.font.Font(None, 60)
@@ -143,6 +148,17 @@ class Game:
 
         # Draw background (board walls)
         self.screen.blit(self.boardWalls, (0, 0))
+
+        # Draw board points
+        for row in self.myBoard.points:
+            for point in row:
+                if point.is_ball:
+                    point.draw(self.screen)
+
+        if self.controller.client.current_population == 1:
+            x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
+            y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
+            self.screen.blit(self.waitingPlayer, (x, y))
 
         # Show new frame
         pygame.display.flip()
