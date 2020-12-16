@@ -48,12 +48,9 @@ class Controller:
 
     def run(self):
         while True:
-            if self.menuUI.is_running:
-                self.menuUI.main()
-            if self.game.is_running:
-                self.game.main()
-            if self.settingsUI.is_running:
-                self.settingsUI.main()
+            for view in self.views:
+                if view.is_running:
+                    view.main()
 
     def close_game(self):
         if self.client.connected:

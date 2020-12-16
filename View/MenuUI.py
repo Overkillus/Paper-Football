@@ -82,9 +82,8 @@ class MenuUI:
                 elif self.sound_rect.collidepoint(mouse_pos) and not Settings.sound_muted:
                     Settings.sound_muted = True
                     mixer.music.pause()
-                # Settings button
+                # Open settings
                 elif self.settings_rect.collidepoint(mouse_pos):
-                    # swap to settings
                     self.controller.change_view(self.controller.settingsUI)
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
