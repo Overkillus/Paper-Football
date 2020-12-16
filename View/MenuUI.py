@@ -21,6 +21,7 @@ class MenuUI:
     settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
     sound_icon = pygame.image.load("Art/sound.png")
     sound_icon_off = pygame.image.load("Art/sound_off.png")
+    rules_icon = pygame.image.load("Art/settings.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
     # screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
@@ -42,6 +43,7 @@ class MenuUI:
 
         # Settings button
         self.settings_rect = self.settings_icon.get_rect(topleft=(15, 430))
+        self.rules_rect = self.rules_icon.get_rect(topleft=(200, 430))
 
         # Start and exit buttons
         button_w = 100
@@ -85,6 +87,9 @@ class MenuUI:
                 # Open settings
                 elif self.settings_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.settingsUI)
+                # Open rules
+                elif self.rules_rect.collidepoint(mouse_pos):
+                    self.controller.change_view(self.controller.rulesUI)
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
                     self.controller.close_game()
@@ -111,6 +116,8 @@ class MenuUI:
         self.screen.blit(self.title, (self.screen.get_width()/2 - self.title.get_width()/2, self.screen.get_height()/10))
         # Settings
         self.screen.blit(self.settings_icon, (15, 430))
+        # Rules
+        self.screen.blit(self.rules_icon, (15, 430))
         # Mute toggle
         if Settings.sound_muted:
             self.screen.blit(self.sound_icon_off, (75, 430))
