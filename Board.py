@@ -65,7 +65,7 @@ class Board:
         # Boolean
         result = self.add_connection(a, b, player)
         if result:
-            connection_sound = mixer.Sound('Sound/moving_effect.mp3')  # Sound by LittleSoundRobotFactory @ FreeSound
+            connection_sound = mixer.Sound('Sound/moving_effect.wav')  # Sound by LittleSoundRobotFactory @ FreeSound
             connection_sound.play()
             connection_sound.set_volume(0.1)
             a.is_ball = False

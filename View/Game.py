@@ -117,7 +117,7 @@ class Game:
                     for p in self.players:
                         if p.turn:
                             p.score += 1
-                    connection_sound = pygame.mixer.Sound('Sound/goal.mp3')
+                    connection_sound = pygame.mixer.Sound('Sound/goal.wav')
                     connection_sound.play()
                     connection_sound.set_volume(0.1)
                     self.myBoard = Board()
