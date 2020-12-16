@@ -43,6 +43,8 @@ class ServerManager(Server):
         # client gets key, and performs join function by themselves automatically.
 
     def join_server(self, connection, address, msg):
+        #self.remove_empty_servers() # slapped here too, why not.
+
         key = msg[len(self.JOINSERVER_MSG) + 1:]
         self.console(f"[{address}] wants to join ({key})")
 
@@ -57,6 +59,8 @@ class ServerManager(Server):
     def quickjoin_server(self, connection, address, msg):
         # send server !QUICKJOIN, and server looks for non-full games. send first one found.
         # if none found, create new server.
+
+        self.remove_empty_servers() # slapped here too, why not.
 
         server_to_join = 0
         for k, serv in self.SERVERS.items():

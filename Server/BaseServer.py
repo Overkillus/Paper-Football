@@ -2,7 +2,6 @@ import pickle
 import socket
 import threading
 
-
 class Server:
 
     def __init__(self, server, port):
@@ -42,8 +41,18 @@ class Server:
         send_len = str(msg_len).encode(self.FORMAT)
         send_len += b' ' * (self.HEADER_SIZE - len(send_len))
 
-        connection.send(send_len)
-        connection.send(message)
+        try:
+            connection.send(send_len)
+            connection.send(message)
+        except:
+            self.close_connection(connection)
+            self.console("message send fail - means connection is dead.")
+
+    def close_connection(self, connection):
+        connection.close()
+        if connection in self.all_connections:
+            self.all_connections.remove(connection)
+
 
     # any other specific messages. overriden by children.
     def handle_client_messages(self, connection, address, msg):
@@ -53,7 +62,7 @@ class Server:
     def handle_client(self, connection, address):
         counter = 0 # just for test purposes. counts individual total of client msgs.
         connected = True
-        while connected:
+        while connected and connection.fileno() != -1:
             try: # capture client disconnecting prematurely.
                 # first message = length of message
                 msg_len = connection.recv(self.HEADER_SIZE).decode(self.FORMAT)
@@ -77,8 +86,8 @@ class Server:
                 connected = False
                 self.console(f"Client message error. Connection cut with {address}")
 
-        connection.close()
-        self.all_connections.remove(connection)
+        self.close_connection(connection)
+
 
     def send_to_all_clients(self, msg): # e.g. useful for ticks.
         for con in self.all_connections:
