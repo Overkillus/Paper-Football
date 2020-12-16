@@ -1,5 +1,6 @@
 import sys
 import pygame
+from View import Game
 import Colours
 from pygame import mixer
 import Settings
@@ -10,12 +11,12 @@ pygame.init()
 
 class RulesUI:
     """
-    Class representing Settings view
+    Class representing Rules view
     """
 
     # Art
-    background = pygame.image.load("Art/settingsUI.png")
-    font = pygame.font.SysFont('arialbold', 90)
+    font = pygame.font.SysFont('arialbold', 30)
+    rules_icon = pygame.image.load("Art/question_black.png")
 
     def __init__(self, controller):
         # State
@@ -24,6 +25,7 @@ class RulesUI:
         # Context
         self.screen = controller.screen
         self.controller = controller
+        self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
 
     def main(self):
         self.event_handler()
@@ -39,20 +41,19 @@ class RulesUI:
             if event.type == pygame.QUIT:
                 self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.controller.change_view(self.controller.menuUI)
-            # Mouse click
+                self.controller.change_view(self.controller.game)
             elif event.type == pygame.MOUSEBUTTONUP:
-                # Mouse click details
-                mouse_pos = pygame.mouse.get_pos()
+                if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
+                    self.controller.change_view(self.controller.game)
 
     def update(self):
         pass
 
     def render(self):
         # Clear screen
-        self.screen.fill((0, 0, 0))
-        # Background
-        self.screen.blit(self.background, (0, 0))
+        self.screen.fill((0, 0, 255))
+        self.screen.blit(self.rules_icon, (630, 430))
 
         # Show new frame
         pygame.display.flip()
+

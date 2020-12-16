@@ -14,6 +14,7 @@ class Game:
     boardImg = pygame.image.load("Art/board_lines.png")
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
+    rules_icon = pygame.image.load("Art/question_black.png")
 
     def __init__(self, controller):
         # State
@@ -30,6 +31,10 @@ class Game:
         self.circle_radius = 8
         self.circle_hitbox_multiplier = 1.8
 
+        # Rules
+        self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
+
+
         # Players
         self.players = []
         self.players.append(Player("Player One", Colours.PURPLE))
@@ -45,6 +50,7 @@ class Game:
             self.update()
             self.render()
 
+
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -52,6 +58,9 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
+                mouse_pos = pygame.mouse.get_pos()
+                if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
+                    self.controller.change_view(self.controller.rulesUI)
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
                         if self.players[0].turn and self.controller.client.current_population == 2:
@@ -87,6 +96,8 @@ class Game:
                                     for current_point in row:
                                         current_point.is_selected = False
                                 point.is_selected = True
+
+                                pygame.mouse.get_pos()
 
     def update(self):
         # Update pending opponent moves
@@ -159,6 +170,9 @@ class Game:
             x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
             y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
             self.screen.blit(self.waitingPlayer, (x, y))
+
+        # Rules icon
+        self.screen.blit(self.rules_icon, (630, 430))
 
         # Show new frame
         pygame.display.flip()
