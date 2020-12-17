@@ -1,9 +1,9 @@
 import sys
 import pygame
-from View import Game
 import Colours
 from pygame import mixer
 import Settings
+import View.MenuUI
 # import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
 pygame.init()
@@ -15,7 +15,8 @@ class RulesUI:
     """
 
     # Art
-    font = pygame.font.SysFont('arialbold', 30)
+    title = pygame.font.SysFont('comicsansms', 50)
+    font = pygame.font.SysFont('comicsansms', 18)
     rules_icon = pygame.image.load("Art/question_black.png")
 
     def __init__(self, controller):
@@ -51,8 +52,11 @@ class RulesUI:
 
     def render(self):
         # Clear screen
-        self.screen.fill((0, 0, 255))
+        txt = "rules go here "
+        self.screen.fill((0, 176, 178))
         self.screen.blit(self.rules_icon, (630, 430))
+        View.MenuUI.draw_text("Rules", self.title, Colours.WHITE, self.screen, 280, 10)
+        View.MenuUI.draw_text(txt, self.font, Colours.WHITE, self.screen, 40, 80)
 
         # Show new frame
         pygame.display.flip()
