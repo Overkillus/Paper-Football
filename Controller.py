@@ -7,6 +7,7 @@ from Server.Client import Client
 from View.Game import Game
 import Settings
 from View.MenuUI import MenuUI
+from View.SettingsUI import SettingsUI
 
 pygame.init()
 
@@ -34,7 +35,8 @@ class Controller:
         # Views
         self.menuUI = MenuUI(self)
         self.game = Game(self)
-        self.views = [self.menuUI, self.game]
+        self.settingsUI = SettingsUI(self)
+        self.views = [self.menuUI, self.game, self.settingsUI]
 
         # Initial state
         self.menuUI.is_running = True
@@ -48,6 +50,8 @@ class Controller:
                 self.menuUI.main()
             if self.game.is_running:
                 self.game.main()
+            if self.settingsUI.is_running:
+                self.settingsUI.main()
 
     def close_game(self):
         if self.client.connected:
