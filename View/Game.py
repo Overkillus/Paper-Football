@@ -1,10 +1,12 @@
 import sys
 import pygame
+import random
 
 # Init
 import Colours
 import Settings
 from Board import Board
+from Particle import Particle
 from Player import Player
 from Point import Point
 
@@ -30,6 +32,7 @@ class Game:
         self.myBoard.set_board_distance(self.board_distance)
         self.circle_radius = 8
         self.circle_hitbox_multiplier = 1.8
+        self.particles = []
 
         # Players
         self.players = []
@@ -53,6 +56,13 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
+
+                # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+                for i in range(80):
+                    loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+                    p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(1, 4))
+                    self.particles.append(p)
+
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
                         if self.players[0].turn and self.controller.client.current_population == 2:
@@ -123,6 +133,18 @@ class Game:
                     connection_sound.set_volume(0.1)
                     self.myBoard = Board()
 
+        # Particles
+        self.particles = [particle for particle in self.particles if particle.time > 0]
+        print(len(self.particles))
+        for particle in self.particles:
+            particle.tick()
+
+        # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+        # for i in range(40):
+        #     loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+        #     p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(2, 4))
+        #     self.particles.append(p)
+
     def render(self):
         # Clear screen
         self.screen.fill((0, 0, 0))
@@ -155,6 +177,11 @@ class Game:
                 if point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn)
 
+        # Particles
+        for p in self.particles:
+            p.draw(self.screen)
+
+        # Waiting banner
         if self.controller.client.current_population == 1:
             x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
             y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
