@@ -135,7 +135,7 @@ class Game:
 
         # Particles
         self.particles = [particle for particle in self.particles if particle.time > 0]
-        print(len(self.particles))
+        # print(len(self.particles))
         for particle in self.particles:
             particle.tick()
 
