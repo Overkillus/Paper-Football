@@ -21,14 +21,15 @@ class Point:
         self.is_goal = False
         self.is_legal = True
         self.is_selected = False
+        self.ball_scale_time = 0
 
-    def draw(self, screen, mouse_pos):
+    def draw(self, screen, mouse_pos, pulse=False):
 
         # Coordinates
         x = self.board_distance + (self.x * self.board_distance)
         y = self.board_distance + (self.y * self.board_distance)
 
-        # Dynamic scaling
+        # Dynamic point scaling
         size_multiplier = 0.7
         dist = math.hypot(x - mouse_pos[0], y - mouse_pos[1])
         max = (Settings.screen_width + Settings.screen_height) / 3
@@ -36,10 +37,17 @@ class Point:
         a = -b / max
         size_multiplier += a*dist + b
 
+        # Ball pulsing
+        ball_scale = 0.75 + (math.sin(self.ball_scale_time) / 3)
+        if pulse:
+            self.ball_scale_time = (self.ball_scale_time + 0.15) % (2*math.pi)
+
         if self.is_ball:
-            screen.blit(self.ball_img.convert_alpha(),
-                        (x - self.ball_img.get_width() / 2,
-                        y - self.ball_img.get_height() / 2))
+            surface = (int(self.ball_img.get_width() * ball_scale), int(self.ball_img.get_height() * ball_scale))
+            image = pygame.transform.scale(self.ball_img, surface).convert_alpha()
+            screen.blit(image,
+                        (x - image.get_width() / 2,
+                            y - image.get_height() / 2))
         elif self.is_selected or self.is_goal:
             pygame.draw.circle(
                 screen,
