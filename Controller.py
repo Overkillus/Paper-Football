@@ -25,8 +25,8 @@ class Controller:
         # self.in_session = False
 
         # Client (connection)
-        # self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
-        self.client = Client("139.162.219.137", 2000)
+        self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
+        # self.client = Client("139.162.219.137", 2000)
         # self.client.start()  #temp
 
         # Clock
@@ -48,9 +48,12 @@ class Controller:
 
     def run(self):
         while True:
-            for view in self.views:
-                if view.is_running:
-                    view.main()
+            if self.menuUI.is_running:
+                self.menuUI.main()
+            if self.game.is_running:
+                self.game.main()
+            if self.settingsUI.is_running:
+                self.settingsUI.main()
 
     def close_game(self):
         if self.client.connected:
