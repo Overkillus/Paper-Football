@@ -11,7 +11,7 @@ class Point:
     """
     circle_radius = 5
     board_distance = 50
-    ball_img = pygame.image.load("Art/ball_green_glow.png")
+    ball_img = pygame.image.load("Art/ball_green_300.png")
 
     def __init__(self, x=0, y=0):
         self.x = x
@@ -42,12 +42,15 @@ class Point:
         if pulse:
             self.ball_scale_time = (self.ball_scale_time + 0.15) % (2*math.pi)
 
+        # Draw ball
         if self.is_ball:
             surface = (int(self.ball_img.get_width() * ball_scale), int(self.ball_img.get_height() * ball_scale))
             image = pygame.transform.scale(self.ball_img, surface).convert_alpha()
             screen.blit(image,
                         (x - image.get_width() / 2,
                             y - image.get_height() / 2))
+
+        # Draw selected
         elif self.is_selected or self.is_goal:
             pygame.draw.circle(
                 screen,
@@ -55,6 +58,7 @@ class Point:
                 (x, y),
                 self.circle_radius * size_multiplier,
             )
+        # Draw generic points
         elif self.is_legal:
             pygame.draw.circle(
                 screen,
