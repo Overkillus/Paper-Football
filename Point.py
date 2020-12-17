@@ -28,7 +28,6 @@ class Point:
         x = self.board_distance + (self.x * self.board_distance)
         y = self.board_distance + (self.y * self.board_distance)
 
-
         # Dynamic scaling
         size_multiplier = 0.7
         dist = math.hypot(x - mouse_pos[0], y - mouse_pos[1])
@@ -36,9 +35,6 @@ class Point:
         b = 1
         a = -b / max
         size_multiplier += a*dist + b
-
-
-
 
         if self.is_ball:
             screen.blit(self.ball_img.convert_alpha(),

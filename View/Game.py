@@ -133,6 +133,8 @@ class Game:
                     connection_sound.set_volume(0.1)
                     self.myBoard = Board()
 
+        pygame.scale
+
     def render(self):
         # Clear screen
         self.screen.fill((0, 0, 0))
