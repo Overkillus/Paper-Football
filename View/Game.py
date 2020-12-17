@@ -6,6 +6,7 @@ import Colours
 import Settings
 from Board import Board
 from Player import Player
+from Point import Point
 
 
 class Game:
@@ -133,8 +134,6 @@ class Game:
                     connection_sound.set_volume(0.1)
                     self.myBoard = Board()
 
-        pygame.scale
-
     def render(self):
         # Clear screen
         self.screen.fill((0, 0, 0))
@@ -165,7 +164,7 @@ class Game:
         for row in self.myBoard.points:
             for point in row:
                 if point.is_ball:
-                    point.draw(self.screen, pygame.mouse.get_pos())
+                    point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn)
 
         if self.controller.client.current_population == 1:
             x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
