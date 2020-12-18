@@ -33,7 +33,7 @@ class Point:
         size_multiplier = 0.7
         dist = math.hypot(x - mouse_pos[0], y - mouse_pos[1])
         max = (Settings.screen_width + Settings.screen_height) / 3
-        b = 1
+        b = 1.2
         a = -b / max
         size_multiplier += a*dist + b
 
