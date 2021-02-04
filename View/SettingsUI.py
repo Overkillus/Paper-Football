@@ -29,6 +29,7 @@ class SettingsUI:
     sound_reduce = pygame.image.load('Art/sound_reduce.png')
     sound_increase = pygame.image.load('Art/sound_increase.png')
 
+
     font = pygame.font.SysFont('arialbold', 30)
 
     mixer.music.load('Sound/background.wav')
@@ -42,8 +43,16 @@ class SettingsUI:
         self.controller = controller
 
         # Buttons
-        button_w = 70
-        button_h = 40
+        button_x = 325
+        button_y = 320
+        button_w = 25
+        button_h = 25
+        self.yellow_button = pygame.Rect(button_x, button_y, button_w, button_h)
+        self.pink_button = pygame.Rect(button_x + 35, button_y, button_w, button_h)
+        self.cyan_button = pygame.Rect(button_x + 35*2, button_y, button_w, button_h)
+        self.red_button = pygame.Rect(button_x + 35*3, button_y, button_w, button_h)
+        self.green_button = pygame.Rect(button_x + 35*4, button_y, button_w, button_h)
+        self.orange_button = pygame.Rect(button_x + 35*5, button_y, button_w, button_h)
         self.exit_button = pygame.Rect(15, 25, self.setting_icon.get_width(), self.setting_icon.get_height())
         self.default_screen_button = pygame.Rect(250, 95, self.default_screen.get_width(), self.default_screen.get_height())
         self.medium_screen_button = pygame.Rect(350, 95, self.medium_screen.get_width(), self.medium_screen.get_height())
@@ -51,10 +60,11 @@ class SettingsUI:
         self.football_theme_button = pygame.Rect(225, 170, self.football_theme.get_width(), self.football_theme.get_height())
         self.neon_theme_button = pygame.Rect(325, 170, self.neon_theme.get_width(), self.neon_theme.get_height())
         self.paper_theme_button = pygame.Rect(425, 170, self.paper_theme.get_width(), self.paper_theme.get_height())
-        self.small_board_button = pygame.Rect(425, 170, self.small_board.get_width(), self.small_board.get_height())
-        self.medium_board_button = pygame.Rect(425, 170, self.medium_board.get_width(), self.medium_board.get_height())
-
-
+        self.small_board_button = pygame.Rect(250, 245, self.small_board.get_width(), self.small_board.get_height())
+        self.medium_board_button = pygame.Rect(320, 245, self.medium_board.get_width(), self.medium_board.get_height())
+        self.sound_off_button = pygame.Rect(220, 385, self.sound_off.get_width(), self.sound_off.get_height())
+        self.sound_reduce_button = pygame.Rect(270, 385, self.sound_reduce.get_width(), self.sound_reduce.get_height())
+        self.sound_increase_button = pygame.Rect(320, 385, self.sound_increase.get_width(), self.sound_increase.get_height())
 
 
 
@@ -66,6 +76,7 @@ class SettingsUI:
             self.controller.delta_time -= 1 / Settings.max_tps
             self.update()
             self.render()
+
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -121,6 +132,13 @@ class SettingsUI:
         self.screen.blit(self.medium_board, (320, 245))
         # Colours
         draw_text('Select your colour:', self.font, Colours.WHITE, self.screen, 125, 325)
+        pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button)
+        pygame.draw.rect(self.screen, Colours.PINK, self.pink_button)
+        pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button)
+        pygame.draw.rect(self.screen, Colours.RED, self.red_button)
+        pygame.draw.rect(self.screen, Colours.GREEN, self.green_button)
+        pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button)
+
         # Sound
         draw_text('Sound:', self.font, Colours.WHITE, self.screen, 125, 400)
         self.screen.blit(self.sound_off, (220, 385))
