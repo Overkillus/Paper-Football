@@ -102,12 +102,13 @@ class SettingsUI:
                 # Mouse click
                 mouse_pos = pygame.mouse.get_pos()
                 # Increase volume
-                #if self.button_1.collidepoint(mouse_pos):
-                 #   mixer.music.set_volume(0.25)
-                #elif self.button_2.collidepoint(mouse_pos):
-                 #   mixer.music.set_volume(0.5)
-                #elif self.button_3.collidepoint(mouse_pos):
-                 #   mixer.music.set_volume(1.0)
+                if self.sound_off_button.collidepoint(mouse_pos):
+                    mixer.music.set_volume(0.0)
+                elif self.sound_reduce_button.collidepoint(mouse_pos):
+                    mixer.music.set_volume(0.5)
+                elif self.sound_increase_button.collidepoint(mouse_pos):
+                    mixer.music.set_volume(1.0)
+
                 # Back button
                 if self.exit_button.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.menuUI)
