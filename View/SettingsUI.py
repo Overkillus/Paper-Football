@@ -101,13 +101,50 @@ class SettingsUI:
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click
                 mouse_pos = pygame.mouse.get_pos()
-                # Increase volume
+                # Volume Control
                 if self.sound_off_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.0)
                 elif self.sound_reduce_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.5)
                 elif self.sound_increase_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(1.0)
+
+                # Resolution Settings
+                if self.default_screen_button.collidepoint(mouse_pos):
+                    ...
+                elif self.medium_screen_button.collidepoint(mouse_pos):
+                    ...
+                elif self.large_screen_button.collidepoint(mouse_pos):
+                    ...
+
+                # Theme Settings
+                if self.football_theme_button.collidepoint(mouse_pos):
+                    ...
+                elif self.neon_theme_button.collidepoint(mouse_pos):
+                    ...
+                elif self.paper_theme_button.collidepoint(mouse_pos):
+                    ...
+
+                # Board settings
+                if self.small_board_button.collidepoint(mouse_pos):
+                    ...
+                elif self.medium_board_button.collidepoint(mouse_pos):
+                    ...
+
+                # Colour Settings
+                if self.yellow_button.collidepoint(mouse_pos):
+                    ...
+                elif self.pink_button.collidepoint(mouse_pos):
+                    ...
+                elif self.cyan_button.collidepoint(mouse_pos):
+                    ...
+                elif self.red_button.collidepoint(mouse_pos):
+                    ...
+                elif self.green_button.collidepoint(mouse_pos):
+                    ...
+                elif self.orange_button.collidepoint(mouse_pos):
+                    ...
+
 
                 # Back button
                 if self.exit_button.collidepoint(mouse_pos):
