@@ -9,6 +9,7 @@ import Settings
 from View.MenuUI import MenuUI
 from View.SettingsUI import SettingsUI
 from View.RulesUI import RulesUI
+from View.ChatUI import ChatUI
 
 pygame.init()
 
@@ -38,7 +39,8 @@ class Controller:
         self.game = Game(self)
         self.settingsUI = SettingsUI(self)
         self.rulesUI = RulesUI(self)
-        self.views = [self.menuUI, self.game, self.settingsUI, self.rulesUI]
+        self.chatUI = ChatUI(self)
+        self.views = [self.menuUI, self.game, self.settingsUI, self.rulesUI, self.chatUI]
 
         # Initial state
         self.menuUI.is_running = True

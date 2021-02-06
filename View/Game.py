@@ -16,6 +16,7 @@ class Game:
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
     rules_icon = pygame.image.load("Art/question_black.png")
+    chat_icon = pygame.image.load("Art/question_black.png")
 
     def __init__(self, controller):
         # State
@@ -34,7 +35,6 @@ class Game:
 
         # Rules
         self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
-
 
         # Players
         self.players = []
@@ -173,6 +173,7 @@ class Game:
 
         # Rules icon
         self.screen.blit(self.rules_icon, (630, 430))
+        self.screen.blit(self.chat_icon, (10, 430))
 
         # Show new frame
         pygame.display.flip()
