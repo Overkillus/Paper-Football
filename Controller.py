@@ -4,7 +4,7 @@ import sys
 import pygame
 
 from Server.Client import Client
-from View.Game import Game
+from View.GameUI import Game
 import Settings
 from View.MenuUI import MenuUI
 from View.SettingsUI import SettingsUI
