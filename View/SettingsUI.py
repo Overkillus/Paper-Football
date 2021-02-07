@@ -91,7 +91,6 @@ class SettingsUI:
             self.update()
             self.render()
 
-
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
