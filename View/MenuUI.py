@@ -97,7 +97,7 @@ class MenuUI:
                             self.controller.client.quick_join()
                     # Swap to game
                     if self.controller.client.connected:
-                        self.controller.change_view(self.controller.game)
+                        self.controller.change_view(self.controller.gameUI)
 
     def update(self):
         pass

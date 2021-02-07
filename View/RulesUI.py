@@ -42,10 +42,10 @@ class RulesUI:
             if event.type == pygame.QUIT:
                 self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.controller.change_view(self.controller.game)
+                self.controller.change_view(self.controller.gameUI)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
-                    self.controller.change_view(self.controller.game)
+                    self.controller.change_view(self.controller.gameUI)
 
     def update(self):
         pass

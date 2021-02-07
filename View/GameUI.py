@@ -63,8 +63,8 @@ class Game:
             elif event.type == pygame.MOUSEBUTTONUP:
 
                 # Particle effect on click
-                loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
                 for i in range(80):
+                    loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
                     p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(1, 4))
                     self.particles.append(p)
 
