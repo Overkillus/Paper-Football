@@ -4,10 +4,12 @@ import sys
 import pygame
 
 from Server.Client import Client
-from View.Game import Game
+from View.GameUI import Game
 import Settings
 from View.MenuUI import MenuUI
 from View.SettingsUI import SettingsUI
+from View.RulesUI import RulesUI
+from View.ChatUI import ChatUI
 
 pygame.init()
 
@@ -34,9 +36,11 @@ class Controller:
 
         # Views
         self.menuUI = MenuUI(self)
-        self.game = Game(self)
+        self.gameUI = Game(self)
         self.settingsUI = SettingsUI(self)
-        self.views = [self.menuUI, self.game, self.settingsUI]
+        self.rulesUI = RulesUI(self)
+        self.chatUI = ChatUI(self)
+        self.views = [self.menuUI, self.gameUI, self.settingsUI, self.rulesUI, self.chatUI]
 
         # Initial state
         self.menuUI.is_running = True

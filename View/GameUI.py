@@ -17,6 +17,8 @@ class Game:
     boardImg = pygame.image.load("Art/board_lines.png")
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
+    rules_icon = pygame.image.load("Art/question_black.png")
+    chat_icon = pygame.image.load("Art/question_black.png")
 
     def __init__(self, controller):
         # State
@@ -33,6 +35,9 @@ class Game:
         self.circle_radius = 8
         self.circle_hitbox_multiplier = 1.8
         self.particles = []
+
+        # Rules
+        self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
 
         # Players
         self.players = []
@@ -57,12 +62,18 @@ class Game:
                 self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
 
-                # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+                # Particle effect on click
+                loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
                 for i in range(80):
-                    loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
                     p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(1, 4))
                     self.particles.append(p)
 
+                # Button
+                mouse_pos = pygame.mouse.get_pos()
+                if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
+                    self.controller.change_view(self.controller.rulesUI)
+
+                # Game logic
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
                         if self.players[0].turn and self.controller.client.current_population == 2:
@@ -135,15 +146,8 @@ class Game:
 
         # Particles
         self.particles = [particle for particle in self.particles if particle.time > 0]
-        # print(len(self.particles))
         for particle in self.particles:
             particle.tick()
-
-        # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
-        # for i in range(40):
-        #     loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
-        #     p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(2, 4))
-        #     self.particles.append(p)
 
     def render(self):
         # Clear screen
@@ -186,6 +190,12 @@ class Game:
             x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
             y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
             self.screen.blit(self.waitingPlayer, (x, y))
+
+        # Rules icon
+        self.screen.blit(self.rules_icon, (630, 430))
+
+        # Chat icon
+        self.screen.blit(self.chat_icon, (10, 430))
 
         # Show new frame
         pygame.display.flip()
