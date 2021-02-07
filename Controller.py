@@ -25,7 +25,7 @@ class Controller:
 
         # Client (connection)
         # self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
-        self.client = Client("139.162.219.137", 2000)
+        self.client = Client("139.162.219.137", 2000) # Server ip
         # self.client.start()  #temp
 
         # Clock
@@ -44,20 +44,20 @@ class Controller:
         # Start
         self.run()
 
+    # Show the currently active view (1 at a time)
     def run(self):
         while True:
-            if self.menuUI.is_running:
-                self.menuUI.main()
-            if self.game.is_running:
-                self.game.main()
-            if self.settingsUI.is_running:
-                self.settingsUI.main()
+            for view in self.views:
+                if view.is_running:
+                    view.main()
 
+    # Terminate server connection and close application
     def close_game(self):
         if self.client.connected:
             self.client.disconnect()
         sys.exit(0)
 
+    # Swap current view
     def change_view(self, view):
         if view not in self.views:
             return False
@@ -67,4 +67,5 @@ class Controller:
             view.is_running = True
 
 
+# Self-activation
 Controller()

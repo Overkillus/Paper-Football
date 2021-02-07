@@ -27,6 +27,8 @@ class GameServer(Server):
             self.send_to_all_clients_except(msg, connection)
         if self.SYNCHRONISE_MSG in msg:
             self.send_to_all_clients(msg)
+        if self.POPULATION_MSG in msg:
+            self.send_to_all_clients((self.POPULATION_MSG, len(self.all_connections)))
 
     def console(self, msg):
         new_msg = (f"[SERVER-{self.PORT}]: {msg}")

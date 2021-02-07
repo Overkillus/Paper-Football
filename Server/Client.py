@@ -19,9 +19,11 @@ class Client:
         self.QUICKJOINSERVER_MSG = "!QUICKJOIN"
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
+        self.POPULATUION_MSG = "!POPULATION"
 
         self.pending_move = None
         self.pending_board = None
+        self.current_population = 1
 
         self.IN_GAME = False
         self.connected = False
@@ -93,6 +95,9 @@ class Client:
         elif self.SYNCHRONISE_MSG in msg:
             board = msg[1]
             self.pending_board = board
+        elif self.POPULATUION_MSG in msg:
+            pop = msg[1]
+            self.current_population = pop
 
     # server joining requests
     def create_server(self):
@@ -104,6 +109,7 @@ class Client:
     def join_server(self, key):
         self.console("attempt to join server. if nothing happens, server doesn't exist.")
         self.send_to_server(f"{self.JOINSERVER_MSG} {key}")
+        self.send_to_server(self.POPULATUION_MSG)  # Update pop
         # ask ServerManager to join server with given key. it returns to you the port.
         # you auto join with that port.
 
@@ -111,6 +117,7 @@ class Client:
         #Joins first available server or creates a new server
         self.console("quick joining server. will find one available or make a new one...")
         self.send_to_server(self.QUICKJOINSERVER_MSG)
+        self.send_to_server(self.POPULATUION_MSG)  # Update pop
 
     def exchange_server(self, new_port): # eh, i cba changing function names and stuff
         if not self.changing_server:
@@ -146,6 +153,7 @@ class Client:
             time.sleep(0.01)
 
             self.send_to_server(self.GAMEQUESTION_MSG)  # is this a game?
+            self.send_to_server(self.POPULATUION_MSG) # Update pop
 
         self.changing_server = False # completed exchange_server pretty much.
 

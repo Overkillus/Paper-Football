@@ -25,7 +25,7 @@ class Player:
         self.__saturate(self.lineDRImg, color)
 
     def __saturate(self, image, color):
-        # zero out RGB values
+        # Zero out RGB values
         image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-        # add in new RGB values
+        # Add in new RGB values
         image.fill(color[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)

@@ -1,11 +1,14 @@
 import sys
 import pygame
+import random
 
 # Init
 import Colours
 import Settings
 from Board import Board
+from Particle import Particle
 from Player import Player
+from Point import Point
 
 
 class Game:
@@ -13,6 +16,7 @@ class Game:
     # Art
     boardImg = pygame.image.load("Art/board_lines.png")
     boardWalls = pygame.image.load("Art/board_walls.png")
+    waitingPlayer = pygame.image.load("Art/waiting.png")
 
     def __init__(self, controller):
         # State
@@ -28,6 +32,7 @@ class Game:
         self.myBoard.set_board_distance(self.board_distance)
         self.circle_radius = 8
         self.circle_hitbox_multiplier = 1.8
+        self.particles = []
 
         # Players
         self.players = []
@@ -51,37 +56,48 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
+
+                # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+                for i in range(80):
+                    loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+                    p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(1, 4))
+                    self.particles.append(p)
+
                 for i in range(self.myBoard.width):
                     for j in range(self.myBoard.height):
-                        # Square hitbox points in the board
-                        hitbox = pygame.Rect(
-                            self.board_distance + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
-                            self.board_distance + j * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # Y
-                            self.circle_radius * self.circle_hitbox_multiplier * 2,  # width
-                            self.circle_radius * self.circle_hitbox_multiplier * 2  # height
-                        )
-                        # If point clicked
-                        if hitbox.collidepoint(pygame.mouse.get_pos()):
-                            point = self.myBoard.points[i][j]
-                            point_used = point.is_used
-                            current_player = [p for p in self.players if p.turn][0]
-                            current_index = self.players.index(current_player)
-                            result = self.myBoard.move(point, self.players[current_index])  # TEMP
+                        if self.players[0].turn and self.controller.client.current_population == 2:
+                            # Square hitbox points in the board
+                            hitbox = pygame.Rect(
+                                self.board_distance + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
+                                self.board_distance + j * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # Y
+                                self.circle_radius * self.circle_hitbox_multiplier * 2,  # width
+                                self.circle_radius * self.circle_hitbox_multiplier * 2  # height
+                            )
+                            # If point clicked
+                            if hitbox.collidepoint(pygame.mouse.get_pos()):
+                                point = self.myBoard.points[i][j]
+                                point_used = point.is_used
+                                player = self.players[0]
+                                result = self.myBoard.move(point, player)  # TEMP
 
-                            # # TODO temp
-                            if result:
-                                self.controller.client.send_to_server(("!MOVE", (i, j)))
-                                # self.controller.client.send_to_server(("!SYNCHRONISE", self.myBoard))
+                                # Send move to opponent
+                                if result:
+                                    x = i - (self.myBoard.width-1)
+                                    x = -x
 
-                            # If move made update turn for players
-                            if result and not point_used:
-                                current_player.turn = False
-                                self.players[(current_index + 1) % 2].turn = True
+                                    self.controller.client.send_to_server(("!MOVE", (x, j)))
+                                    # self.controller.client.send_to_server(("!SYNCHRONISE", self.myBoard))
 
-                            for row in self.myBoard.points:
-                                for current_point in row:
-                                    current_point.is_selected = False
-                            point.is_selected = True
+                                # If move made update turn for players
+                                if result and not point_used:
+                                    player.turn = False
+                                    self.players[1].turn = True
+
+                                # Update selected points
+                                for row in self.myBoard.points:
+                                    for current_point in row:
+                                        current_point.is_selected = False
+                                point.is_selected = True
 
     def update(self):
         # Update pending opponent moves
@@ -90,23 +106,44 @@ class Game:
             self.controller.client.pending_move = None
             point = self.myBoard.points[pending_move[0]][pending_move[1]]
             point_used = point.is_used
-            current_player = [p for p in self.players if p.turn][0]
-            current_index = self.players.index(current_player)
-            result = self.myBoard.move(point, self.players[current_index])
+            result = self.myBoard.move(point, self.players[1])
             for row in self.myBoard.points:
                 for current_point in row:
                     current_point.is_selected = False
 
             # If move made update turn for players
             if result and not point_used:
-                current_player.turn = False
-                self.players[(current_index + 1) % 2].turn = True
+                self.players[1].turn = False
+                self.players[0].turn = True
 
         if self.controller.client.pending_board is not None:
             pending_board = self.controller.client.pending_board
             self.controller.client.pending_board = None
             self.myBoard = pending_board
 
+        # Check for goal
+        for row in self.myBoard.points:
+            for current_point in row:
+                if current_point.is_goal and current_point.is_ball:
+                    for p in self.players:
+                        if p.turn:
+                            p.score += 1
+                    connection_sound = pygame.mixer.Sound('Sound/goal.wav')
+                    connection_sound.play()
+                    connection_sound.set_volume(0.1)
+                    self.myBoard = Board()
+
+        # Particles
+        self.particles = [particle for particle in self.particles if particle.time > 0]
+        # print(len(self.particles))
+        for particle in self.particles:
+            particle.tick()
+
+        # loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+        # for i in range(40):
+        #     loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
+        #     p = Particle(loc, (random.randint(0, 20)/10-1, random.randint(0, 20)/10-1), random.randint(2, 4))
+        #     self.particles.append(p)
 
     def render(self):
         # Clear screen
@@ -121,17 +158,34 @@ class Game:
         # Draw board points
         for row in self.myBoard.points:
             for point in row:
-                point.draw(self.screen)
+                if not point.is_ball:
+                    point.draw(self.screen, pygame.mouse.get_pos())
 
         # Draw Scores
         font = pygame.font.Font(None, 60)
-        score1 = font.render(str(self.players[0].score), True, Colours.WHITE)
+        score1 = font.render(str(self.players[0].score), True, Colours.PURPLE)
         self.screen.blit(score1, (35, 70))
-        score2 = font.render(str(self.players[1].score), True, Colours.WHITE)
+        score2 = font.render(str(self.players[1].score), True, Colours.YELLOW)
         self.screen.blit(score2, (640, 70))
 
         # Draw background (board walls)
         self.screen.blit(self.boardWalls, (0, 0))
+
+        # Draw ball
+        for row in self.myBoard.points:
+            for point in row:
+                if point.is_ball:
+                    point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn)
+
+        # Particles
+        for p in self.particles:
+            p.draw(self.screen)
+
+        # Waiting banner
+        if self.controller.client.current_population == 1:
+            x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
+            y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
+            self.screen.blit(self.waitingPlayer, (x, y))
 
         # Show new frame
         pygame.display.flip()

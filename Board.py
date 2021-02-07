@@ -36,7 +36,9 @@ class Board:
         ab = Connection(a, b, False, player)
 
         # Invalid length check
-        if not self.__validate_connection_length(ab):
+        if not b.is_legal or not a.is_legal:
+            return False
+        elif not self.__validate_connection_length(ab):
             print("wrong length")
             return False
         # Connection or mirror connection already exists
@@ -63,7 +65,7 @@ class Board:
         # Boolean
         result = self.add_connection(a, b, player)
         if result:
-            connection_sound = mixer.Sound('Sound/moving_effect.mp3')  # Sound by LittleSoundRobotFactory @ FreeSound
+            connection_sound = mixer.Sound('Sound/moving_effect.wav')  # Sound by LittleSoundRobotFactory @ FreeSound
             connection_sound.play()
             connection_sound.set_volume(0.1)
             a.is_ball = False
@@ -178,6 +180,11 @@ class Board:
             self.points[0][self.height-1-i].is_legal = False
             self.points[self.width-1][i].is_legal = False
             self.points[self.width-1][self.height-i-1].is_legal = False
+
+        # Hardcoded goal points
+        for j in range(3, 6):
+            self.points[0][j].is_goal = True
+            self.points[self.width-1][j].is_goal = True
 
     def add_long_connection(self, a, b):
         """
