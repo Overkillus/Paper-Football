@@ -94,7 +94,7 @@ class SettingsUI:
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.controller.change_view(self.controller.menuUI)
+                self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -104,18 +104,20 @@ class SettingsUI:
                 if self.sound_off_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.0)
                 elif self.sound_reduce_button.collidepoint(mouse_pos):
-                    mixer.music.set_volume(0.5)
+                    mixer.music.set_volume(0.1)
                 elif self.sound_increase_button.collidepoint(mouse_pos):
-                    mixer.music.set_volume(1.0)
+                    mixer.music.set_volume(0.2)
 
                 # Resolution Settings
                 if self.default_screen_button.collidepoint(mouse_pos):
-                    ...
+                    self.screen = pygame.display.set_mode((Settings.default_screen_width, Settings.default_screen_height), pygame.RESIZABLE)
                 elif self.medium_screen_button.collidepoint(mouse_pos):
                     ...
                 elif self.large_screen_button.collidepoint(mouse_pos):
-                    ...
-
+                    self.screen = pygame.display.set_mode((0, 0))
+                    pygame.display.toggle_fullscreen()
+                    Settings.screen_width = pygame.display.get_window_size()[0]
+                    Settings.screen_width = pygame.display.get_window_size()[1]
                 # Theme Settings
                 if self.football_theme_button.collidepoint(mouse_pos):
                     ...
@@ -154,7 +156,7 @@ class SettingsUI:
 
     def render(self):
         # Clear screen
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((3, 15, 56))
 
         # Background
         self.screen.blit(self.background, (0, 0))

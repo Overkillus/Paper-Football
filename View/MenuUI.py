@@ -38,10 +38,10 @@ class MenuUI:
         self.controller = controller
 
         # Sound button
-        self.sound_rect = self.sound_icon.get_rect(topleft=(75, 430))
+        self.sound_rect = self.sound_icon.get_rect()
 
         # Settings button
-        self.settings_rect = self.settings_icon.get_rect(topleft=(15, 430))
+        self.settings_rect = self.settings_icon.get_rect()
 
         # Start and exit buttons
         button_w = 100
@@ -100,31 +100,49 @@ class MenuUI:
                         self.controller.change_view(self.controller.gameUI)
 
     def update(self):
-        pass
+        # Layout helper variables
+        sw = self.screen.get_width()
+        sh = self.screen.get_height()
+
+        # Settings
+        self.settings_rect.center = (40, sh-40)
+        # Sound mute
+        self.sound_rect.center = (100, sh-40)
+        # Buttons (start/exit)
+        self.button_1.center = (sw/2 - self.button_1.width, sh/3)
+        self.button_2.center = (sw/2 + self.button_2.width, sh/3)
 
     def render(self):
+        # Layout helper variables
+        sw = self.screen.get_width()
+        sh = self.screen.get_height()
+
         # Clear screen
-        self.screen.fill((0, 0, 0))
-        # Background
-        self.screen.blit(self.background, (0, 0))
+        self.screen.fill((3, 15, 56))
+        # Background image
+        self.screen.blit(self.background,
+                         (sw/2 - self.background.get_width()/2,
+                          sh/2 - self.background.get_height()/2))
         # Title
-        self.screen.blit(self.title, (self.screen.get_width()/2 - self.title.get_width()/2, self.screen.get_height()/10))
+        self.screen.blit(self.title,
+                         (sw/2 - self.title.get_width()/2,
+                          sh/10))
         # Settings
-        self.screen.blit(self.settings_icon, (15, 430))
+        self.screen.blit(self.settings_icon, self.settings_rect)
         # Mute toggle
         if Settings.sound_muted:
-            self.screen.blit(self.sound_icon_off, (75, 430))
+            self.screen.blit(self.sound_icon_off, self.sound_rect)
         else:
-            self.screen.blit(self.sound_icon, (75, 430))
+            self.screen.blit(self.sound_icon, self.sound_rect)
         # Start and Exit buttons
         pygame.draw.rect(self.screen, Colours.CYAN, self.button_1)
         pygame.draw.rect(self.screen, Colours.PINK, self.button_2)
         draw_text('START', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
         draw_text('QUIT', self.font, Colours.WHITE, self.screen, self.button_2.x + 25, self.button_2.y + 10)
         if self.button_1.collidepoint(pygame.mouse.get_pos()):
-            self.screen.blit(self.button1_glow, (225, 145))
+            self.screen.blit(self.button1_glow, (self.button_1[0]-5, self.button_1[1]-5))
         if self.button_2.collidepoint(pygame.mouse.get_pos()):
-            self.screen.blit(self.button2_glow, (365, 145))
+            self.screen.blit(self.button2_glow, (self.button_2[0]-5, self.button_2[1]-5))
         # Show new frame
         pygame.display.flip()
 
