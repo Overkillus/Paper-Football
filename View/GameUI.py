@@ -76,6 +76,8 @@ class Game:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.rules_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.rulesUI)
+                if self.chat_rect.collidepoint(mouse_pos):
+                    self.controller.change_view(self.controller.chatUI)
 
                 # Game logic
                 for i in range(self.myBoard.width):
