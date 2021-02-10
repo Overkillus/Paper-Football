@@ -36,8 +36,12 @@ class Game:
         self.circle_hitbox_multiplier = 1.8
         self.particles = []
 
-        # Rules
-        self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
+        # Buttons
+        self.rules_rect = self.rules_icon.get_rect()
+        self.chat_rect = self.chat_icon.get_rect()
+
+        # Banners
+        self.waiting_rect = self.waitingPlayer.get_rect()
 
         # Players
         self.players = []
@@ -70,7 +74,7 @@ class Game:
 
                 # Button
                 mouse_pos = pygame.mouse.get_pos()
-                if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
+                if self.rules_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.rulesUI)
 
                 # Game logic
@@ -111,6 +115,17 @@ class Game:
                                 point.is_selected = True
 
     def update(self):
+        # Layout helper variables
+        sw = self.screen.get_width()
+        sh = self.screen.get_height()
+
+        # Buttons
+        self.rules_rect.bottomright = (sw-10, sh-20)
+        self.chat_rect.bottomleft = (10, sh-20)
+
+        # Banners
+        self.waiting_rect.center = (sw/2, sh/2)
+
         # Update pending opponent moves
         if self.controller.client.pending_move is not None:
             pending_move = self.controller.client.pending_move
@@ -187,15 +202,13 @@ class Game:
 
         # Waiting banner
         if self.controller.client.current_population == 1:
-            x = Settings.screen_width/2 - (self.waitingPlayer.get_width()/2)
-            y = Settings.screen_height/2 - (self.waitingPlayer.get_height()/2)
-            self.screen.blit(self.waitingPlayer, (x, y))
+            self.screen.blit(self.waitingPlayer, self.waiting_rect)
 
         # Rules icon
-        self.screen.blit(self.rules_icon, (630, 430))
+        self.screen.blit(self.rules_icon, self.rules_rect)
 
         # Chat icon
-        self.screen.blit(self.chat_icon, (10, 430))
+        self.screen.blit(self.chat_icon, self.chat_rect)
 
         # Show new frame
         pygame.display.flip()
