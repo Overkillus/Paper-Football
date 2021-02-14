@@ -110,10 +110,10 @@ class SettingsUI:
                 if self.default_screen_button.collidepoint(mouse_pos):
                     self.screen = pygame.display.set_mode((Settings.default_screen_width, Settings.default_screen_height), pygame.RESIZABLE)
                 elif self.medium_screen_button.collidepoint(mouse_pos):
-                    ...
+                    self.screen = pygame.display.set_mode((1366, 768))
                 elif self.large_screen_button.collidepoint(mouse_pos):
-                    self.screen = pygame.display.set_mode((0, 0))
-                    pygame.display.toggle_fullscreen()
+                    # self.screen = pygame.display.set_mode((1920, 1080))
+                    self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
                     Settings.screen_width = pygame.display.get_window_size()[0]
                     Settings.screen_width = pygame.display.get_window_size()[1]
                 # Theme Settings
@@ -191,10 +191,10 @@ class SettingsUI:
         pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button)
 
         # Sound
-        draw_text('Sound:', self.font, Colours.WHITE, self.screen, 125, 400)
-        self.screen.blit(self.sound_off, (220, 385))
-        self.screen.blit(self.sound_reduce, (270, 385))
-        self.screen.blit(self.sound_increase, (320, 385))
+        draw_text('Sound:', self.font, Colours.WHITE, self.screen, 125, 450)
+        self.screen.blit(self.sound_off, (220, 425))
+        self.screen.blit(self.sound_reduce, (270, 425))
+        self.screen.blit(self.sound_increase, (320, 425))
 
         # Buttons
         if self.default_screen_button.collidepoint(pygame.mouse.get_pos()):

@@ -153,9 +153,10 @@ class Game:
         for row in self.myBoard.points:
             for current_point in row:
                 if current_point.is_goal and current_point.is_ball:
-                    for p in self.players:
-                        if p.turn:
-                            p.score += 1
+                    if current_point.x < self.myBoard.width/2:
+                        self.players[1].score += 1
+                    else:
+                        self.players[0].score += 1
                     connection_sound = pygame.mixer.Sound('Sound/goal.wav')
                     connection_sound.play()
                     connection_sound.set_volume(0.1)
