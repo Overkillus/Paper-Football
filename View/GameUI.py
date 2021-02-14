@@ -40,6 +40,12 @@ class Game:
         self.rules_rect = self.rules_icon.get_rect()
         self.chat_rect = self.chat_icon.get_rect()
 
+        # Board
+        self.board_lines_rect = self.boardImg.get_rect()
+        self.board_walls_rect = self.boardWalls.get_rect()
+        self.x_offset = 0
+        self.y_offset = 0
+
         # Banners
         self.waiting_rect = self.waitingPlayer.get_rect()
 
@@ -85,8 +91,8 @@ class Game:
                         if self.players[0].turn and self.controller.client.current_population == 2:
                             # Square hitbox points in the board
                             hitbox = pygame.Rect(
-                                self.board_distance + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
-                                self.board_distance + j * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # Y
+                                self.x_offset + i * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # X
+                                self.y_offset + j * self.board_distance - self.circle_radius * self.circle_hitbox_multiplier,  # Y
                                 self.circle_radius * self.circle_hitbox_multiplier * 2,  # width
                                 self.circle_radius * self.circle_hitbox_multiplier * 2  # height
                             )
@@ -124,6 +130,12 @@ class Game:
         # Buttons
         self.rules_rect.bottomright = (sw-10, sh-20)
         self.chat_rect.bottomleft = (10, sh-20)
+
+        # Board
+        self.board_lines_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_rect.center = (sw / 2 + 5, sh / 2)
+        self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
+        self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
 
         # Banners
         self.waiting_rect.center = (sw/2, sh/2)
@@ -172,32 +184,33 @@ class Game:
         self.screen.fill((0, 0, 0))
 
         # Draw lines of the board
-        self.screen.blit(self.boardImg, (0, 0))
+        self.screen.blit(self.boardImg, self.board_lines_rect)
+
         # Draw connections
         for connection in self.myBoard.connections:
-            connection.draw(self.screen)
+            connection.draw(self.screen, (self.x_offset, self.y_offset))
 
         # Draw board points
         for row in self.myBoard.points:
             for point in row:
                 if not point.is_ball:
-                    point.draw(self.screen, pygame.mouse.get_pos())
+                    point.draw(self.screen, pygame.mouse.get_pos(), False, (self.x_offset, self.y_offset))
 
-        # Draw Scores
+        # Draw Scores #TODO add art
         font = pygame.font.Font(None, 60)
-        score1 = font.render(str(self.players[0].score), True, Colours.PURPLE)
-        self.screen.blit(score1, (35, 70))
-        score2 = font.render(str(self.players[1].score), True, Colours.YELLOW)
-        self.screen.blit(score2, (640, 70))
+        score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
+        self.screen.blit(score1, (self.screen.get_width()/18, 70))
+        score2 = font.render(str(self.players[1].score), True, self.players[1].get_color())
+        self.screen.blit(score2, (self.screen.get_width()-self.screen.get_width()/10+8, 70))
 
         # Draw background (board walls)
-        self.screen.blit(self.boardWalls, (0, 0))
+        self.screen.blit(self.boardWalls, self.board_walls_rect)
 
         # Draw ball
         for row in self.myBoard.points:
             for point in row:
                 if point.is_ball:
-                    point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn)
+                    point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn, (self.x_offset, self.y_offset))
 
         # Particles
         for p in self.particles:

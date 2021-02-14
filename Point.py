@@ -23,11 +23,11 @@ class Point:
         self.is_selected = False
         self.ball_scale_time = 0
 
-    def draw(self, screen, mouse_pos, pulse=False):
+    def draw(self, screen, mouse_pos, pulse=False, offset=(0, 0)):
 
         # Coordinates
-        x = self.board_distance + (self.x * self.board_distance)
-        y = self.board_distance + (self.y * self.board_distance)
+        x = offset[0] + (self.x * self.board_distance)
+        y = offset[1] + (self.y * self.board_distance)
 
         # Dynamic point scaling
         size_multiplier = 0.7

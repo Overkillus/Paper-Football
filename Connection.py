@@ -19,7 +19,7 @@ class Connection:
         self.is_wall = is_wall
         self.player = player
 
-    def draw(self, screen):
+    def draw(self, screen, offset=(0, 0)):
 
         # Omit drawing non player lines TODO different connection type
         if self.player is not None:
@@ -43,43 +43,43 @@ class Connection:
         # Starting bottom right corner and going clockwise
         if difference == (1, 1):  # Bottom right
             screen.blit(lineDLImg,
-                        (self.board_distance + self.a.x * self.board_distance - lineHImg.get_width()/10,
-                         self.board_distance + self.a.y * self.board_distance - lineHImg.get_height()/2)
+                        (offset[0] + self.a.x * self.board_distance - lineHImg.get_width()/10,
+                         offset[1] + self.a.y * self.board_distance - lineHImg.get_height()/2)
                         )
         elif difference == (0, 1):  # Bottom center
             screen.blit(lineVImg,
-                        (self.board_distance + self.a.x * self.board_distance - lineVImg.get_width()/2,
-                         self.board_distance + self.a.y * self.board_distance - lineVImg.get_height()/10)
+                        (offset[0] + self.a.x * self.board_distance - lineVImg.get_width()/2,
+                         offset[1] + self.a.y * self.board_distance - lineVImg.get_height()/10)
                         )
         elif difference == (-1, 1):  # Bottom left
             screen.blit(lineDRImg,
-                        (self.board_distance + (self.a.x-1) * self.board_distance - lineDRImg.get_width()/10,
-                         self.board_distance + self.a.y * self.board_distance - lineDRImg.get_height()/10)
+                        (offset[0] + (self.a.x-1) * self.board_distance - lineDRImg.get_width()/10,
+                         offset[1] + self.a.y * self.board_distance - lineDRImg.get_height()/10)
                         )
         elif difference == (-1, 0):  # Left center
             screen.blit(lineHImg,
-                        (self.board_distance + self.b.x * self.board_distance - lineHImg.get_width()/10,
-                         self.board_distance + self.b.y * self.board_distance - lineHImg.get_height()/2)
+                        (offset[0] + self.b.x * self.board_distance - lineHImg.get_width()/10,
+                         offset[1] + self.b.y * self.board_distance - lineHImg.get_height()/2)
                         )
         elif difference == (-1, -1):  # Top left
             screen.blit(lineDLImg,
-                        (self.board_distance + self.b.x * self.board_distance - lineHImg.get_width() / 10,
-                         self.board_distance + self.b.y * self.board_distance - lineHImg.get_height() / 2)
+                        (offset[0] + self.b.x * self.board_distance - lineHImg.get_width() / 10,
+                         offset[1] + self.b.y * self.board_distance - lineHImg.get_height() / 2)
                         )
         elif difference == (0, -1):  # Top center
             screen.blit(lineVImg,
-                        (self.board_distance + self.b.x * self.board_distance - lineVImg.get_width()/2,
-                         self.board_distance + self.b.y * self.board_distance - lineVImg.get_height()/10)
+                        (offset[0] + self.b.x * self.board_distance - lineVImg.get_width()/2,
+                         offset[1] + self.b.y * self.board_distance - lineVImg.get_height()/10)
                         )
         elif difference == (1, -1):  # Top right
             screen.blit(lineDRImg,
-                        (self.board_distance + (self.b.x-1) * self.board_distance - lineDRImg.get_width()/10,
-                         self.board_distance + self.b.y * self.board_distance - lineDRImg.get_height()/10)
+                        (offset[0] + (self.b.x-1) * self.board_distance - lineDRImg.get_width()/10,
+                         offset[1] + self.b.y * self.board_distance - lineDRImg.get_height()/10)
                         )
         elif difference == (1, 0):  # Right center
             screen.blit(lineHImg,
-                        (self.board_distance + self.a.x * self.board_distance - lineHImg.get_width()/10,
-                         self.board_distance + self.a.y * self.board_distance - lineHImg.get_height()/2)
+                        (offset[0] + self.a.x * self.board_distance - lineHImg.get_width()/10,
+                         offset[1] + self.a.y * self.board_distance - lineHImg.get_height()/2)
                         )
 
     def __saturate(self, image, color):
