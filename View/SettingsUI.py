@@ -191,10 +191,10 @@ class SettingsUI:
         pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button)
 
         # Sound
-        draw_text('Sound:', self.font, Colours.WHITE, self.screen, 125, 450)
-        self.screen.blit(self.sound_off, (220, 425))
-        self.screen.blit(self.sound_reduce, (270, 425))
-        self.screen.blit(self.sound_increase, (320, 425))
+        draw_text('Sound:', self.font, Colours.WHITE, self.screen, 125, 400)
+        self.screen.blit(self.sound_off, (220, 385))
+        self.screen.blit(self.sound_reduce, (270, 385))
+        self.screen.blit(self.sound_increase, (320, 385))
 
         # Buttons
         if self.default_screen_button.collidepoint(pygame.mouse.get_pos()):
