@@ -132,17 +132,17 @@ class SettingsUI:
 
                 # Colour Settings
                 if self.yellow_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.YELLOW)
                 elif self.pink_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.PINK)
                 elif self.cyan_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.CYAN)
                 elif self.red_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.RED)
                 elif self.green_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.GREEN)
                 elif self.orange_button.collidepoint(mouse_pos):
-                    ...
+                    self.controller.gameUI.players[0].set_color(Colours.ORANGE)
 
                 # Back button
                 if self.exit_button.collidepoint(mouse_pos):
