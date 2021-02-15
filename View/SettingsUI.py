@@ -38,6 +38,7 @@ class SettingsUI:
     sound_reduce = pygame.image.load('Art/sound_reduce.png')
     sound_increase = pygame.image.load('Art/sound_increase.png')
 
+    fontTitle = pygame.font.SysFont('arialbold', 45)
     font = pygame.font.SysFont('arialbold', 30)
 
     mixer.music.load('Sound/background.wav')
@@ -202,7 +203,7 @@ class SettingsUI:
         self.screen.blit(self.background, (0, 0))
 
         # Settings title
-        draw_text('Game Settings', self.font, Colours.WHITE, self.screen, sw/2 - 65, 25)
+        draw_text('Game Settings', self.fontTitle, Colours.WHITE, self.screen, sw/2 - 100, 32)
 
         # Exit Icon
         self.screen.blit(self.exitIcon, (15, 25))
@@ -234,7 +235,7 @@ class SettingsUI:
         pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button)
 
         # Sound
-        draw_text('Sound:', self.font, Colours.WHITE, self.screen, self.sound_off_button.x - 100, self.sound_off_button.y + 10)
+        draw_text('Sound:', self.font, Colours.WHITE, self.screen, self.sound_off_button.x - 97, self.sound_off_button.y + 10)
         self.screen.blit(self.sound_off, self.sound_off_button)
         self.screen.blit(self.sound_reduce, self.sound_reduce_button)
         self.screen.blit(self.sound_increase, self.sound_increase_button)
