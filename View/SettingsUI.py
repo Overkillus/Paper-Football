@@ -59,9 +59,9 @@ class SettingsUI:
         self.paper_theme_button = self.paper_theme.get_rect()
         self.small_board_button = self.small_board.get_rect()
         self.medium_board_button = self.medium_board.get_rect()
-        self.sound_off_rect = self.sound_off.get_rect()
-        self.sound_reduce_rect = self.sound_reduce.get_rect()
-        self.sound_increase_rect = self.sound_increase.get_rect()
+        self.sound_off_button = self.sound_off.get_rect()
+        self.sound_reduce_button = self.sound_reduce.get_rect()
+        self.sound_increase_button = self.sound_increase.get_rect()
 
 
 
@@ -120,7 +120,7 @@ class SettingsUI:
                     mixer.music.set_volume(0.0)
                 elif self.sound_reduce_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.1)
-                elif self.sound_increase_rect.collidepoint(mouse_pos):
+                elif self.sound_increase_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.2)
 
                 # Resolution Settings
@@ -169,30 +169,41 @@ class SettingsUI:
     def update(self):
         sw = self.screen.get_width()
         sh = self.screen.get_height()
+        rows = 7
+        y_offset = 40
 
-        self.yellow_button.center = (sw/2, sh/1.5)
-        self.yellow_button_selected.center = (sw/2, sh/1.5)
-        self.pink_button.center = (sw / 2 + 35, sh / 1.5)
-        self.pink_button_selected.center = (sw / 2 + 35, sh / 1.5)
-        self.cyan_button.center = (sw / 2 + 35*2, sh / 1.5)
-        self.cyan_button_selected.center = (sw / 2 + 35*2, sh / 1.5)
-        self.red_button.center = (sw / 2 + 35*3, sh / 1.5)
-        self.red_button_selected.center = (sw / 2 + 35*3, sh / 1.5)
-        self.green_button.center = (sw / 2 + 35*4, sh / 1.5)
-        self.green_button_selected.center = (sw / 2 + 35*4, sh / 1.5)
-        self.orange_button.center = (sw / 2 + 35*5, sh / 1.5)
-        self.orange_button_selected.center = (sw / 2 + 35*5, sh / 1.5)
-        self.default_screen_button.center = (sw/2 - 50, sh/5 + 10)
-        self.medium_screen_button.center = (sw/2 + 50, sh/5 + 10)
-        self.large_screen_button.center = (sw / 2 + 150, sh / 5 + 10)
-        self.football_theme_button.center =(sw / 2 - 75, sh /3 + 20)
-        self.neon_theme_button.center = (sw / 2 + 25, sh /3 + 20)
-        self.paper_theme_button.center = (sw / 2 + 125, sh /3 + 20)
-        self.small_board_button.center = (sw / 2 - 65, sh / 2 + 10)
-        self.medium_board_button.center = (sw / 2 + 5, sh / 2 + 10)
-        self.sound_off_rect.center = (sw / 2 - 100, sh / 1.25 + 10)
-        self.sound_reduce_rect.center = (sw / 2 - 50, sh / 1.25 + 10)
-        self.sound_increase_rect.center = (sw / 2, sh / 1.25 + 10)
+        # Resolution
+        self.default_screen_button.center = (sw/2 - 50, sh/rows + y_offset)
+        self.medium_screen_button.center = (sw/2 + 50, sh/rows + y_offset)
+        self.large_screen_button.center = (sw/2 + 150, sh/rows + y_offset)
+
+        # Theme
+        self.football_theme_button.center =(sw / 2 - 75, 2*sh/rows + y_offset)
+        self.neon_theme_button.center = (sw / 2 + 25, 2*sh/rows + y_offset)
+        self.paper_theme_button.center = (sw / 2 + 125, 2*sh/rows + y_offset)
+
+        # Size
+        self.small_board_button.center = (sw / 2 - 65, 3*sh/rows + y_offset)
+        self.medium_board_button.center = (sw / 2 + 5, 3*sh/rows + y_offset)
+
+        # Colors
+        self.yellow_button.center = (sw/2, 4*sh/rows + y_offset)
+        self.yellow_button_selected.center = (sw/2, 4*sh/rows + y_offset)
+        self.pink_button.center = (sw / 2 + 35, 4*sh/rows + y_offset)
+        self.pink_button_selected.center = (sw / 2 + 35, 4*sh/rows + y_offset)
+        self.cyan_button.center = (sw / 2 + 35*2, 4*sh/rows + y_offset)
+        self.cyan_button_selected.center = (sw / 2 + 35*2, 4*sh/rows + y_offset)
+        self.red_button.center = (sw / 2 + 35*3, 4*sh/rows + y_offset)
+        self.red_button_selected.center = (sw / 2 + 35*3, 4*sh/rows + y_offset)
+        self.green_button.center = (sw / 2 + 35*4, 4*sh/rows + y_offset)
+        self.green_button_selected.center = (sw / 2 + 35*4, 4*sh/rows + y_offset)
+        self.orange_button.center = (sw / 2 + 35*5, 4*sh/rows + y_offset)
+        self.orange_button_selected.center = (sw / 2 + 35*5, 4*sh/rows + y_offset)
+
+        # Sound
+        self.sound_off_button.center = (sw / 2 - 100, 5 * sh / rows + y_offset)
+        self.sound_reduce_button.center = (sw / 2 - 50, 5 * sh / rows + y_offset)
+        self.sound_increase_button.center = (sw / 2, 5 * sh / rows + y_offset)
 
 
     def render(self):
@@ -207,7 +218,7 @@ class SettingsUI:
         self.screen.blit(self.background, (0, 0))
 
         # Settings title
-        draw_text('Game Settings', self.font, Colours.WHITE, self.screen, 300, 30)
+        draw_text('Game Settings', self.font, Colours.WHITE, self.screen, sw/2 - 65, 25)
 
         # Exit Icon
         self.screen.blit(self.exitIcon, (15, 25))
@@ -314,110 +325,3 @@ def draw_text(text, font, color, surface, x, y):
     text_rect = text_object.get_rect()
     text_rect.topleft = (x, y)
     surface.blit(text_object, text_rect)
-
-# Window
-# root = Tk()
-# root.geometry('768x550')
-# root.title("Settings")
-# root.iconbitmap(r'Art/settings.png')
-
-
-# About Credits
-# def about_game():
-#   tkinter.messagebox.showinfo('Credits', 'Sound from:\n~Zapsplat.com, '
-#             '\n~PlayOnLoop.com, '
-#            '\n~http://www.freesfx.co.uk')
-
-
-# How to play
-# def rules():
-#   tkinter.messagebox.showinfo('Rules', 'Two players are trying to score a goal in the opponents net with horizontal, '
-#                                       'vertical and diagonal moves.\nAlready used points can be re-used for a double'
-#                                      'move')
-
-
-# menubar
-# menubar = Menu(root)
-# root.config(menu=menubar)
-
-# submenu
-# subMenu = Menu(menubar, tearoff=0)
-# menubar.add_cascade(label="About", menu=subMenu)
-# subMenu.add_command(label="Credits", command=about_game)
-# subMenu.add_command(label="How to play", command=rules)
-
-# text
-# text = Label(root, text='Game Settings')
-# text.pack(pady=10)
-
-
-# button functions
-# muted = FALSE
-
-
-# def mute_music():
-# global muted
-# if muted:  # unmute music
-# mixer.music.set_volume(0.5)
-# volume1Btn.configure(image=volume1Photo)
-# scale.set(50)
-#   muted = FALSE
-#   #else:  # mute
-#    mixer.music.set_volume(0)
-#     volume1Btn.configure(image=mutePhoto)
-#      scale.set(0)
-#       muted = TRUE
-
-
-# def play_btn():
-#  mixer.music.load('background.wav')
-#   mixer.music.play()
-
-
-# def pause_btn():
-# mixer.music.load('../Sound/background.wav')
-#  mixer.music.stop()
-#   statusbar['text'] = "Paper football: music paused"
-
-
-# def set_vol(val):
-# volume = int(val) / 100
-# mixer.music.set_volume(volume)
-
-
-# def exit_btn():
-#   root.destroy()
-
-# frame
-# middleframe = Frame(root, relief=RAISED, borderwidth=0)
-# middleframe.pack()
-
-# Volume 1
-# volume1Photo = PhotoImage(file='../Art/sound.png')
-# volume1Btn = Button(image=volume1Photo, command=mute_music)
-# volume1Btn.pack()
-# mutePhoto = PhotoImage(file='../Art/sound_off.png')
-
-# Volume button
-# volumePhoto = PhotoImage(file='../Art/sound.png')
-# play_btn = Button(middleframe, image=volumePhoto, command=play_btn)
-# play_btn.pack(pady=5, padx=10)
-
-# Mixer
-# scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
-# scale.set(50)  # default value
-# mixer.music.set_volume(50)
-# scale.pack()
-
-# Exit button
-# exitPhoto = PhotoImage(file='../Art/exit.png')
-# exit_btn = Button(middleframe, image=exitPhoto, command=exit_btn)
-# exit_btn.pack(pady=5, padx=10)
-
-
-# status bar
-# statusbar = Label(root, text="Paper Football", relief=SUNKEN, anchor=W)
-# statusbar.pack(side=BOTTOM, fill=X)
-
-# loop
-# root.mainloop()
