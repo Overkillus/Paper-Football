@@ -50,21 +50,6 @@ class SettingsUI:
         self.screen = controller.screen
         self.controller = controller
 
-        self.default_screen_button = self.default_screen.get_rect()
-        self.exit_rect = self.exitIcon.get_rect()
-        self.medium_screen_button = self.medium_screen.get_rect()
-        self.large_screen_button = self.large_screen.get_rect()
-        self.football_theme_button = self.football_theme.get_rect()
-        self.neon_theme_button = self.neon_theme.get_rect()
-        self.paper_theme_button = self.paper_theme.get_rect()
-        self.small_board_button = self.small_board.get_rect()
-        self.medium_board_button = self.medium_board.get_rect()
-        self.sound_off_button = self.sound_off.get_rect()
-        self.sound_reduce_button = self.sound_reduce.get_rect()
-        self.sound_increase_button = self.sound_increase.get_rect()
-
-
-
         # Buttons
         button_x = 325
         button_y = 320
@@ -83,14 +68,18 @@ class SettingsUI:
         self.orange_button = pygame.Rect(button_x + 35*5, button_y, button_w, button_h)
         self.orange_button_selected = pygame.Rect(button_x + 35*5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
         self.exit_button = pygame.Rect(15, 25, self.setting_icon.get_width(), self.setting_icon.get_height())
-        #self.default_screen_button = pygame.Rect(250, 95, self.default_screen.get_width(), self.default_screen.get_height())
-        #self.medium_screen_button = pygame.Rect(350, 95, self.medium_screen.get_width(), self.medium_screen.get_height())
-        #self.large_screen_button = pygame.Rect(450, 95, self.large_screen.get_width(), self.large_screen.get_height())
-        #self.football_theme_button = pygame.Rect(225, 170, self.football_theme.get_width(), self.football_theme.get_height())
-        #self.neon_theme_button = pygame.Rect(325, 170, self.neon_theme.get_width(), self.neon_theme.get_height())
-        #self.paper_theme_button = pygame.Rect(425, 170, self.paper_theme.get_width(), self.paper_theme.get_height())
-        #self.small_board_button = pygame.Rect(250, 245, self.small_board.get_width(), self.small_board.get_height())
-        #self.medium_board_button = pygame.Rect(320, 245, self.medium_board.get_width(), self.medium_board.get_height())
+        self.default_screen_button = self.default_screen.get_rect()
+        self.exit_rect = self.exitIcon.get_rect()
+        self.medium_screen_button = self.medium_screen.get_rect()
+        self.large_screen_button = self.large_screen.get_rect()
+        self.football_theme_button = self.football_theme.get_rect()
+        self.neon_theme_button = self.neon_theme.get_rect()
+        self.paper_theme_button = self.paper_theme.get_rect()
+        self.small_board_button = self.small_board.get_rect()
+        self.medium_board_button = self.medium_board.get_rect()
+        self.sound_off_button = self.sound_off.get_rect()
+        self.sound_reduce_button = self.sound_reduce.get_rect()
+        self.sound_increase_button = self.sound_increase.get_rect()
         self.sound_off_button = pygame.Rect(220, 385, self.sound_off.get_width(), self.sound_off.get_height())
         self.sound_reduce_button = pygame.Rect(270, 385, self.sound_reduce.get_width(), self.sound_reduce.get_height())
         self.sound_increase_button = pygame.Rect(320, 385, self.sound_increase.get_width(), self.sound_increase.get_height())
