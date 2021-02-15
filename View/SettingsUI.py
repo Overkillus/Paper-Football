@@ -56,34 +56,50 @@ class SettingsUI:
         button_y = 320
         button_w = 25
         button_h = 25
-        self.yellow_button = pygame.Rect(button_x, button_y, button_w, button_h)
-        self.yellow_button_selected = pygame.Rect(button_x-2.5, button_y-2.5, button_w+5, button_h+5)
-        self.pink_button = pygame.Rect(button_x + 35, button_y, button_w, button_h)
-        self.pink_button_selected = pygame.Rect(button_x + 35 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.cyan_button = pygame.Rect(button_x + 35*2, button_y, button_w, button_h)
-        self.cyan_button_selected = pygame.Rect(button_x + 35*2 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.red_button = pygame.Rect(button_x + 35*3, button_y, button_w, button_h)
-        self.red_button_selected = pygame.Rect(button_x + 35*3 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.green_button = pygame.Rect(button_x + 35*4, button_y, button_w, button_h)
-        self.green_button_selected = pygame.Rect(button_x + 35*4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.orange_button = pygame.Rect(button_x + 35*5, button_y, button_w, button_h)
-        self.orange_button_selected = pygame.Rect(button_x + 35*5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        # Colors player 1
+        self.yellow_button_p1 = pygame.Rect(button_x, button_y, button_w, button_h)
+        self.yellow_button_selected_p1 = pygame.Rect(button_x - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.pink_button_p1 = pygame.Rect(button_x + 35, button_y, button_w, button_h)
+        self.pink_button_selected_p1 = pygame.Rect(button_x + 35 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.cyan_button_p1 = pygame.Rect(button_x + 35 * 2, button_y, button_w, button_h)
+        self.cyan_button_selected_p1 = pygame.Rect(button_x + 35 * 2 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.red_button_p1 = pygame.Rect(button_x + 35 * 3, button_y, button_w, button_h)
+        self.red_button_selected_p1 = pygame.Rect(button_x + 35 * 3 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.green_button_p1 = pygame.Rect(button_x + 35 * 4, button_y, button_w, button_h)
+        self.green_button_selected_p1 = pygame.Rect(button_x + 35 * 4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.orange_button_p1 = pygame.Rect(button_x + 35 * 5, button_y, button_w, button_h)
+        self.orange_button_selected_p1 = pygame.Rect(button_x + 35 * 5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        # Colors player 2
+        self.yellow_button_p2 = pygame.Rect(button_x, button_y, button_w, button_h)
+        self.yellow_button_selected_p2 = pygame.Rect(button_x - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.pink_button_p2 = pygame.Rect(button_x + 35, button_y, button_w, button_h)
+        self.pink_button_selected_p2 = pygame.Rect(button_x + 35 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.cyan_button_p2 = pygame.Rect(button_x + 35 * 2, button_y, button_w, button_h)
+        self.cyan_button_selected_p2 = pygame.Rect(button_x + 35 * 2 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.red_button_p2 = pygame.Rect(button_x + 35 * 3, button_y, button_w, button_h)
+        self.red_button_selected_p2 = pygame.Rect(button_x + 35 * 3 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.green_button_p2 = pygame.Rect(button_x + 35 * 4, button_y, button_w, button_h)
+        self.green_button_selected_p2 = pygame.Rect(button_x + 35 * 4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.orange_button_p2 = pygame.Rect(button_x + 35 * 5, button_y, button_w, button_h)
+        self.orange_button_selected_p2 = pygame.Rect(button_x + 35 * 5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        # Exit
         self.exit_button = pygame.Rect(15, 25, self.setting_icon.get_width(), self.setting_icon.get_height())
-        self.default_screen_button = self.default_screen.get_rect()
         self.exit_rect = self.exitIcon.get_rect()
+        # Resolution
+        self.default_screen_button = self.default_screen.get_rect()
         self.medium_screen_button = self.medium_screen.get_rect()
         self.large_screen_button = self.large_screen.get_rect()
+        # Theme
         self.football_theme_button = self.football_theme.get_rect()
         self.neon_theme_button = self.neon_theme.get_rect()
         self.paper_theme_button = self.paper_theme.get_rect()
+        # Size
         self.small_board_button = self.small_board.get_rect()
         self.medium_board_button = self.medium_board.get_rect()
+        # Sound
         self.sound_off_button = self.sound_off.get_rect()
         self.sound_reduce_button = self.sound_reduce.get_rect()
         self.sound_increase_button = self.sound_increase.get_rect()
-        self.sound_off_button = pygame.Rect(220, 385, self.sound_off.get_width(), self.sound_off.get_height())
-        self.sound_reduce_button = pygame.Rect(270, 385, self.sound_reduce.get_width(), self.sound_reduce.get_height())
-        self.sound_increase_button = pygame.Rect(320, 385, self.sound_increase.get_width(), self.sound_increase.get_height())
 
     def main(self):
         self.event_handler()
@@ -135,19 +151,33 @@ class SettingsUI:
                 elif self.medium_board_button.collidepoint(mouse_pos):
                     ...
 
-                # Colour Settings
-                if self.yellow_button.collidepoint(mouse_pos):
+                # Colour player 1 Settings
+                if self.yellow_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.YELLOW)
-                elif self.pink_button.collidepoint(mouse_pos):
+                elif self.pink_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.PINK)
-                elif self.cyan_button.collidepoint(mouse_pos):
+                elif self.cyan_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.CYAN)
-                elif self.red_button.collidepoint(mouse_pos):
+                elif self.red_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.RED)
-                elif self.green_button.collidepoint(mouse_pos):
+                elif self.green_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.GREEN)
-                elif self.orange_button.collidepoint(mouse_pos):
+                elif self.orange_button_p1.collidepoint(mouse_pos):
                     self.controller.gameUI.players[0].set_color(Colours.ORANGE)
+
+                # Colour player 2 Settings
+                if self.yellow_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.YELLOW)
+                elif self.pink_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.PINK)
+                elif self.cyan_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.CYAN)
+                elif self.red_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.RED)
+                elif self.green_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.GREEN)
+                elif self.orange_button_p2.collidepoint(mouse_pos):
+                    self.controller.gameUI.players[1].set_color(Colours.ORANGE)
 
                 # Back button
                 if self.exit_button.collidepoint(mouse_pos):
@@ -156,7 +186,7 @@ class SettingsUI:
     def update(self):
         sw = self.screen.get_width()
         sh = self.screen.get_height()
-        rows = 7
+        rows = 8
         y_offset = 40
 
         # Resolution
@@ -173,24 +203,38 @@ class SettingsUI:
         self.small_board_button.center = (sw / 2 - 65, 3*sh/rows + y_offset)
         self.medium_board_button.center = (sw / 2 + 5, 3*sh/rows + y_offset)
 
-        # Colors
-        self.yellow_button.center = (sw/2, 4*sh/rows + y_offset)
-        self.yellow_button_selected.center = (sw/2, 4*sh/rows + y_offset)
-        self.pink_button.center = (sw / 2 + 35, 4*sh/rows + y_offset)
-        self.pink_button_selected.center = (sw / 2 + 35, 4*sh/rows + y_offset)
-        self.cyan_button.center = (sw / 2 + 35*2, 4*sh/rows + y_offset)
-        self.cyan_button_selected.center = (sw / 2 + 35*2, 4*sh/rows + y_offset)
-        self.red_button.center = (sw / 2 + 35*3, 4*sh/rows + y_offset)
-        self.red_button_selected.center = (sw / 2 + 35*3, 4*sh/rows + y_offset)
-        self.green_button.center = (sw / 2 + 35*4, 4*sh/rows + y_offset)
-        self.green_button_selected.center = (sw / 2 + 35*4, 4*sh/rows + y_offset)
-        self.orange_button.center = (sw / 2 + 35*5, 4*sh/rows + y_offset)
-        self.orange_button_selected.center = (sw / 2 + 35*5, 4*sh/rows + y_offset)
+        # Colors player 1
+        self.yellow_button_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
+        self.yellow_button_selected_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
+        self.pink_button_p1.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
+        self.pink_button_selected_p1.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
+        self.cyan_button_p1.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
+        self.cyan_button_selected_p1.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
+        self.red_button_p1.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
+        self.red_button_selected_p1.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
+        self.green_button_p1.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
+        self.green_button_selected_p1.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
+        self.orange_button_p1.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
+        self.orange_button_selected_p1.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
+
+        # Colors player 2
+        self.yellow_button_p2.center = (20 + sw / 2, 5 * sh / rows + y_offset)
+        self.yellow_button_selected_p2.center = (20 + sw / 2, 5 * sh / rows + y_offset)
+        self.pink_button_p2.center = (20 + sw / 2 + 40, 5 * sh / rows + y_offset)
+        self.pink_button_selected_p2.center = (20 + sw / 2 + 40, 5 * sh / rows + y_offset)
+        self.cyan_button_p2.center = (20 + sw / 2 + 40 * 2, 5 * sh / rows + y_offset)
+        self.cyan_button_selected_p2.center = (20 + sw / 2 + 40 * 2, 5 * sh / rows + y_offset)
+        self.red_button_p2.center = (20 + sw / 2 + 40 * 3, 5 * sh / rows + y_offset)
+        self.red_button_selected_p2.center = (20 + sw / 2 + 40 * 3, 5 * sh / rows + y_offset)
+        self.green_button_p2.center = (20 + sw / 2 + 40 * 4, 5 * sh / rows + y_offset)
+        self.green_button_selected_p2.center = (20 + sw / 2 + 40 * 4, 5 * sh / rows + y_offset)
+        self.orange_button_p2.center = (20 + sw / 2 + 40 * 5, 5 * sh / rows + y_offset)
+        self.orange_button_selected_p2.center = (20 + sw / 2 + 40 * 5, 5 * sh / rows + y_offset)
 
         # Sound
-        self.sound_off_button.center = (sw / 2 - 100, 5 * sh / rows + y_offset)
-        self.sound_reduce_button.center = (sw / 2 - 50, 5 * sh / rows + y_offset)
-        self.sound_increase_button.center = (sw / 2, 5 * sh / rows + y_offset)
+        self.sound_off_button.center = (sw / 2 - 100, 6 * sh / rows + y_offset)
+        self.sound_reduce_button.center = (sw / 2 - 50, 6 * sh / rows + y_offset)
+        self.sound_increase_button.center = (sw / 2, 6 * sh / rows + y_offset)
 
     def render(self):
         sw = self.screen.get_width()
@@ -225,14 +269,23 @@ class SettingsUI:
         self.screen.blit(self.small_board, self.small_board_button)
         self.screen.blit(self.medium_board, self.medium_board_button)
 
-        # Colours
-        draw_text('Select your colour:', self.font, Colours.WHITE, self.screen, self.yellow_button.x - 210, self.yellow_button.y)
-        pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button)
-        pygame.draw.rect(self.screen, Colours.PINK, self.pink_button)
-        pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button)
-        pygame.draw.rect(self.screen, Colours.RED, self.red_button)
-        pygame.draw.rect(self.screen, Colours.GREEN, self.green_button)
-        pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button)
+        # Colours player 1
+        draw_text('Select your colour:', self.font, Colours.WHITE, self.screen, self.yellow_button_p1.x - 230, self.yellow_button_p1.y)
+        pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_p1)
+        pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_p1)
+        pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_p1)
+        pygame.draw.rect(self.screen, Colours.RED, self.red_button_p1)
+        pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_p1)
+        pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_p1)
+
+        # Colours player 2
+        draw_text('Select enemy colour:', self.font, Colours.WHITE, self.screen, self.yellow_button_p1.x - 230, self.yellow_button_p2.y)
+        pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_p2)
+        pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_p2)
+        pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_p2)
+        pygame.draw.rect(self.screen, Colours.RED, self.red_button_p2)
+        pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_p2)
+        pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_p2)
 
         # Sound
         draw_text('Sound:', self.font, Colours.WHITE, self.screen, self.sound_off_button.x - 97, self.sound_off_button.y + 10)
@@ -240,35 +293,52 @@ class SettingsUI:
         self.screen.blit(self.sound_reduce, self.sound_reduce_button)
         self.screen.blit(self.sound_increase, self.sound_increase_button)
 
-        # Buttons
+        # Buttons select highlight
+        # Resolution
         if self.default_screen_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.default_screen_selected, (self.default_screen_button.x, self.default_screen_button.y))
         if self.medium_screen_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.medium_screen_selected, (self.medium_screen_button.x, self.medium_screen_button.y))
         if self.large_screen_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.large_screen_selected, (self.large_screen_button.x, self.large_screen_button.y))
+        # Theme
         if self.football_theme_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.football_theme_selected, (self.football_theme_button.x, self.football_theme_button.y))
         if self.neon_theme_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.neon_theme_selected, (self.neon_theme_button.x, self.neon_theme_button.y))
         if self.paper_theme_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.paper_theme_selected, (self.paper_theme_button.x, self.paper_theme_button.y))
+        # Size
         if self.small_board_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.small_board_selected, (self.small_board_button.x, self.small_board_button.y))
         if self.medium_board_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.medium_board_selected, (self.medium_board_button.x, self.medium_board_button.y))
-        if self.yellow_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected)
-        if self.pink_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected)
-        if self.cyan_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected)
-        if self.red_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected)
-        if self.green_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected)
-        if self.orange_button.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected)
+        # Color player 1
+        if self.yellow_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p1)
+        if self.pink_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p1)
+        if self.cyan_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p1)
+        if self.red_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p1)
+        if self.green_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p1)
+        if self.orange_button_p1.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p1)
+        # Color player 2
+        if self.yellow_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p2)
+        if self.pink_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p2)
+        if self.cyan_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p2)
+        if self.red_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p2)
+        if self.green_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p2)
+        if self.orange_button_p2.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p2)
 
         # Volume Buttons
        # pygame.draw.rect(self.screen, Colours.GREY, self.button_1)
