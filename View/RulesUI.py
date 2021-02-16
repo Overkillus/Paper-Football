@@ -17,7 +17,8 @@ class RulesUI:
     # Art
     title = pygame.font.SysFont('comicsansms', 50)
     font = pygame.font.SysFont('comicsansms', 18)
-    rules_icon = pygame.image.load("Art/question_black.png")
+    exit_icon = pygame.image.load("Art/exit2.png")
+    rules = pygame.image.load("Art/game_rules.png")
 
     def __init__(self, controller):
         # State
@@ -26,7 +27,8 @@ class RulesUI:
         # Context
         self.screen = controller.screen
         self.controller = controller
-        self.rules_rect = self.rules_icon.get_rect(topleft=(630, 430))
+        self.rules_icon_rect = self.exit_icon.get_rect()
+        self.rules_rect = self.rules.get_rect()
 
     def main(self):
         self.event_handler()
@@ -44,19 +46,26 @@ class RulesUI:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.gameUI)
             elif event.type == pygame.MOUSEBUTTONUP:
-                if self.rules_rect.collidepoint(pygame.mouse.get_pos()):
+                if self.rules_icon_rect.collidepoint(pygame.mouse.get_pos()):
                     self.controller.change_view(self.controller.gameUI)
 
     def update(self):
-        pass
+        # Layout helper variables
+        sw = self.screen.get_width()
+        sh = self.screen.get_height()
+
+        self.rules_icon_rect.bottomright = (sw - 20, sh - 20)
+        self.rules_rect.center = (sw/2, sh/2)
 
     def render(self):
         # Clear screen
-        txt = "rules go here "
-        self.screen.fill((0, 176, 178))
-        self.screen.blit(self.rules_icon, (630, 430))
-        View.MenuUI.draw_text("Rules", self.title, Colours.WHITE, self.screen, 280, 10)
-        View.MenuUI.draw_text(txt, self.font, Colours.WHITE, self.screen, 40, 80)
+        self.screen.fill((0, 0, 0))
+
+        # Background
+        self.screen.blit(self.rules, self.rules_rect)
+
+        # Button
+        self.screen.blit(self.exit_icon, self.rules_icon_rect)
 
         # Show new frame
         pygame.display.flip()
