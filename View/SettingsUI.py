@@ -123,9 +123,9 @@ class SettingsUI:
                 if self.sound_off_button.collidepoint(mouse_pos):
                     mixer.music.set_volume(0.0)
                 elif self.sound_reduce_button.collidepoint(mouse_pos):
-                    mixer.music.set_volume(0.1)
+                    mixer.music.set_volume(mixer.music.get_volume() - 0.1)
                 elif self.sound_increase_button.collidepoint(mouse_pos):
-                    mixer.music.set_volume(0.2)
+                    mixer.music.set_volume(mixer.music.get_volume() + 0.1)
 
                 # Resolution Settings
                 if self.default_screen_button.collidepoint(mouse_pos):
@@ -204,6 +204,7 @@ class SettingsUI:
         self.medium_board_button.center = (sw / 2 + 5, 3*sh/rows + y_offset)
 
         # Colors player 1
+
         self.yellow_button_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
         self.yellow_button_selected_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
         self.pink_button_p1.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
@@ -293,14 +294,16 @@ class SettingsUI:
         self.screen.blit(self.sound_reduce, self.sound_reduce_button)
         self.screen.blit(self.sound_increase, self.sound_increase_button)
 
+
         # Buttons select highlight
         # Resolution
-        if self.default_screen_button.collidepoint(pygame.mouse.get_pos()):
+        if self.default_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (Settings.default_screen_width, Settings.default_screen_height):
             self.screen.blit(self.default_screen_selected, (self.default_screen_button.x, self.default_screen_button.y))
-        if self.medium_screen_button.collidepoint(pygame.mouse.get_pos()):
+        if self.medium_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (1366, 768):
             self.screen.blit(self.medium_screen_selected, (self.medium_screen_button.x, self.medium_screen_button.y))
-        if self.large_screen_button.collidepoint(pygame.mouse.get_pos()):
+        if self.large_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (1536, 864):
             self.screen.blit(self.large_screen_selected, (self.large_screen_button.x, self.large_screen_button.y))
+
         # Theme
         if self.football_theme_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.football_theme_selected, (self.football_theme_button.x, self.football_theme_button.y))
@@ -308,36 +311,39 @@ class SettingsUI:
             self.screen.blit(self.neon_theme_selected, (self.neon_theme_button.x, self.neon_theme_button.y))
         if self.paper_theme_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.paper_theme_selected, (self.paper_theme_button.x, self.paper_theme_button.y))
+
         # Size
         if self.small_board_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.small_board_selected, (self.small_board_button.x, self.small_board_button.y))
         if self.medium_board_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.medium_board_selected, (self.medium_board_button.x, self.medium_board_button.y))
+
         # Color player 1
-        if self.yellow_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.yellow_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.YELLOW:
             pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p1)
-        if self.pink_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.pink_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.PINK:
             pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p1)
-        if self.cyan_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.cyan_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.CYAN:
             pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p1)
-        if self.red_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.red_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.RED:
             pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p1)
-        if self.green_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.green_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.GREEN:
             pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p1)
-        if self.orange_button_p1.collidepoint(pygame.mouse.get_pos()):
+        if self.orange_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.ORANGE:
             pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p1)
+
         # Color player 2
-        if self.yellow_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.yellow_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.YELLOW:
             pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p2)
-        if self.pink_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.pink_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.PINK:
             pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p2)
-        if self.cyan_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.cyan_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.CYAN:
             pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p2)
-        if self.red_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.red_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.RED:
             pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p2)
-        if self.green_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.green_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.GREEN:
             pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p2)
-        if self.orange_button_p2.collidepoint(pygame.mouse.get_pos()):
+        if self.orange_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.ORANGE:
             pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p2)
 
         # Volume Buttons
