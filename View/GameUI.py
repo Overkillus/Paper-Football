@@ -51,7 +51,7 @@ class Game:
 
         # Players
         self.players = []
-        self.players.append(Player("Player One", Colours.PURPLE))
+        self.players.append(Player("Player One", Colours.PINK))
         self.players[0].turn = True
         self.players.append(Player("Player Two", Colours.YELLOW))
 
@@ -90,7 +90,7 @@ class Game:
                 if self.rules_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.rulesUI)
                 if self.chat_rect.collidepoint(mouse_pos):
-                    self.controller.change_view(self.controller.chatUI)
+                    ...
 
                 # Game logic
                 for i in range(self.myBoard.width):

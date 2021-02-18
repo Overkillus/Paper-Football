@@ -9,7 +9,6 @@ import Settings
 from View.MenuUI import MenuUI
 from View.SettingsUI import SettingsUI
 from View.RulesUI import RulesUI
-from View.ChatUI import ChatUI
 
 pygame.init()
 
@@ -28,7 +27,6 @@ class Controller:
         # Client (connection)
         # self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
         self.client = Client("139.162.219.137", 2000) # Server ip
-        # self.client.start()  #temp
 
         # Clock
         self.clock = pygame.time.Clock()
@@ -39,8 +37,7 @@ class Controller:
         self.gameUI = Game(self)
         self.settingsUI = SettingsUI(self)
         self.rulesUI = RulesUI(self)
-        self.chatUI = ChatUI(self)
-        self.views = [self.menuUI, self.gameUI, self.settingsUI, self.rulesUI, self.chatUI]
+        self.views = [self.menuUI, self.gameUI, self.settingsUI, self.rulesUI]
 
         # Initial state
         self.menuUI.is_running = True

@@ -344,37 +344,6 @@ class SettingsUI:
         if self.orange_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.ORANGE:
             pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p2)
 
-        # Volume Buttons
-       # pygame.draw.rect(self.screen, Colours.GREY, self.button_1)
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_2)
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_3)
-        #draw_text('25%', self.font, Colours.WHITE, self.screen, self.button_1.x + 18, self.button_1.y + 10)
-        #draw_text('50%', self.font, Colours.WHITE, self.screen, self.button_2.x + 18, self.button_2.y + 10)
-        #draw_text('100%', self.font, Colours.WHITE, self.screen, self.button_3.x + 8, self.button_3.y + 10)
-
-        # Theme Buttons
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_4)
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_5)
-        #draw_text('Neon', self.font, Colours.WHITE, self.screen, self.button_4.x + 8, self.button_4.y + 10)
-        #draw_text('Paper', self.font, Colours.WHITE, self.screen, self.button_5.x + 8, self.button_5.y + 10)
-
-        # Board Size
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_6)
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_7)
-        #draw_text('13 x 9', self.font, Colours.WHITE, self.screen, self. button_6.x + 8, self.button_6.y + 10)
-        #draw_text('19 x 15', self.font, Colours.WHITE, self.screen, self.button_7.x + 8, self.button_7.y + 10)
-
-        # Screen Mode
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_8)
-        #pygame.draw.rect(self.screen, Colours.GREY, self.button_9)
-        #draw_text('Full', self.font, Colours.WHITE, self.screen, self.button_8.x + 8, self.button_8.y + 10)
-        #draw_text('Windowed', self.font, Colours.WHITE, self.screen, self.button_9.x + 8, self.button_9.y + 10)
-        # Headers
-        #draw_text('Volume', self.font, Colours.WHITE, self.screen, 135, 110)
-        #draw_text('Theme', self.font, Colours.WHITE, self.screen, 135, 230)
-        #draw_text('Board Size', self.font, Colours.WHITE, self.screen, 115, 350)
-        #draw_text('Screen Mode', self.font, Colours.WHITE, self.screen, 450, 110)
-
         # Show new frame
         pygame.display.flip()
 
