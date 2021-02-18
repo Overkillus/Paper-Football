@@ -1,7 +1,9 @@
 
 # Display
-default_screen_width = 695
-default_screen_height = 500
+# default_screen_width = 695
+# default_screen_height = 500
+default_screen_width = 800
+default_screen_height = 600
 screen_width = default_screen_width
 screen_height = default_screen_height
 max_tps = 24

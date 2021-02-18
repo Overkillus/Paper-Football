@@ -15,10 +15,8 @@ class MenuUI:
 
     # Art
     background = pygame.image.load("Art/lobby3_bg.png")
-    background = pygame.transform.scale(background, (Settings.screen_width, Settings.screen_height))
     title = pygame.image.load("Art/logo_small.png")
-    # title = pygame.transform.scale(title, (250, 80))
-    settings_icon = pygame.image.load("Art/settings.png")  # TODO implement functionality to adjust various settings
+    settings_icon = pygame.image.load("Art/settings.png")
     sound_icon = pygame.image.load("Art/sound.png")
     sound_icon_off = pygame.image.load("Art/sound_off.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
