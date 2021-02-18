@@ -14,13 +14,14 @@ class MenuUI:
     """
 
     # Art
-    background = pygame.image.load("Art/lobby3_bg.png")
+    background = pygame.image.load("Art/lobby.png")
     title = pygame.image.load("Art/logo_small.png")
     settings_icon = pygame.image.load("Art/settings.png")
     sound_icon = pygame.image.load("Art/sound.png")
     sound_icon_off = pygame.image.load("Art/sound_off.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
+    credits = pygame.image.load("Art/credits.png")
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
@@ -36,9 +37,10 @@ class MenuUI:
 
         # Sound button
         self.sound_rect = self.sound_icon.get_rect()
-
         # Settings button
         self.settings_rect = self.settings_icon.get_rect()
+        # Credits
+        self.credits_rect = self.credits.get_rect()
 
         # Start and exit buttons
         button_w = 100
@@ -108,6 +110,8 @@ class MenuUI:
         # Buttons (start/exit)
         self.button_1.center = (sw/2 - self.button_1.width, sh/3)
         self.button_2.center = (sw/2 + self.button_2.width, sh/3)
+        # Credits
+        self.credits_rect.bottomright = (sw - 20, sh-20)
 
     def render(self):
         # Layout helper variables
@@ -126,6 +130,8 @@ class MenuUI:
                           sh/10))
         # Settings
         self.screen.blit(self.settings_icon, self.settings_rect)
+        # Credits
+        self.screen.blit(self.credits, self.credits_rect)
         # Mute toggle
         if Settings.sound_muted:
             self.screen.blit(self.sound_icon_off, self.sound_rect)
