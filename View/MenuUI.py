@@ -21,7 +21,6 @@ class MenuUI:
     sound_icon_off = pygame.image.load("Art/sound_off.png")
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
-    # screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound

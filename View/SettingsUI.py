@@ -14,8 +14,6 @@ class SettingsUI:
     Class representing settings ui
     """
     # Art
-    background = pygame.image.load("Art/lobby_bg.png")
-    background = pygame.transform.scale(background, (Settings.screen_width, Settings.screen_height))
     setting_icon = pygame.image.load("Art/settings.png")
     exitIcon = pygame.image.load('Art/exit2.png')
     default_screen = pygame.image.load('Art/default_b.png')
@@ -242,9 +240,6 @@ class SettingsUI:
 
         # Clear screen
         self.screen.fill((3, 15, 56))
-
-        # Background
-        self.screen.blit(self.background, (0, 0))
 
         # Settings title
         draw_text('Game Settings', self.fontTitle, Colours.WHITE, self.screen, sw/2 - 100, 32)
