@@ -18,14 +18,10 @@ class Controller:
     Class managing different views and controlling interactions between modules.
     """
     def __init__(self):
-        self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height))
+        self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height), pygame.RESIZABLE)
         pygame.display.set_caption('Paper Football')
 
-        # # State
-        # self.in_session = False
-
-        # Client (connection)
-        # self.client = Client(socket.gethostname(), 2000)  # TODO temp local ip address
+        # self.client = Client(socket.gethostname(), 2000)
         self.client = Client("139.162.219.137", 2000) # Server ip
 
         # Clock

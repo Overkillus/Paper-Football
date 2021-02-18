@@ -1,6 +1,6 @@
 
 # Display
-default_screen_width = 800
+default_screen_width = 940
 default_screen_height = 600
 screen_width = default_screen_width
 screen_height = default_screen_height

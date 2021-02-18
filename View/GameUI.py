@@ -19,6 +19,8 @@ class Game:
     waitingPlayer = pygame.image.load("Art/waiting.png")
     rules_icon = pygame.image.load("Art/question_black.png")
     chat_icon = pygame.image.load("Art/chat.png")
+    player1_banner = pygame.image.load("Art/score_player1.png")
+    player2_banner = pygame.image.load("Art/score_player2.png")
 
     def __init__(self, controller):
         # State
@@ -48,6 +50,8 @@ class Game:
 
         # Banners
         self.waiting_rect = self.waitingPlayer.get_rect()
+        self.player1_banner_rect = self.player1_banner.get_rect()
+        self.player2_banner_rect = self.player2_banner.get_rect()
 
         # Players
         self.players = []
@@ -146,6 +150,8 @@ class Game:
 
         # Banners
         self.waiting_rect.center = (sw/2, sh/2)
+        self.player1_banner_rect.topleft = (0, 0)
+        self.player2_banner_rect.topright = (sw, 0)
 
         # Update pending opponent moves
         if self.controller.client.pending_move is not None:
@@ -203,13 +209,6 @@ class Game:
                 if not point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), False, (self.x_offset, self.y_offset))
 
-        # Draw Scores #TODO add art
-        font = pygame.font.Font(None, 60)
-        score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
-        self.screen.blit(score1, (self.screen.get_width()/18, 70))
-        score2 = font.render(str(self.players[1].score), True, self.players[1].get_color())
-        self.screen.blit(score2, (self.screen.get_width()-self.screen.get_width()/10+8, 70))
-
         # Draw background (board walls)
         self.screen.blit(self.boardWalls, self.board_walls_rect)
 
@@ -218,6 +217,22 @@ class Game:
             for point in row:
                 if point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn, (self.x_offset, self.y_offset))
+
+        # Draw Score
+        font = pygame.font.Font(None, 60)
+        score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
+        score1_rect = score1.get_rect()
+        score1_rect.center = self.player1_banner_rect.center
+        score1_rect[1] += 20
+        self.screen.blit(score1, score1_rect)
+        score2 = font.render(str(self.players[1].score), True, self.players[1].get_color())
+        score2_rect = score1.get_rect()
+        score2_rect.center = self.player2_banner_rect.center
+        score2_rect[1] += 20
+        self.screen.blit(score2, score2_rect)
+        # Draw Player Banner
+        self.screen.blit(self.player1_banner, self.player1_banner_rect)
+        self.screen.blit(self.player2_banner, self.player2_banner_rect)
 
         # Particles
         for p in self.particles:
