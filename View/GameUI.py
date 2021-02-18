@@ -18,7 +18,7 @@ class Game:
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
     rules_icon = pygame.image.load("Art/question_black.png")
-    chat_icon = pygame.image.load("Art/question_black.png")
+    chat_icon = pygame.image.load("Art/chat.png")
 
     def __init__(self, controller):
         # State

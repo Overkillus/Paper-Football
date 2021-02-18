@@ -14,7 +14,6 @@ class SettingsUI:
     Class representing settings ui
     """
     # Art
-    setting_icon = pygame.image.load("Art/settings.png")
     exitIcon = pygame.image.load('Art/exit2.png')
     default_screen = pygame.image.load('Art/default_b.png')
     default_screen_selected = pygame.image.load('Art/default_b_selected.png')
@@ -49,6 +48,9 @@ class SettingsUI:
         self.screen = controller.screen
         self.controller = controller
 
+        # Exit
+        self.exit_button = self.exitIcon.get_rect()
+
         # Buttons
         button_x = 325
         button_y = 320
@@ -80,9 +82,6 @@ class SettingsUI:
         self.green_button_selected_p2 = pygame.Rect(button_x + 35 * 4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
         self.orange_button_p2 = pygame.Rect(button_x + 35 * 5, button_y, button_w, button_h)
         self.orange_button_selected_p2 = pygame.Rect(button_x + 35 * 5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        # Exit
-        self.exit_button = pygame.Rect(15, 25, self.setting_icon.get_width(), self.setting_icon.get_height())
-        self.exit_rect = self.exitIcon.get_rect()
         # Resolution
         self.default_screen_button = self.default_screen.get_rect()
         self.medium_screen_button = self.medium_screen.get_rect()
@@ -187,6 +186,9 @@ class SettingsUI:
         rows = 8
         y_offset = 40
 
+        # Exit
+        self.exit_button.topleft = (20, 20)
+
         # Resolution
         self.default_screen_button.center = (sw/2 - 50, sh/rows + y_offset)
         self.medium_screen_button.center = (sw/2 + 50, sh/rows + y_offset)
@@ -245,7 +247,7 @@ class SettingsUI:
         draw_text('Game Settings', self.fontTitle, Colours.WHITE, self.screen, sw/2 - 100, 32)
 
         # Exit Icon
-        self.screen.blit(self.exitIcon, (15, 25))
+        self.screen.blit(self.exitIcon, self.exit_button)
 
         # Resolution
         draw_text('Resolution:', self.font, Colours.WHITE, self.screen, self.default_screen_button.x - 125, self.default_screen_button.y + 5)
