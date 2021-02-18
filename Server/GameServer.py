@@ -30,6 +30,12 @@ class GameServer(Server):
         if self.POPULATION_MSG in msg:
             self.send_to_all_clients((self.POPULATION_MSG, len(self.all_connections)))
 
+    # Overrides the OG close_connection().
+    def close_connection(self, connection):
+        connection.close()
+        # removed the removal of player entry in all_connections since this is used to check player count.
+        # an absolutely lazy & ugly af way of doing it (since u're left with essentially "dead" players)
+
     def console(self, msg):
         new_msg = (f"[SERVER-{self.PORT}]: {msg}")
         # inspiration for future: send tuples for objects. e.g. (f"[SERVER-{self.PORT}]:", msg)
