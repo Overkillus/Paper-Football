@@ -21,6 +21,8 @@ class SettingsUI:
     medium_screen_selected = pygame.image.load('Art/medium_screen_b_selected.png')
     large_screen = pygame.image.load('Art/large_screen_b.png')
     large_screen_selected = pygame.image.load('Art/large_screen_b_selected.png')
+    native_screen = pygame.image.load('Art/native.png')
+    native_screen_selected = pygame.image.load('Art/native_selected.png')
     football_theme = pygame.image.load('Art/football_b.png')
     football_theme_selected = pygame.image.load('Art/football_b_selected.png')
     neon_theme = pygame.image.load('Art/neon_b.png')
@@ -51,41 +53,40 @@ class SettingsUI:
         # Exit
         self.exit_button = self.exitIcon.get_rect()
 
-        # Buttons
-        button_x = 325
-        button_y = 320
-        button_w = 25
-        button_h = 25
+        # Color Buttons
+        color_button = pygame.Rect(0, 0, 25, 25)
+        color_button_selected = pygame.Rect(0, 0, 34, 34)
         # Colors player 1
-        self.yellow_button_p1 = pygame.Rect(button_x, button_y, button_w, button_h)
-        self.yellow_button_selected_p1 = pygame.Rect(button_x - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.pink_button_p1 = pygame.Rect(button_x + 35, button_y, button_w, button_h)
-        self.pink_button_selected_p1 = pygame.Rect(button_x + 35 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.cyan_button_p1 = pygame.Rect(button_x + 35 * 2, button_y, button_w, button_h)
-        self.cyan_button_selected_p1 = pygame.Rect(button_x + 35 * 2 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.red_button_p1 = pygame.Rect(button_x + 35 * 3, button_y, button_w, button_h)
-        self.red_button_selected_p1 = pygame.Rect(button_x + 35 * 3 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.green_button_p1 = pygame.Rect(button_x + 35 * 4, button_y, button_w, button_h)
-        self.green_button_selected_p1 = pygame.Rect(button_x + 35 * 4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.orange_button_p1 = pygame.Rect(button_x + 35 * 5, button_y, button_w, button_h)
-        self.orange_button_selected_p1 = pygame.Rect(button_x + 35 * 5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.yellow_button_p1 = color_button.copy()
+        self.yellow_button_selected_p1 = color_button_selected.copy()
+        self.pink_button_p1 = color_button.copy()
+        self.pink_button_selected_p1 = color_button_selected.copy()
+        self.cyan_button_p1 = color_button.copy()
+        self.cyan_button_selected_p1 = color_button_selected.copy()
+        self.red_button_p1 = color_button.copy()
+        self.red_button_selected_p1 = color_button_selected.copy()
+        self.green_button_p1 = color_button.copy()
+        self.green_button_selected_p1 = color_button_selected.copy()
+        self.orange_button_p1 = color_button.copy()
+        self.orange_button_selected_p1 = color_button_selected.copy()
         # Colors player 2
-        self.yellow_button_p2 = pygame.Rect(button_x, button_y, button_w, button_h)
-        self.yellow_button_selected_p2 = pygame.Rect(button_x - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.pink_button_p2 = pygame.Rect(button_x + 35, button_y, button_w, button_h)
-        self.pink_button_selected_p2 = pygame.Rect(button_x + 35 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.cyan_button_p2 = pygame.Rect(button_x + 35 * 2, button_y, button_w, button_h)
-        self.cyan_button_selected_p2 = pygame.Rect(button_x + 35 * 2 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.red_button_p2 = pygame.Rect(button_x + 35 * 3, button_y, button_w, button_h)
-        self.red_button_selected_p2 = pygame.Rect(button_x + 35 * 3 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.green_button_p2 = pygame.Rect(button_x + 35 * 4, button_y, button_w, button_h)
-        self.green_button_selected_p2 = pygame.Rect(button_x + 35 * 4 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
-        self.orange_button_p2 = pygame.Rect(button_x + 35 * 5, button_y, button_w, button_h)
-        self.orange_button_selected_p2 = pygame.Rect(button_x + 35 * 5 - 2.5, button_y - 2.5, button_w + 5, button_h + 5)
+        self.yellow_button_p2 = color_button.copy()
+        self.yellow_button_selected_p2 = color_button_selected.copy()
+        self.pink_button_p2 = color_button.copy()
+        self.pink_button_selected_p2 = color_button_selected.copy()
+        self.cyan_button_p2 = color_button.copy()
+        self.cyan_button_selected_p2 = color_button_selected.copy()
+        self.red_button_p2 = color_button.copy()
+        self.red_button_selected_p2 = color_button_selected.copy()
+        self.green_button_p2 = color_button.copy()
+        self.green_button_selected_p2 = color_button_selected.copy()
+        self.orange_button_p2 = color_button.copy()
+        self.orange_button_selected_p2 = color_button_selected.copy()
         # Resolution
         self.default_screen_button = self.default_screen.get_rect()
         self.medium_screen_button = self.medium_screen.get_rect()
         self.large_screen_button = self.large_screen.get_rect()
+        self.native_screen_button = self.native_screen.get_rect()
         # Theme
         self.football_theme_button = self.football_theme.get_rect()
         self.neon_theme_button = self.neon_theme.get_rect()
@@ -127,13 +128,18 @@ class SettingsUI:
                 # Resolution Settings
                 if self.default_screen_button.collidepoint(mouse_pos):
                     self.screen = pygame.display.set_mode((Settings.default_screen_width, Settings.default_screen_height), pygame.RESIZABLE)
+                    Settings.is_native = False
                 elif self.medium_screen_button.collidepoint(mouse_pos):
-                    self.screen = pygame.display.set_mode((1366, 768))
+                    self.screen = pygame.display.set_mode((1366, 768), pygame.RESIZABLE)
+                    Settings.is_native = False
                 elif self.large_screen_button.collidepoint(mouse_pos):
-                    # self.screen = pygame.display.set_mode((1920, 1080))
+                    self.screen = pygame.display.set_mode((1920, 1080), pygame.RESIZABLE)
+                    Settings.is_native = False
+                elif self.native_screen_button.collidepoint(mouse_pos):
                     self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
                     Settings.screen_width = pygame.display.get_window_size()[0]
                     Settings.screen_width = pygame.display.get_window_size()[1]
+                    Settings.is_native = True
                 # Theme Settings
                 if self.football_theme_button.collidepoint(mouse_pos):
                     ...
@@ -193,6 +199,7 @@ class SettingsUI:
         self.default_screen_button.center = (sw/2 - 50, sh/rows + y_offset)
         self.medium_screen_button.center = (sw/2 + 50, sh/rows + y_offset)
         self.large_screen_button.center = (sw/2 + 150, sh/rows + y_offset)
+        self.native_screen_button.center = (sw/2 + 250, sh/rows + y_offset)
 
         # Theme
         self.football_theme_button.center =(sw / 2 - 75, 2*sh/rows + y_offset)
@@ -254,6 +261,7 @@ class SettingsUI:
         self.screen.blit(self.default_screen, self.default_screen_button)
         self.screen.blit(self.medium_screen, self.medium_screen_button)
         self.screen.blit(self.large_screen, self.large_screen_button)
+        self.screen.blit(self.native_screen, self.native_screen_button)
 
         # Themes
         draw_text('Themes:', self.font, Colours.WHITE, self.screen, self.football_theme_button.x - 100, self.football_theme_button.y + 5)
@@ -291,54 +299,57 @@ class SettingsUI:
         self.screen.blit(self.sound_increase, self.sound_increase_button)
 
         # Buttons select highlight
+        pos = pygame.mouse.get_pos()
         # Resolution
-        if self.default_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (Settings.default_screen_width, Settings.default_screen_height):
+        if self.default_screen_button.collidepoint(pos) or pygame.display.get_window_size() == (Settings.default_screen_width, Settings.default_screen_height):
             self.screen.blit(self.default_screen_selected, (self.default_screen_button.x, self.default_screen_button.y))
-        if self.medium_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (1366, 768):
+        if self.medium_screen_button.collidepoint(pos) or pygame.display.get_window_size() == (1366, 768):
             self.screen.blit(self.medium_screen_selected, (self.medium_screen_button.x, self.medium_screen_button.y))
-        if self.large_screen_button.collidepoint(pygame.mouse.get_pos()) or pygame.display.get_window_size() == (1536, 864):
+        if self.large_screen_button.collidepoint(pos) or pygame.display.get_window_size() == (1920, 1080):
             self.screen.blit(self.large_screen_selected, (self.large_screen_button.x, self.large_screen_button.y))
+        if self.native_screen_button.collidepoint(pos) or Settings.is_native:
+            self.screen.blit(self.native_screen_selected, (self.native_screen_button.x, self.native_screen_button.y))
 
         # Theme
-        if self.football_theme_button.collidepoint(pygame.mouse.get_pos()):
+        if self.football_theme_button.collidepoint(pos):
             self.screen.blit(self.football_theme_selected, (self.football_theme_button.x, self.football_theme_button.y))
-        if self.neon_theme_button.collidepoint(pygame.mouse.get_pos()):
+        if self.neon_theme_button.collidepoint(pos):
             self.screen.blit(self.neon_theme_selected, (self.neon_theme_button.x, self.neon_theme_button.y))
-        if self.paper_theme_button.collidepoint(pygame.mouse.get_pos()):
+        if self.paper_theme_button.collidepoint(pos):
             self.screen.blit(self.paper_theme_selected, (self.paper_theme_button.x, self.paper_theme_button.y))
 
         # Size
-        if self.small_board_button.collidepoint(pygame.mouse.get_pos()):
+        if self.small_board_button.collidepoint(pos):
             self.screen.blit(self.small_board_selected, (self.small_board_button.x, self.small_board_button.y))
-        if self.medium_board_button.collidepoint(pygame.mouse.get_pos()):
+        if self.medium_board_button.collidepoint(pos):
             self.screen.blit(self.medium_board_selected, (self.medium_board_button.x, self.medium_board_button.y))
 
         # Color player 1
-        if self.yellow_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.YELLOW:
+        if self.yellow_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.YELLOW:
             pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p1)
-        if self.pink_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.PINK:
+        if self.pink_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.PINK:
             pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p1)
-        if self.cyan_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.CYAN:
+        if self.cyan_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.CYAN:
             pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p1)
-        if self.red_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.RED:
+        if self.red_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.RED:
             pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p1)
-        if self.green_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.GREEN:
+        if self.green_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.GREEN:
             pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p1)
-        if self.orange_button_p1.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[0].get_color() == Colours.ORANGE:
+        if self.orange_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.ORANGE:
             pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p1)
 
         # Color player 2
-        if self.yellow_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.YELLOW:
+        if self.yellow_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.YELLOW:
             pygame.draw.rect(self.screen, Colours.YELLOW, self.yellow_button_selected_p2)
-        if self.pink_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.PINK:
+        if self.pink_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.PINK:
             pygame.draw.rect(self.screen, Colours.PINK, self.pink_button_selected_p2)
-        if self.cyan_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.CYAN:
+        if self.cyan_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.CYAN:
             pygame.draw.rect(self.screen, Colours.CYAN, self.cyan_button_selected_p2)
-        if self.red_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.RED:
+        if self.red_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.RED:
             pygame.draw.rect(self.screen, Colours.RED, self.red_button_selected_p2)
-        if self.green_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.GREEN:
+        if self.green_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.GREEN:
             pygame.draw.rect(self.screen, Colours.GREEN, self.green_button_selected_p2)
-        if self.orange_button_p2.collidepoint(pygame.mouse.get_pos()) or self.controller.gameUI.players[1].get_color() == Colours.ORANGE:
+        if self.orange_button_p2.collidepoint(pos) or self.controller.gameUI.players[1].get_color() == Colours.ORANGE:
             pygame.draw.rect(self.screen, Colours.ORANGE, self.orange_button_selected_p2)
 
         # Show new frame
