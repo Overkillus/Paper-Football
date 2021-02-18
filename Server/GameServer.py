@@ -12,7 +12,7 @@ class GameServer(Server):
 
         newKey = ""
         for i in range(6):
-            newKey += random.choice(string.digits + string.ascii_uppercase)
+            newKey += random.choice(string.digits)
         #print(newKey)
         self.KEY = newKey
 
