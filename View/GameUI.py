@@ -25,6 +25,8 @@ class Game:
     chat1 = pygame.image.load("Art/well_played.png")
     chat2 = pygame.image.load("Art/nice_move.png")
     chat3 = pygame.image.load("Art/good_luck.png")
+    chat1Selected = pygame.image.load("Art/well_played_selected.png")
+    chat2Selected = pygame.image.load("Art/nice_move_selected.png")
     chat3Selected = pygame.image.load("Art/good_luck_selected.png")
     exit_chat = pygame.image.load("Art/exit2.png")
 
@@ -51,7 +53,6 @@ class Game:
         self.chat_button1_rect = self.chat1.get_rect()
         self.chat_button2_rect = self.chat2.get_rect()
         self.chat_button3_rect = self.chat3.get_rect()
-        self.chat_button3_selected_rect = self.chat3Selected.get_rect()
 
         # Board
         self.board_lines_rect = self.boardImg.get_rect()
@@ -108,12 +109,12 @@ class Game:
                     self.chatActive = True
                 # if self.chat_rect.collidepoint(mouse_pos) and self.chatActive:
                 #    self.chatActive = False
-                if self.chat_button1_rect.collidepoint(mouse_pos):
-                    self.chatActive = False
-                if self.chat_button2_rect.collidepoint(mouse_pos):
-                    self.chatActive = False
-                if self.chat_button3_rect.collidepoint(mouse_pos):
-                    self.chatActive = False
+                #if self.chat_button1.collidepoint(mouse_pos):
+                #    self.chatActive = False
+                #if self.chat_button2.collidepoint(mouse_pos):
+                #    self.chatActive = False
+                #if self.chat_button3_rect.collidepoint(mouse_pos):
+                #    ...
 
                 # Game logic
                 for i in range(self.myBoard.width):
@@ -160,9 +161,9 @@ class Game:
         # Buttons
         self.rules_rect.bottomright = (sw-10, sh-20)
         self.chat_rect.bottomleft = (10, sh-20)
-        self.chat_button1 = (100, sh - 90)
-        self.chat_button2 = (250, sh - 90)
-        self.chat_button3 = (400, sh - 90)
+        self.chat_button1_rect.bottomleft = (100, sh - 8)
+        self.chat_button2_rect.bottomleft = (250, sh - 8)
+        self.chat_button3_rect.bottomleft = (400, sh - 8)
 
         # Board
         self.board_lines_rect.center = (sw / 2 + 5, sh / 2)
@@ -272,9 +273,18 @@ class Game:
 
         # Chat buttons
         if self.chatActive:
-            self.screen.blit(self.chat1, self.chat_button1)
-            self.screen.blit(self.chat2, self.chat_button2)
-            self.screen.blit(self.chat3, self.chat_button3)
+            self.screen.blit(self.chat1, self.chat_button1_rect)
+            self.screen.blit(self.chat2, self.chat_button2_rect)
+            self.screen.blit(self.chat3, self.chat_button3_rect)
+
+        # Button select highlights
+        mouse_pos = pygame.mouse.get_pos()
+        if self.chat_button1_rect.collidepoint(mouse_pos) and self.chatActive:
+            self.screen.blit(self.chat1Selected, (self.chat_button1_rect.x, self.chat_button1_rect.y))
+        if self.chat_button2_rect.collidepoint(mouse_pos) and self.chatActive:
+            self.screen.blit(self.chat2Selected, (self.chat_button2_rect.x, self.chat_button2_rect.y))
+        if self.chat_button3_rect.collidepoint(mouse_pos) and self.chatActive:
+            self.screen.blit(self.chat3Selected, (self.chat_button3_rect.x, self.chat_button3_rect.y))
 
         # Show new frame
         pygame.display.flip()
