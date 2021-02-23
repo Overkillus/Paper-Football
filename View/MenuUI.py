@@ -68,8 +68,10 @@ class MenuUI:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.controller.close_game()
-            elif event.type == pygame.KEYDOWN and event.type == pygame.K_q:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 self.controller.close_game()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_l:
+                self.controller.change_view(self.controller.lobbyUI)
             # Mouse click
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Mouse click details
@@ -112,6 +114,7 @@ class MenuUI:
         self.button_2.center = (sw/2 + self.button_2.width, sh/3)
         # Credits
         self.credits_rect.bottomright = (sw - 20, sh-20)
+
 
     def render(self):
         # Layout helper variables
