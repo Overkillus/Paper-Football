@@ -9,6 +9,7 @@ import Settings
 from View.MenuUI import MenuUI
 from View.SettingsUI import SettingsUI
 from View.RulesUI import RulesUI
+from View.LobbyUI import LobbyUI
 
 pygame.init()
 
@@ -33,7 +34,8 @@ class Controller:
         self.gameUI = Game(self)
         self.settingsUI = SettingsUI(self)
         self.rulesUI = RulesUI(self)
-        self.views = [self.menuUI, self.gameUI, self.settingsUI, self.rulesUI]
+        self.lobbyUI = LobbyUI(self)
+        self.views = [self.menuUI, self.gameUI, self.settingsUI, self.rulesUI, self.lobbyUI]
 
         # Initial state
         self.menuUI.is_running = True
