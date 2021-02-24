@@ -109,7 +109,7 @@ class Game:
                 if self.rules_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.rulesUI)
                 if self.chat_rect.collidepoint(mouse_pos):
-                    ...
+                    self.chatActive = True
                 if self.exit_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.menuUI)
                     self.myBoard = Board()
@@ -117,9 +117,6 @@ class Game:
                     self.players[0].score = 0
                     self.players[0].turn = True
                     self.players[1].score = 0
-                    self.chatActive = True
-                # if self.chat_rect.collidepoint(mouse_pos) and self.chatActive:
-                #    self.chatActive = False
                 if self.exit_chat_rect.collidepoint(mouse_pos) and self.chatActive:
                     self.chatActive = False
                 #if self.chat_button1_rect.collidepoint(mouse_pos):
