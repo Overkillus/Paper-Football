@@ -19,6 +19,7 @@ class Game:
     waitingPlayer = pygame.image.load("Art/waiting.png")
     rules_icon = pygame.image.load("Art/question_black.png")
     chat_icon = pygame.image.load("Art/chat.png")
+    exit_icon = pygame.image.load("Art/exit_door.png")
     player1_banner = pygame.image.load("Art/score_player1.png")
     player2_banner = pygame.image.load("Art/score_player2.png")
 
@@ -41,6 +42,7 @@ class Game:
         # Buttons
         self.rules_rect = self.rules_icon.get_rect()
         self.chat_rect = self.chat_icon.get_rect()
+        self.exit_rect = self.exit_icon.get_rect()
 
         # Board
         self.board_lines_rect = self.boardImg.get_rect()
@@ -95,6 +97,13 @@ class Game:
                     self.controller.change_view(self.controller.rulesUI)
                 if self.chat_rect.collidepoint(mouse_pos):
                     ...
+                if self.exit_rect.collidepoint(mouse_pos):
+                    self.controller.change_view(self.controller.menuUI)
+                    self.myBoard = Board()
+                    self.controller.client.disconnect()
+                    self.players[0].score = 0
+                    self.players[0].turn = True
+                    self.players[1].score = 0
 
                 # Game logic
                 for i in range(self.myBoard.width):
@@ -141,6 +150,7 @@ class Game:
         # Buttons
         self.rules_rect.bottomright = (sw-10, sh-20)
         self.chat_rect.bottomleft = (10, sh-20)
+        self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
         # Board
         self.board_lines_rect.center = (sw / 2 + 5, sh / 2)
@@ -247,6 +257,9 @@ class Game:
 
         # Chat icon
         self.screen.blit(self.chat_icon, self.chat_rect)
+
+        # Exit
+        self.screen.blit(self.exit_icon, self.exit_rect)
 
         # Show new frame
         pygame.display.flip()
