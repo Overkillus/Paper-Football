@@ -33,8 +33,12 @@ class GameServer(Server):
     # Overrides the OG close_connection().
     def close_connection(self, connection):
         connection.close()
-        # removed the removal of player entry in all_connections since this is used to check player count.
-        # an absolutely lazy & ugly af way of doing it (since u're left with essentially "dead" players)
+        if connection in self.all_connections:
+            self.all_connections.remove(connection)
+        # same as BaseServer above ^. new GameServer additions below.
+        self.STATUS = self.GAMEOVER_STRING # since a player left, game is dead.
+        # auto disconnect remaining player(s)? up to you.
+
 
     def console(self, msg):
         new_msg = (f"[SERVER-{self.PORT}]: {msg}")
@@ -46,6 +50,7 @@ class GameServer(Server):
     def close_server(self): # this function is only useful for gameservers, tbh.
         self.send_to_all_clients(f"{self.ENTERGAME_MSG} {2000}") # exchangeServers(2000)
         self.SERVER_ON = False # close start() thread
+        self.STATUS = self.GAMEOVER_STRING
 
     # return functions.
     def return_port(self):
@@ -60,6 +65,9 @@ class GameServer(Server):
 
     def return_max_players(self):
         return self.MAX_PLAYERS
+
+    def return_status(self):
+        return self.STATUS
 
 
 # might the infrastructure dif on this one?

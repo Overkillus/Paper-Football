@@ -15,8 +15,8 @@ class ServerManager(Server):
         servers_for_deletion = [] # to delete outside initial for loop.
 
         for k, serv in self.SERVERS.items():
-            self.console(serv)
-            if serv.return_players() <= 0:
+            self.console(f"{serv}, PLAYERS: {serv.return_players()}")
+            if serv.return_players() <= 0 or serv.return_status() == self.GAMEOVER_STRING:
                 serv.close_server()
                 servers_for_deletion.append(k) # fuhggedaboutit
                 empty_counter += 1

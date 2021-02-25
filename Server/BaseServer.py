@@ -20,6 +20,8 @@ class Server:
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATION_MSG = "!POPULATION"
 
+        self.GAMEOVER_STRING = "game over"
+
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.
 
