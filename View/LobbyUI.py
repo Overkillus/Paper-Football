@@ -1,6 +1,7 @@
 import sys
 import pygame
 import Settings
+import Colours
 
 pygame.init()
 
@@ -23,6 +24,24 @@ class LobbyUI:
 
         # Exit
         self.exit_button = self.exitIcon.get_rect()
+
+        # keypad
+        keypad_button = pygame.Rect(0, 0, 80, 90)
+        join_game_button = pygame.Rect(0, 0, keypad_button.width*3.15, keypad_button.height*0.75)
+
+        self.keypad_1 = keypad_button.copy()
+        self.keypad_2 = keypad_button.copy()
+        self.keypad_3 = keypad_button.copy()
+        self.keypad_4 = keypad_button.copy()
+        self.keypad_5 = keypad_button.copy()
+        self.keypad_6 = keypad_button.copy()
+        self.keypad_7 = keypad_button.copy()
+        self.keypad_8 = keypad_button.copy()
+        self.keypad_9 = keypad_button.copy()
+        self.keypad_delete = keypad_button.copy()
+        self.keypad_0 = keypad_button.copy()
+        self.keypad_cancel = keypad_button.copy()
+        self.join_game = join_game_button.copy()
 
 
     def main(self):
@@ -47,11 +66,62 @@ class LobbyUI:
                 if self.exit_button.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.menuUI)
 
+                # Keypad
+                if self.keypad_1.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_2.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_3.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_4.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_5.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_6.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_7.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_8.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_9.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_0.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_delete.collidepoint(mouse_pos):
+                    ...
+                if self.keypad_cancel.collidepoint(mouse_pos):
+                    ...
+                if self.join_game.collidepoint(mouse_pos):
+                    ...
+
 
     def update(self):
+        sw = self.screen.get_width()
+        sh = self.screen.get_height()
+        bw = self.keypad_1.width + 20
+        bh = self.keypad_1.height
+        y_offset = 5
+        x_offset = -15
+        rows = 8
+        cols = 1.75
+
         # Exit
         self.exit_button.topleft = (20, 20)
 
+        # keypad
+        self.keypad_1.center = (sw / cols + 100, 2 * sh/rows)
+        self.keypad_2.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows)
+        self.keypad_3.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows)
+        self.keypad_4.center = (sw / cols + 100, 2 * sh / rows + bh + y_offset)
+        self.keypad_5.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
+        self.keypad_6.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
+        self.keypad_7.center = (sw / cols + 100, 2 * sh / rows + 2*(bh + y_offset))
+        self.keypad_8.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_9.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_delete.center = (sw / cols + 100, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_0.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_cancel.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
+        self.join_game.center = (sw / cols + 200 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
 
     def render(self):
         sw = self.screen.get_width()
@@ -62,5 +132,20 @@ class LobbyUI:
 
         # Exit Icon
         self.screen.blit(self.exitIcon, self.exit_button)
+
+        # keypad
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_1)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_2)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_3)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_4)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_5)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_6)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_7)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_8)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_9)
+        pygame.draw.rect(self.screen, Colours.RED, self.keypad_delete)
+        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_0)
+        pygame.draw.rect(self.screen, Colours.RED, self.keypad_cancel)
+        pygame.draw.rect(self.screen, Colours.GREEN, self.join_game)
 
         pygame.display.flip()
