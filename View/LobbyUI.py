@@ -42,6 +42,8 @@ class LobbyUI:
         self.keypad_0 = keypad_button.copy()
         self.keypad_cancel = keypad_button.copy()
         self.join_game = join_game_button.copy()
+        self.join_random = join_game_button.copy()
+        self.create_game = join_game_button.copy()
 
 
     def main(self):
@@ -93,35 +95,43 @@ class LobbyUI:
                     ...
                 if self.join_game.collidepoint(mouse_pos):
                     ...
-
+                if self.join_random.collidepoint(mouse_pos):
+                    ...
+                if self.create_game.collidepoint(mouse_pos):
+                    ...
 
     def update(self):
+        display_x = 100
         sw = self.screen.get_width()
         sh = self.screen.get_height()
-        bw = self.keypad_1.width + 20
+        bw = self.keypad_1.width + (display_x - self.keypad_1.width)
         bh = self.keypad_1.height
         y_offset = 5
-        x_offset = -15
+        x_offset = (self.keypad_1.width - display_x) + 5
         rows = 8
-        cols = 1.75
+        sf = 1.75
+
+
 
         # Exit
         self.exit_button.topleft = (20, 20)
 
         # keypad
-        self.keypad_1.center = (sw / cols + 100, 2 * sh/rows)
-        self.keypad_2.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows)
-        self.keypad_3.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows)
-        self.keypad_4.center = (sw / cols + 100, 2 * sh / rows + bh + y_offset)
-        self.keypad_5.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
-        self.keypad_6.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
-        self.keypad_7.center = (sw / cols + 100, 2 * sh / rows + 2*(bh + y_offset))
-        self.keypad_8.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_9.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_delete.center = (sw / cols + 100, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_0.center = (sw / cols + bw*2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_cancel.center = (sw / cols + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
-        self.join_game.center = (sw / cols + 200 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
+        self.keypad_1.center = (sw / sf + display_x, 2 * sh/rows)
+        self.keypad_2.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows)
+        self.keypad_3.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows)
+        self.keypad_4.center = (sw / sf + display_x, 2 * sh / rows + bh + y_offset)
+        self.keypad_5.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
+        self.keypad_6.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
+        self.keypad_7.center = (sw / sf + display_x, 2 * sh / rows + 2*(bh + y_offset))
+        self.keypad_8.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_9.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_delete.center = (sw / sf + display_x, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_0.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_cancel.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
+        self.join_game.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
+        self.join_random.center = (sw/4, sh / 5)
+        self.create_game.center = (sw / 4, sh / 1.25)
 
     def render(self):
         sw = self.screen.get_width()
@@ -147,5 +157,7 @@ class LobbyUI:
         pygame.draw.rect(self.screen, Colours.GREY, self.keypad_0)
         pygame.draw.rect(self.screen, Colours.RED, self.keypad_cancel)
         pygame.draw.rect(self.screen, Colours.GREEN, self.join_game)
+        pygame.draw.rect(self.screen, Colours.CYAN, self.join_random)
+        pygame.draw.rect(self.screen, Colours.PURPLE, self.create_game)
 
         pygame.display.flip()
