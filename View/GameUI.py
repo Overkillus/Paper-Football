@@ -23,6 +23,9 @@ class Game:
     player1_banner = pygame.image.load("Art/score_player1.png")
     player2_banner = pygame.image.load("Art/score_player2.png")
 
+    exit_selected = pygame.image.load("Art/exit2_highlight.png")
+    rules_selected = pygame.image.load("Art/question_highlight.png")
+    chat_selected = pygame.image.load("Art/chat_selected.png")
     chat1 = pygame.image.load("Art/well_played.png")
     chat2 = pygame.image.load("Art/nice_move.png")
     chat3 = pygame.image.load("Art/good_luck.png")
@@ -295,6 +298,12 @@ class Game:
 
         # Button select highlights
         mouse_pos = pygame.mouse.get_pos()
+        if self.exit_rect.collidepoint(mouse_pos):
+            self.screen.blit(self.exit_selected, (self.exit_rect.x, self.exit_rect.y))
+        if self.rules_rect.collidepoint(mouse_pos):
+            self.screen.blit(self.rules_selected, (self.rules_rect.x, self.rules_rect.y))
+        if self.chat_rect.collidepoint(mouse_pos) and not self.chatActive:
+            self.screen.blit(self.chat_selected, (self.chat_rect.x, self.chat_rect.y))
         if self.chat_button1_rect.collidepoint(mouse_pos) and self.chatActive:
             self.screen.blit(self.chat1Selected, (self.chat_button1_rect.x, self.chat_button1_rect.y))
         if self.chat_button2_rect.collidepoint(mouse_pos) and self.chatActive:
