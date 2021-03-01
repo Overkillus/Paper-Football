@@ -28,6 +28,7 @@ class LobbyUI:
         # keypad
         keypad_button = pygame.Rect(0, 0, 80, 90)
         join_game_button = pygame.Rect(0, 0, keypad_button.width*3.15, keypad_button.height*0.75)
+        game_type_button = pygame.Rect(0, 0, join_game_button.width/2 - 5, join_game_button.height)
 
         self.keypad_1 = keypad_button.copy()
         self.keypad_2 = keypad_button.copy()
@@ -44,6 +45,8 @@ class LobbyUI:
         self.join_game = join_game_button.copy()
         self.join_random = join_game_button.copy()
         self.create_game = join_game_button.copy()
+        self.public_button = game_type_button.copy()
+        self.private_button = game_type_button.copy()
 
 
     def main(self):
@@ -99,6 +102,10 @@ class LobbyUI:
                     ...
                 if self.create_game.collidepoint(mouse_pos):
                     ...
+                if self.public_button.collidepoint(mouse_pos):
+                    ...
+                if self.private_button.collidepoint(mouse_pos):
+                    ...
 
     def update(self):
         display_x = 100
@@ -132,6 +139,9 @@ class LobbyUI:
         self.join_game.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
         self.join_random.center = (sw/4, sh / 5)
         self.create_game.center = (sw / 4, sh / 1.25)
+        self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
+        self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
+
 
     def render(self):
         sw = self.screen.get_width()
@@ -159,5 +169,7 @@ class LobbyUI:
         pygame.draw.rect(self.screen, Colours.GREEN, self.join_game)
         pygame.draw.rect(self.screen, Colours.CYAN, self.join_random)
         pygame.draw.rect(self.screen, Colours.PURPLE, self.create_game)
+        pygame.draw.rect(self.screen, Colours.ORANGE, self.public_button)
+        pygame.draw.rect(self.screen, Colours.YELLOW, self.private_button)
 
         pygame.display.flip()
