@@ -48,6 +48,9 @@ class LobbyUI:
         self.public_button = game_type_button.copy()
         self.private_button = game_type_button.copy()
 
+        self.keycode = "" # new LobbyUI variables I just added
+        self.server_creation_type = "public"
+
 
     def main(self):
         self.event_handler()
@@ -57,6 +60,30 @@ class LobbyUI:
             self.controller.delta_time -= 1 / Settings.max_tps
             self.update()
             self.render()
+
+    # temporarily slapping LobbyUI function here. it's 6:30am and i cba making new script
+    def lobby_buttons(self, action, arg1):
+        # self.keycode self.server_creation_type variables placed in init() function.
+        if action == "keycode-append" and len(self.keycode) < 5:
+            self.keycode += arg1
+        elif action == "keycode-erase" and len(self.keycode) > 0:
+            self.keycode = self.keycode[:-1]
+        elif action == "keycode-reset":
+            self.keycode = ""
+        elif action == "keycode-join":
+            pass #client.join_server(self.keycode)
+        elif action == "join-randoms":
+            pass #client.quick_join()
+        elif action == "public-private":
+            self.server_creation_type = arg1
+        elif action == "create-server":
+            pass #client.create_server()
+        print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
+        # TODO: put this function in a place where the client object can be accessed, or equivalent
+        # TODO: art
+        # TODO: button changes look on click (both art and code)
+        # TODO: display keycode above keypad. BONUS: make the text appear in a stylised font?
+
 
 
     def event_handler(self):
@@ -73,39 +100,39 @@ class LobbyUI:
 
                 # Keypad
                 if self.keypad_1.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "1")
                 if self.keypad_2.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "2")
                 if self.keypad_3.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "3")
                 if self.keypad_4.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "4")
                 if self.keypad_5.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "5")
                 if self.keypad_6.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "6")
                 if self.keypad_7.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "7")
                 if self.keypad_8.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "8")
                 if self.keypad_9.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "9")
                 if self.keypad_0.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-append", "0")
                 if self.keypad_delete.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-erase", None)
                 if self.keypad_cancel.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-reset", None)
                 if self.join_game.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("keycode-join", None)
                 if self.join_random.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("join-randoms", None)
                 if self.create_game.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("create-server", None)
                 if self.public_button.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("public-private", "public")
                 if self.private_button.collidepoint(mouse_pos):
-                    ...
+                    self.lobby_buttons("public-private", "private")
 
     def update(self):
         display_x = 100
