@@ -5,10 +5,12 @@ from Server.BaseServer import Server
 
 
 class GameServer(Server):
-    def __init__(self, server, port):
+    def __init__(self, server, port, gameType):
         self.STATUS = "running"
         self.PLAYER_COUNT = 0
         self.MAX_PLAYERS = 2
+
+        self.GAME_TYPE = gameType # depends on what given
 
         newKey = ""
         for i in range(6):
@@ -68,6 +70,11 @@ class GameServer(Server):
 
     def return_status(self):
         return self.STATUS
+
+    def return_game_type(self):
+        return self.GAME_TYPE
+
+    #
 
 
 # might the infrastructure dif on this one?

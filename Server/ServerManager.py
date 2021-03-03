@@ -28,13 +28,13 @@ class ServerManager(Server):
 
         self.console(f"{empty_counter} empty server(s) removed")
 
-    def create_server(self, connection, address):
+    def create_server(self, connection, address, gameType):
         self.remove_empty_servers() # a lil extra here: remove empty servers.
 
         self.console(f"[{address}] wants to create a server")
         # create server object. get its key. server should have a STATUS var tbh.
         self.SERVER_COUNTER += 1
-        s = GameServer(self.SERVER, self.PORT+self.SERVER_COUNTER) # this halts. how not?
+        s = GameServer(self.SERVER, self.PORT+self.SERVER_COUNTER, gameType) # now uses game privacy
         k = s.return_key()
         # self.SERVERS.append(s)
         self.SERVERS[k] = s
@@ -64,19 +64,23 @@ class ServerManager(Server):
 
         server_to_join = 0
         for k, serv in self.SERVERS.items():
-            if serv.return_players() < serv.return_max_players():
+            if serv.return_players() < serv.return_max_players() and serv.return_gametype() != self.GAMETYPE_PRIVATE:
                 server_to_join = serv.return_port()
                 break
         if server_to_join != 0:
             self.send_to_client(connection, f"{self.ENTERGAME_MSG} {server_to_join}")
         else:
-            self.create_server(connection, address)
+            self.create_server(connection, address, self.GAMETYPE_PUBLIC)
 
     # any other specific messages. this overrides the parent one.
     def handle_client_messages(self, connection, address, msg):
         #print("serverManager client message handling. ")
         if self.CREATESERVER_MSG in msg:
-            self.create_server(connection, address)
+            self.create_server(connection, address, msg[len(self.CREATESERVER_MSG)+1:])
+            #if self.GAMETYPE_PRIVATE in msg:
+            #    self.create_server(connection, address, self.GAMETYPE_PRIVATE)
+            #else:
+            #    self.create_server(connection, address, self.GAMETYPE_PUBLIC)
         elif self.JOINSERVER_MSG in msg:
             self.join_server(connection, address, msg)
         elif self.QUICKJOINSERVER_MSG in msg:
