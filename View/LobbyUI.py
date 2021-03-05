@@ -37,14 +37,16 @@ class LobbyUI:
     keypad_dash_highlight = pygame.image.load('Art/dash-highlight.png')
     keypad_cancel = pygame.image.load('Art/c.png')
     keypad_cancel_highlight = pygame.image.load('Art/c_highlight.png')
-    keypad_join_game = pygame.image.load('Art/join_small.png')
-    keypad_join_game_highlight = pygame.image.load('Art/join_small_highlight.png')
+    keypad_join_game = pygame.image.load('Art/join_bigger.png')
+    keypad_join_game_highlight = pygame.image.load('Art/join_bigger_highlight.png')
     keypad_screen = pygame.image.load('Art/keypad_screen_small.png')
     join_random = pygame.image.load('Art/randomgame.png')
     join_random_highlight = pygame.image.load('Art/randomgame_highlight.png')
     create_game = pygame.image.load('Art/createprivate.png')
     create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
     central_line = pygame.image.load('Art/line_vertical.png')
+
+    font = pygame.font.SysFont('arialbold', 50)
 
 
 
@@ -218,6 +220,8 @@ class LobbyUI:
         self.screen.blit(self.exitIcon, self.exit_button)
 
         # keypad
+        draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
+        draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
         self.screen.blit(self.keypad_1, self.keypad_1_button)
         self.screen.blit(self.keypad_2, self.keypad_2_button)
         self.screen.blit(self.keypad_3, self.keypad_3_button)
@@ -268,3 +272,11 @@ class LobbyUI:
             self.screen.blit(self.create_game_highlight, (self.create_game_button.x, self.create_game_button.y))
 
         pygame.display.flip()
+
+
+# Helper Function
+def draw_text(text, font, color, surface, x, y):
+    text_object = font.render(text, 1, color)
+    text_rect = text_object.get_rect()
+    text_rect.topleft = (x, y)
+    surface.blit(text_object, text_rect)
