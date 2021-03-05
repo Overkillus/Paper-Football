@@ -44,8 +44,9 @@ class Game:
         self.controller = controller
 
         # Entity variables
-        self.myBoard = Board(13, 9)
-        self.board_distance = 50
+        self.myBoard = Board(7, 7)
+        self.scale = 1.3
+        self.board_distance = int(50*self.scale)
         self.myBoard.set_board_distance(self.board_distance)
         self.circle_radius = 8
         self.circle_hitbox_multiplier = 1.8
@@ -278,8 +279,8 @@ class Game:
 
         # Waiting banner
         if self.controller.client.current_population == 1:
-            self.screen.blit(self.waitingPlayer, self.waiting_rect)
-
+            # self.screen.blit(self.waitingPlayer, self.waiting_rect)
+            ...
         # Rules icon
         self.screen.blit(self.rules_icon, self.rules_rect)
 

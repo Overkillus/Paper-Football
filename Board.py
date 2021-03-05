@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import pygame
 
 from Connection import Connection
 from Point import Point
@@ -127,8 +128,14 @@ class Board:
         a.is_used = False
 
     def set_board_distance(self, distance):
+        print("lol")
         Point.board_distance = distance
         Connection.board_distance = distance
+        Connection.lineHImg = pygame.transform.scale(Connection.lineHImg, (distance+15, Connection.lineHImg.get_height()))
+        Connection.lineVImg = pygame.transform.scale(Connection.lineVImg, (Connection.lineVImg.get_width(), distance+15))
+        Connection.lineDLImg = pygame.transform.scale(Connection.lineDLImg, (distance+15, distance+15))
+        Connection.lineDRImg = pygame.transform.scale(Connection.lineDRImg, (distance+15, distance+15))
+        print(Connection.lineHImg.get_width())
 
     def generate_walls(self):
         # Top and bottom wall
@@ -168,21 +175,23 @@ class Board:
                 # print(ax, ay, bx, by)
                 self.add_connection(a, b)
 
-        # Hardcoded walls for goals
-        self.add_connection(self.points[0][3], self.points[1][3])
-        self.add_connection(self.points[0][5], self.points[1][5])
-        self.add_connection(self.points[self.width-1][3], self.points[self.width-2][3])
-        self.add_connection(self.points[self.width-1][5], self.points[self.width-2][5])
+        # Top and Bottom walls for goals
+        top_y = self.height//2 - 1
+        bottom_y = self.height//2 + 1
+        self.add_connection(self.points[0][top_y], self.points[1][top_y])
+        self.add_connection(self.points[0][bottom_y], self.points[1][bottom_y])
+        self.add_connection(self.points[self.width-1][top_y], self.points[self.width-2][top_y])
+        self.add_connection(self.points[self.width-1][bottom_y], self.points[self.width-2][bottom_y])
 
-        # Hardcoded illegal points
-        for i in range(3):
+        # Illegal points
+        for i in range(self.height//2 - 1):
             self.points[0][i].is_legal = False
             self.points[0][self.height-1-i].is_legal = False
             self.points[self.width-1][i].is_legal = False
             self.points[self.width-1][self.height-i-1].is_legal = False
 
-        # Hardcoded goal points
-        for j in range(3, 6):
+        # Goal points
+        for j in range(self.height//2 - 1, self.height//2 + 2):
             self.points[0][j].is_goal = True
             self.points[self.width-1][j].is_goal = True
 
