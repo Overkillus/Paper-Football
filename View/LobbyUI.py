@@ -13,6 +13,38 @@ class LobbyUI:
 
     # Art
     exitIcon = pygame.image.load('Art/exit2.png')
+    keypad_1 = pygame.image.load('Art/1.png')
+    keypad_1_highlight = pygame.image.load('Art/1_highlight.png')
+    keypad_2 = pygame.image.load('Art/2.png')
+    keypad_2_highlight = pygame.image.load('Art/2_highlight.png')
+    keypad_3 = pygame.image.load('Art/3.png')
+    keypad_3_highlight = pygame.image.load('Art/3_highlight.png')
+    keypad_4 = pygame.image.load('Art/4.png')
+    keypad_4_highlight = pygame.image.load('Art/4_highlight.png')
+    keypad_5 = pygame.image.load('Art/5.png')
+    keypad_5_highlight = pygame.image.load('Art/5_highlight.png')
+    keypad_6 = pygame.image.load('Art/6.png')
+    keypad_6_highlight = pygame.image.load('Art/6_highlight.png')
+    keypad_7 = pygame.image.load('Art/7.png')
+    keypad_7_highlight = pygame.image.load('Art/7_highlight.png')
+    keypad_8 = pygame.image.load('Art/8.png')
+    keypad_8_highlight = pygame.image.load('Art/8_highlight.png')
+    keypad_9 = pygame.image.load('Art/9.png')
+    keypad_9_highlight = pygame.image.load('Art/9_highlight.png')
+    keypad_0 = pygame.image.load('Art/0.png')
+    keypad_0_highlight = pygame.image.load('Art/0_highlight.png')
+    keypad_dash = pygame.image.load('Art/dash.png')
+    keypad_dash_highlight = pygame.image.load('Art/dash-highlight.png')
+    keypad_cancel = pygame.image.load('Art/c.png')
+    keypad_cancel_highlight = pygame.image.load('Art/c_highlight.png')
+    keypad_join_game = pygame.image.load('Art/join_small.png')
+    keypad_join_game_highlight = pygame.image.load('Art/join_small_highlight.png')
+    join_random = pygame.image.load('Art/randomgame.png')
+    join_random_highlight = pygame.image.load('Art/randomgame_highlight.png')
+    create_game = pygame.image.load('Art/createprivate.png')
+    create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
+    central_line = pygame.image.load('Art/line_vertical.png')
+
 
     def __init__(self, controller):
         # State
@@ -26,27 +58,28 @@ class LobbyUI:
         self.exit_button = self.exitIcon.get_rect()
 
         # keypad
-        keypad_button = pygame.Rect(0, 0, 80, 90)
+        keypad_button = pygame.Rect(0, 0, 68, 65)
         join_game_button = pygame.Rect(0, 0, keypad_button.width*3.15, keypad_button.height*0.75)
-        game_type_button = pygame.Rect(0, 0, join_game_button.width/2 - 5, join_game_button.height)
+        #game_type_button = pygame.Rect(0, 0, join_game_button.width/2 - 5, join_game_button.height)
 
-        self.keypad_1 = keypad_button.copy()
-        self.keypad_2 = keypad_button.copy()
-        self.keypad_3 = keypad_button.copy()
-        self.keypad_4 = keypad_button.copy()
-        self.keypad_5 = keypad_button.copy()
-        self.keypad_6 = keypad_button.copy()
-        self.keypad_7 = keypad_button.copy()
-        self.keypad_8 = keypad_button.copy()
-        self.keypad_9 = keypad_button.copy()
-        self.keypad_delete = keypad_button.copy()
-        self.keypad_0 = keypad_button.copy()
-        self.keypad_cancel = keypad_button.copy()
-        self.join_game = join_game_button.copy()
-        self.join_random = join_game_button.copy()
-        self.create_game = join_game_button.copy()
-        self.public_button = game_type_button.copy()
-        self.private_button = game_type_button.copy()
+        self.keypad_1_button = self.keypad_1.get_rect()
+        self.keypad_2_button = self.keypad_2.get_rect()
+        self.keypad_3_button = self.keypad_3.get_rect()
+        self.keypad_4_button = self.keypad_4.get_rect()
+        self.keypad_5_button = self.keypad_5.get_rect()
+        self.keypad_6_button = self.keypad_6.get_rect()
+        self.keypad_7_button = self.keypad_7.get_rect()
+        self.keypad_8_button = self.keypad_8.get_rect()
+        self.keypad_9_button = self.keypad_9.get_rect()
+        self.keypad_0_button = self.keypad_0.get_rect()
+        self.keypad_dash_button = self.keypad_dash.get_rect()
+        self.keypad_cancel_button = self.keypad_cancel.get_rect()
+        self.keypad_join_game_button = self.keypad_join_game.get_rect()
+        self.join_random_button = self.join_random.get_rect()
+        self.create_game_button = self.create_game.get_rect()
+        self.central_line_image = self.central_line.get_rect()
+        #self.public_button = game_type_button.copy()
+        #self.private_button = game_type_button.copy()
 
         self.keycode = "" # new LobbyUI variables I just added
         self.server_creation_type = "public"
@@ -99,49 +132,49 @@ class LobbyUI:
                     self.controller.change_view(self.controller.menuUI)
 
                 # Keypad
-                if self.keypad_1.collidepoint(mouse_pos):
+                if self.keypad_1_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "1")
-                if self.keypad_2.collidepoint(mouse_pos):
+                if self.keypad_2_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "2")
-                if self.keypad_3.collidepoint(mouse_pos):
+                if self.keypad_3_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "3")
-                if self.keypad_4.collidepoint(mouse_pos):
+                if self.keypad_4_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "4")
-                if self.keypad_5.collidepoint(mouse_pos):
+                if self.keypad_5_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "5")
-                if self.keypad_6.collidepoint(mouse_pos):
+                if self.keypad_6_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "6")
-                if self.keypad_7.collidepoint(mouse_pos):
+                if self.keypad_7_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "7")
-                if self.keypad_8.collidepoint(mouse_pos):
+                if self.keypad_8_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "8")
-                if self.keypad_9.collidepoint(mouse_pos):
+                if self.keypad_9_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "9")
-                if self.keypad_0.collidepoint(mouse_pos):
+                if self.keypad_0_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-append", "0")
-                if self.keypad_delete.collidepoint(mouse_pos):
+                if self.keypad_dash_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-erase", None)
-                if self.keypad_cancel.collidepoint(mouse_pos):
+                if self.keypad_cancel_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-reset", None)
-                if self.join_game.collidepoint(mouse_pos):
+                if self.keypad_join_game_button.collidepoint(mouse_pos):
                     self.lobby_buttons("keycode-join", None)
-                if self.join_random.collidepoint(mouse_pos):
+                if self.join_random_button.collidepoint(mouse_pos):
                     self.lobby_buttons("join-randoms", None)
-                if self.create_game.collidepoint(mouse_pos):
+                if self.create_game_button.collidepoint(mouse_pos):
                     self.lobby_buttons("create-server", None)
-                if self.public_button.collidepoint(mouse_pos):
-                    self.lobby_buttons("public-private", "public")
-                if self.private_button.collidepoint(mouse_pos):
-                    self.lobby_buttons("public-private", "private")
+                #if self.public_button.collidepoint(mouse_pos):
+                    #self.lobby_buttons("public-private", "public")
+                #if self.private_button.collidepoint(mouse_pos):
+                    #self.lobby_buttons("public-private", "private")
 
     def update(self):
         display_x = 100
         sw = self.screen.get_width()
         sh = self.screen.get_height()
-        bw = self.keypad_1.width + (display_x - self.keypad_1.width)
-        bh = self.keypad_1.height
-        y_offset = 5
-        x_offset = (self.keypad_1.width - display_x) + 5
+        bw = self.keypad_1_button.width + (display_x - self.keypad_1_button.width)
+        bh = self.keypad_1_button.height
+        y_offset = 0
+        x_offset = (self.keypad_1_button.width - display_x) - 0
         rows = 8
         sf = 1.75
 
@@ -151,23 +184,24 @@ class LobbyUI:
         self.exit_button.topleft = (20, 20)
 
         # keypad
-        self.keypad_1.center = (sw / sf + display_x, 2 * sh/rows)
-        self.keypad_2.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows)
-        self.keypad_3.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows)
-        self.keypad_4.center = (sw / sf + display_x, 2 * sh / rows + bh + y_offset)
-        self.keypad_5.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
-        self.keypad_6.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
-        self.keypad_7.center = (sw / sf + display_x, 2 * sh / rows + 2*(bh + y_offset))
-        self.keypad_8.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_9.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_delete.center = (sw / sf + display_x, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_0.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_cancel.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
-        self.join_game.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
-        self.join_random.center = (sw/4, sh / 5)
-        self.create_game.center = (sw / 4, sh / 1.25)
-        self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
-        self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
+        self.keypad_1_button.center = (sw / sf + display_x, 2 * sh/rows)
+        self.keypad_2_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows)
+        self.keypad_3_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows)
+        self.keypad_4_button.center = (sw / sf + display_x, 2 * sh / rows + bh + y_offset)
+        self.keypad_5_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
+        self.keypad_6_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
+        self.keypad_7_button.center = (sw / sf + display_x, 2 * sh / rows + 2*(bh + y_offset))
+        self.keypad_8_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_9_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
+        self.keypad_0_button.center = (sw / sf + bw * 2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_dash_button.center = (sw / sf + display_x, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_cancel_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
+        self.keypad_join_game_button.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
+        self.join_random_button.center = (sw/4, sh / 1.5)
+        self.create_game_button.center = (sw / 4, sh / 1.25)
+        self.central_line_image.center = (sw / 2, sh / 2)
+        #self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
+        #self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
 
 
     def render(self):
@@ -175,28 +209,58 @@ class LobbyUI:
         sh = self.screen.get_height()
 
         # Clear screen
-        self.screen.fill((255, 182, 193))
+        self.screen.fill((3, 15, 56))
 
         # Exit Icon
         self.screen.blit(self.exitIcon, self.exit_button)
 
         # keypad
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_1)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_2)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_3)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_4)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_5)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_6)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_7)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_8)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_9)
-        pygame.draw.rect(self.screen, Colours.RED, self.keypad_delete)
-        pygame.draw.rect(self.screen, Colours.GREY, self.keypad_0)
-        pygame.draw.rect(self.screen, Colours.RED, self.keypad_cancel)
-        pygame.draw.rect(self.screen, Colours.GREEN, self.join_game)
-        pygame.draw.rect(self.screen, Colours.CYAN, self.join_random)
-        pygame.draw.rect(self.screen, Colours.PURPLE, self.create_game)
-        pygame.draw.rect(self.screen, Colours.ORANGE, self.public_button)
-        pygame.draw.rect(self.screen, Colours.YELLOW, self.private_button)
+        self.screen.blit(self.keypad_1, self.keypad_1_button)
+        self.screen.blit(self.keypad_2, self.keypad_2_button)
+        self.screen.blit(self.keypad_3, self.keypad_3_button)
+        self.screen.blit(self.keypad_4, self.keypad_4_button)
+        self.screen.blit(self.keypad_5, self.keypad_5_button)
+        self.screen.blit(self.keypad_6, self.keypad_6_button)
+        self.screen.blit(self.keypad_7, self.keypad_7_button)
+        self.screen.blit(self.keypad_8, self.keypad_8_button)
+        self.screen.blit(self.keypad_9, self.keypad_9_button)
+        self.screen.blit(self.keypad_0, self.keypad_0_button)
+        self.screen.blit(self.keypad_dash, self.keypad_dash_button)
+        self.screen.blit(self.keypad_cancel, self.keypad_cancel_button)
+        self.screen.blit(self.keypad_join_game, self.keypad_join_game_button)
+        self.screen.blit(self.join_random, self.join_random_button)
+        self.screen.blit(self.create_game, self.create_game_button)
+        self.screen.blit(self.central_line, self.central_line_image)
+
+        if self.keypad_1_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_1_highlight, (self.keypad_1_button.x, self.keypad_1_button.y))
+        if self.keypad_2_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_2_highlight, (self.keypad_2_button.x, self.keypad_2_button.y))
+        if self.keypad_3_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_3_highlight, (self.keypad_3_button.x, self.keypad_3_button.y))
+        if self.keypad_4_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_4_highlight, (self.keypad_4_button.x, self.keypad_4_button.y))
+        if self.keypad_5_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_5_highlight, (self.keypad_5_button.x, self.keypad_5_button.y))
+        if self.keypad_6_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_6_highlight, (self.keypad_6_button.x, self.keypad_6_button.y))
+        if self.keypad_7_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_7_highlight, (self.keypad_7_button.x, self.keypad_7_button.y))
+        if self.keypad_8_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_8_highlight, (self.keypad_8_button.x, self.keypad_8_button.y))
+        if self.keypad_9_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_9_highlight, (self.keypad_9_button.x, self.keypad_9_button.y))
+        if self.keypad_0_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_0_highlight, (self.keypad_0_button.x, self.keypad_0_button.y))
+        if self.keypad_dash_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_dash_highlight, (self.keypad_dash_button.x, self.keypad_dash_button.y))
+        if self.keypad_cancel_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_cancel_highlight, (self.keypad_cancel_button.x, self.keypad_cancel_button.y))
+        if self.keypad_join_game_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.keypad_join_game_highlight, (self.keypad_join_game_button.x, self.keypad_join_game_button.y))
+        if self.join_random_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.join_random_highlight, (self.join_random_button.x, self.join_random_button.y))
+        if self.create_game_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.create_game_highlight, (self.create_game_button.x, self.create_game_button.y))
 
         pygame.display.flip()
