@@ -39,11 +39,13 @@ class LobbyUI:
     keypad_cancel_highlight = pygame.image.load('Art/c_highlight.png')
     keypad_join_game = pygame.image.load('Art/join_small.png')
     keypad_join_game_highlight = pygame.image.load('Art/join_small_highlight.png')
+    keypad_screen = pygame.image.load('Art/keypad_screen_small.png')
     join_random = pygame.image.load('Art/randomgame.png')
     join_random_highlight = pygame.image.load('Art/randomgame_highlight.png')
     create_game = pygame.image.load('Art/createprivate.png')
     create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
     central_line = pygame.image.load('Art/line_vertical.png')
+
 
 
     def __init__(self, controller):
@@ -78,6 +80,7 @@ class LobbyUI:
         self.join_random_button = self.join_random.get_rect()
         self.create_game_button = self.create_game.get_rect()
         self.central_line_image = self.central_line.get_rect()
+        self.keypad_screen_image = self.keypad_screen.get_rect()
         #self.public_button = game_type_button.copy()
         #self.private_button = game_type_button.copy()
 
@@ -168,14 +171,13 @@ class LobbyUI:
                     #self.lobby_buttons("public-private", "private")
 
     def update(self):
-        display_x = 100
+        display_x = self.screen.get_width()/7
         sw = self.screen.get_width()
         sh = self.screen.get_height()
         bw = self.keypad_1_button.width + (display_x - self.keypad_1_button.width)
         bh = self.keypad_1_button.height
-        y_offset = 0
         x_offset = (self.keypad_1_button.width - display_x) - 0
-        rows = 8
+        rows = 5
         sf = 1.75
 
 
@@ -187,19 +189,20 @@ class LobbyUI:
         self.keypad_1_button.center = (sw / sf + display_x, 2 * sh/rows)
         self.keypad_2_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows)
         self.keypad_3_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows)
-        self.keypad_4_button.center = (sw / sf + display_x, 2 * sh / rows + bh + y_offset)
-        self.keypad_5_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + bh + y_offset)
-        self.keypad_6_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + bh + y_offset)
-        self.keypad_7_button.center = (sw / sf + display_x, 2 * sh / rows + 2*(bh + y_offset))
-        self.keypad_8_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_9_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 2 * (bh + y_offset))
-        self.keypad_0_button.center = (sw / sf + bw * 2 + x_offset, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_dash_button.center = (sw / sf + display_x, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_cancel_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * (bh + y_offset))
-        self.keypad_join_game_button.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * (bh + y_offset))
-        self.join_random_button.center = (sw/4, sh / 1.5)
-        self.create_game_button.center = (sw / 4, sh / 1.25)
+        self.keypad_4_button.center = (sw / sf + display_x, 2 * sh / rows + bh)
+        self.keypad_5_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + bh)
+        self.keypad_6_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + bh)
+        self.keypad_7_button.center = (sw / sf + display_x, 2 * sh / rows + 2*bh)
+        self.keypad_8_button.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows + 2 * bh)
+        self.keypad_9_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 2 * bh)
+        self.keypad_0_button.center = (sw / sf + bw * 2 + x_offset, 2 * sh / rows + 3 * bh)
+        self.keypad_dash_button.center = (sw / sf + display_x, 2 * sh / rows + 3 * bh)
+        self.keypad_cancel_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * bh)
+        self.keypad_join_game_button.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * bh)
+        self.join_random_button.center = (sw/4, sh / 1.75)
+        self.create_game_button.center = (sw / 4, sh / 1.5)
         self.central_line_image.center = (sw / 2, sh / 2)
+        self.keypad_screen_image.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows - (self.keypad_screen.get_height() * 0.75))
         #self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
         #self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
 
@@ -231,6 +234,7 @@ class LobbyUI:
         self.screen.blit(self.join_random, self.join_random_button)
         self.screen.blit(self.create_game, self.create_game_button)
         self.screen.blit(self.central_line, self.central_line_image)
+        self.screen.blit(self.keypad_screen, self.keypad_screen_image)
 
         if self.keypad_1_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.keypad_1_highlight, (self.keypad_1_button.x, self.keypad_1_button.y))
