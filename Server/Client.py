@@ -9,6 +9,7 @@ class Client:
         self.SERVER = server
         self.PORT = port  # this is the main lobby port.
 
+        # message variables recognised by both client and servers.
         self.HEADER_SIZE = 10
         self.FORMAT = "utf-8"
         self.DISCONNECT_MSG = "!GETOUT"
@@ -20,6 +21,9 @@ class Client:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATUION_MSG = "!POPULATION"
+        self.GAMEOVER_STRING = "game over"
+        self.GAMETYPE_PUBLIC = "public"
+        self.GAMETYPE_PRIVATE = "private"
 
         self.pending_move = None
         self.pending_board = None
@@ -100,9 +104,9 @@ class Client:
             self.current_population = pop
 
     # server joining requests
-    def create_server(self):
-        self.console("server creation asked. you should join it automatically.")
-        self.send_to_server(self.CREATESERVER_MSG)
+    def create_server(self, gameType):
+        self.console(f"server creation asked. you should join it automatically. TYPE: {gameType}")
+        self.send_to_server(f"{self.CREATESERVER_MSG} {gameType}")
         # ask ServerManager to create server. have it return key to you.
         # the key is returned and join_server() runs.
 
