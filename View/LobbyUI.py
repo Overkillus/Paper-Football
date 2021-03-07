@@ -222,6 +222,10 @@ class LobbyUI:
         # keypad
         draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
         draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
+
+        draw_text(self.keycode, self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 70,
+                  self.keypad_screen_image.y + 38)
+
         self.screen.blit(self.keypad_1, self.keypad_1_button)
         self.screen.blit(self.keypad_2, self.keypad_2_button)
         self.screen.blit(self.keypad_3, self.keypad_3_button)
