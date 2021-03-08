@@ -59,7 +59,7 @@ class LobbyUI:
         self.screen = controller.screen
         self.controller = controller
 
-        # Exit
+        # ExitTo
         self.exit_button = self.exitIcon.get_rect()
 
         # keypad

@@ -44,7 +44,7 @@ class Game:
         self.controller = controller
 
         # Entity variables
-        self.myBoard = Board(13, 9)
+        self.myBoard = Board(Settings.board_width, Settings.board_height)
         self.scale = 1
         self.board_distance = int(50*self.scale)
         self.myBoard.set_board_distance(self.board_distance)

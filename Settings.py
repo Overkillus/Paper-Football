@@ -6,6 +6,8 @@ screen_width = default_screen_width
 screen_height = default_screen_height
 is_native = False
 max_tps = 16
+board_width = 13
+board_height = 9
 
 
 # Sound
