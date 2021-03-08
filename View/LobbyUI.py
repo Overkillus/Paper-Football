@@ -47,6 +47,16 @@ class LobbyUI:
     create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
     central_line = pygame.image.load('Art/line_vertical.png')
 
+    # options buttons.
+    boardsize_1 = pygame.image.load('Art/boardsize_9x7.png')
+    boardsize_1_highlight = pygame.image.load('Art/boardsize_9x7.png') # no highlight version yet
+    boardsize_2 = pygame.image.load('Art/boardsize_13x9.png')
+    boardsize_2_highlight = pygame.image.load('Art/boardsize_13x9.png')  # no highlight version yet
+    boardsize_3 = pygame.image.load('Art/boardsize_17x7.png')
+    boardsize_3_highlight = pygame.image.load('Art/boardsize_17x7.png')  # no highlight version yet
+    boardsize_4 = pygame.image.load('Art/boardsize_19x15.png')
+    boardsize_4_highlight = pygame.image.load('Art/boardsize_19x15.png')  # no highlight version yet
+
     font = pygame.font.SysFont('arialbold', 50)
 
 
@@ -86,6 +96,12 @@ class LobbyUI:
         self.keypad_screen_image = self.keypad_screen.get_rect()
         #self.public_button = game_type_button.copy()
         #self.private_button = game_type_button.copy()
+
+        # game options
+        self.boardsize_1_button = self.boardsize_1.get_rect()
+        self.boardsize_2_button = self.boardsize_2.get_rect()
+        self.boardsize_3_button = self.boardsize_3.get_rect()
+        self.boardsize_4_button = self.boardsize_4.get_rect()
 
         self.keycode = "" # new LobbyUI variables I just added
         self.server_creation_type = "public"
@@ -189,6 +205,14 @@ class LobbyUI:
                     #self.lobby_buttons("public-private", "public")
                 #if self.private_button.collidepoint(mouse_pos):
                     #self.lobby_buttons("public-private", "private")
+                if self.boardsize_1_button.collidepoint(mouse_pos):
+                    pass
+                if self.boardsize_2_button.collidepoint(mouse_pos):
+                    pass
+                if self.boardsize_3_button.collidepoint(mouse_pos):
+                    pass
+                if self.boardsize_4_button.collidepoint(mouse_pos):
+                    pass
 
     def update(self):
         display_x = self.screen.get_width()/7
@@ -226,6 +250,10 @@ class LobbyUI:
         #self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
         #self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
 
+        self.boardsize_1_button.center = (self.join_random_button.x, self.keypad_screen_image.y + 60)
+        self.boardsize_2_button.center = (self.boardsize_1_button.centerx + self.boardsize_1_button.w + 10, self.boardsize_1_button.centery)
+        self.boardsize_3_button.center = (self.boardsize_2_button.centerx + self.boardsize_2_button.w + 10, self.boardsize_1_button.centery)
+        self.boardsize_4_button.center = (self.boardsize_3_button.centerx + self.boardsize_3_button.w + 10, self.boardsize_1_button.centery)
 
     def render(self):
         sw = self.screen.get_width()
@@ -237,10 +265,13 @@ class LobbyUI:
         # Exit Icon
         self.screen.blit(self.exitIcon, self.exit_button)
 
-        # keypad
+        # texts
         draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
         draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
 
+        draw_text('Board Size', self.font, Colours.WHITE, self.screen, self.join_random_button.x + 40, self.keypad_screen_image.y)
+
+        # keypad
         draw_text(self.keycode, self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 70,
                   self.keypad_screen_image.y + 38)
 
@@ -261,6 +292,11 @@ class LobbyUI:
         self.screen.blit(self.create_game, self.create_game_button)
         self.screen.blit(self.central_line, self.central_line_image)
         self.screen.blit(self.keypad_screen, self.keypad_screen_image)
+
+        self.screen.blit(self.boardsize_1, self.boardsize_1_button)
+        self.screen.blit(self.boardsize_2, self.boardsize_2_button)
+        self.screen.blit(self.boardsize_3, self.boardsize_3_button)
+        self.screen.blit(self.boardsize_4, self.boardsize_4_button)
 
         if self.keypad_1_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.keypad_1_highlight, (self.keypad_1_button.x, self.keypad_1_button.y))
@@ -292,6 +328,16 @@ class LobbyUI:
             self.screen.blit(self.join_random_highlight, (self.join_random_button.x, self.join_random_button.y))
         if self.create_game_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.create_game_highlight, (self.create_game_button.x, self.create_game_button.y))
+
+
+        if self.boardsize_1_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.boardsize_1_highlight, (self.boardsize_1_button.x, self.boardsize_1_button.y))
+        if self.boardsize_2_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.boardsize_2_highlight, (self.boardsize_2_button.x, self.boardsize_2_button.y))
+        if self.boardsize_3_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.boardsize_3_highlight, (self.boardsize_3_button.x, self.boardsize_3_button.y))
+        if self.boardsize_4_button.collidepoint(pygame.mouse.get_pos()):
+            self.screen.blit(self.boardsize_4_highlight, (self.boardsize_4_button.x, self.boardsize_4_button.y))
 
         pygame.display.flip()
 
