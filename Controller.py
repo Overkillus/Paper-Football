@@ -22,8 +22,8 @@ class Controller:
         self.screen = pygame.display.set_mode((Settings.screen_width, Settings.screen_height), pygame.RESIZABLE)
         pygame.display.set_caption('Paper Football')
 
-        self.client = Client(socket.gethostname(), 2000)
-        #self.client = Client("139.162.219.137", 2000) # Server ip
+        # self.client = Client(socket.gethostname(), 2000)
+        self.client = Client("139.162.219.137", 2000) # Server ip
 
         # Clock
         self.clock = pygame.time.Clock()
