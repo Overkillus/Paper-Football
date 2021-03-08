@@ -5,12 +5,14 @@ from Server.BaseServer import Server
 
 
 class GameServer(Server):
-    def __init__(self, server, port, gameType):
+    def __init__(self, server, port, gameType, boardsize):
         self.STATUS = "running"
         self.PLAYER_COUNT = 0
         self.MAX_PLAYERS = 2
+        self.GAME_TYPE = gameType
 
-        self.GAME_TYPE = gameType # depends on what given
+        # insert boardsize stuff
+        self.BOARDSIZE = boardsize # a tuple. e.g. (13, 9) = 13x9
 
         newKey = ""
         for i in range(6):
@@ -37,9 +39,9 @@ class GameServer(Server):
         connection.close()
         if connection in self.all_connections:
             self.all_connections.remove(connection)
-        # same as BaseServer above ^. new GameServer additions below.
+        # new additions below
         self.STATUS = self.GAMEOVER_STRING # since a player left, game is dead.
-        # auto disconnect remaining player(s)? up to you.
+        self.send_to_all_clients_except(self, f"{self.PLAYERLEFT_MSG} {connection}", connection)
 
 
     def console(self, msg):
@@ -53,6 +55,9 @@ class GameServer(Server):
         self.send_to_all_clients(f"{self.ENTERGAME_MSG} {2000}") # exchangeServers(2000)
         self.SERVER_ON = False # close start() thread
         self.STATUS = self.GAMEOVER_STRING
+
+    def do_once_client_connected(self, connection): # overriding the BaseServer version
+        self.send_to_client(connection, f"{(self.BOARDSIZE_MSG, (0,0))} ")
 
     # return functions.
     def return_port(self):

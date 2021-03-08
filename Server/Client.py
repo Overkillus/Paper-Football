@@ -21,6 +21,9 @@ class Client:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATUION_MSG = "!POPULATION"
+        self.PLAYERLEFT_MSG = "!PLAYERLEFT"
+        self.BOARDSIZE_MSG = "!BOARDSIZE"
+
         self.GAMEOVER_STRING = "game over"
         self.GAMETYPE_PUBLIC = "public"
         self.GAMETYPE_PRIVATE = "private"
@@ -102,11 +105,14 @@ class Client:
         elif self.POPULATUION_MSG in msg:
             pop = msg[1]
             self.current_population = pop
+        elif self.PLAYERLEFT_MSG in msg:
+            pass # up to you. display message on client?
 
     # server joining requests
-    def create_server(self, gameType):
+    def create_server(self, gameType, boardSize):
         self.console(f"server creation asked. you should join it automatically. TYPE: {gameType}")
-        self.send_to_server(f"{self.CREATESERVER_MSG} {gameType}")
+        # self.send_to_server(f"{self.CREATESERVER_MSG} {gameType}")
+        self.send_to_server((self.CREATESERVER_MSG, gameType, boardSize))
         # ask ServerManager to create server. have it return key to you.
         # the key is returned and join_server() runs.
 
