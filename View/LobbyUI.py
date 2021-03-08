@@ -2,6 +2,7 @@ import sys
 import pygame
 import Settings
 import Colours
+import time # I'M SORRY
 
 pygame.init()
 
@@ -99,28 +100,45 @@ class LobbyUI:
             self.update()
             self.render()
 
+    # maybe have a function somewhere for server-joining features?
+    def isConnected(self):
+        if not self.controller.client.connected:
+            self.controller.client.start()
+            if self.controller.client.connected:
+                return True
+            else:
+                return False
+        else:
+            return True
+
+    def waitUntilInGame(self, timeout): # better way on waiting until connected?
+        lasttime = time.time()
+        while not self.controller.client.IN_GAME and (time.time() - lasttime) < timeout:
+            time.sleep(0)  # variable wait, with a max of 2s (aka. timeout)
+        return self.controller.client.IN_GAME
+
     # temporarily slapping LobbyUI function here. it's 6:30am and i cba making new script
     def lobby_buttons(self, action, arg1):
         # self.keycode self.server_creation_type variables placed in init() function.
-        if action == "keycode-append" and len(self.keycode) < 5:
+        if action == "keycode-append" and len(self.keycode) < 6:
             self.keycode += arg1
         elif action == "keycode-erase" and len(self.keycode) > 0:
             self.keycode = self.keycode[:-1]
         elif action == "keycode-reset":
             self.keycode = ""
-        elif action == "keycode-join":
-            pass #client.join_server(self.keycode)
-        elif action == "join-randoms":
-            pass #client.quick_join()
+        elif action == "keycode-join" and self.isConnected():
+            self.controller.client.join_server(self.keycode)
+            if self.waitUntilInGame(1):
+                self.controller.change_view(self.controller.gameUI)
+        elif action == "join-randoms" and self.isConnected():
+            self.controller.client.quick_join()
+            self.controller.change_view(self.controller.gameUI)
         elif action == "public-private":
             self.server_creation_type = arg1
-        elif action == "create-server":
-            pass #client.create_server()
+        elif action == "create-server" and self.isConnected():
+            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE)
+            self.controller.change_view(self.controller.gameUI)
         print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
-        # TODO: put this function in a place where the client object can be accessed, or equivalent
-        # TODO: art
-        # TODO: button changes look on click (both art and code)
-        # TODO: display keycode above keypad. BONUS: make the text appear in a stylised font?
 
 
 
