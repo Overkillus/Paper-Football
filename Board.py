@@ -128,14 +128,12 @@ class Board:
         a.is_used = False
 
     def set_board_distance(self, distance):
-        print("lol")
         Point.board_distance = distance
         Connection.board_distance = distance
         Connection.lineHImg = pygame.transform.scale(Connection.lineHImg, (distance+15, Connection.lineHImg.get_height()))
         Connection.lineVImg = pygame.transform.scale(Connection.lineVImg, (Connection.lineVImg.get_width(), distance+15))
         Connection.lineDLImg = pygame.transform.scale(Connection.lineDLImg, (distance+15, distance+15))
         Connection.lineDRImg = pygame.transform.scale(Connection.lineDRImg, (distance+15, distance+15))
-        print(Connection.lineHImg.get_width())
 
     def generate_walls(self):
         # Top and bottom wall
