@@ -8,6 +8,7 @@ class Server:
         self.SERVER = server
         self.PORT = port
 
+        # message variables recognised by both client and servers.
         self.HEADER_SIZE = 10
         self.FORMAT = "utf-8"
         self.DISCONNECT_MSG = "!GETOUT"
@@ -19,6 +20,9 @@ class Server:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATION_MSG = "!POPULATION"
+        self.GAMEOVER_STRING = "game over"
+        self.GAMETYPE_PUBLIC = "public"
+        self.GAMETYPE_PRIVATE = "private"
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.

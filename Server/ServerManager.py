@@ -15,8 +15,8 @@ class ServerManager(Server):
         servers_for_deletion = [] # to delete outside initial for loop.
 
         for k, serv in self.SERVERS.items():
-            self.console(serv)
-            if serv.return_players() <= 0:
+            self.console(f"{serv}, PLAYERS: {serv.return_players()}")
+            if serv.return_players() <= 0 or serv.return_status() == self.GAMEOVER_STRING:
                 serv.close_server()
                 servers_for_deletion.append(k) # fuhggedaboutit
                 empty_counter += 1
@@ -28,13 +28,13 @@ class ServerManager(Server):
 
         self.console(f"{empty_counter} empty server(s) removed")
 
-    def create_server(self, connection, address):
+    def create_server(self, connection, address, gameType):
         self.remove_empty_servers() # a lil extra here: remove empty servers.
 
-        self.console(f"[{address}] wants to create a server")
+        self.console(f"[{address}] wants to create a {gameType} server")
         # create server object. get its key. server should have a STATUS var tbh.
         self.SERVER_COUNTER += 1
-        s = GameServer(self.SERVER, self.PORT+self.SERVER_COUNTER) # this halts. how not?
+        s = GameServer(self.SERVER, self.PORT+self.SERVER_COUNTER, gameType) # now uses game privacy
         k = s.return_key()
         # self.SERVERS.append(s)
         self.SERVERS[k] = s
@@ -64,19 +64,19 @@ class ServerManager(Server):
 
         server_to_join = 0
         for k, serv in self.SERVERS.items():
-            if serv.return_players() < serv.return_max_players():
+            if serv.return_players() < serv.return_max_players() and serv.return_game_type() != self.GAMETYPE_PRIVATE:
                 server_to_join = serv.return_port()
                 break
         if server_to_join != 0:
             self.send_to_client(connection, f"{self.ENTERGAME_MSG} {server_to_join}")
         else:
-            self.create_server(connection, address)
+            self.create_server(connection, address, self.GAMETYPE_PUBLIC)
 
     # any other specific messages. this overrides the parent one.
     def handle_client_messages(self, connection, address, msg):
         #print("serverManager client message handling. ")
         if self.CREATESERVER_MSG in msg:
-            self.create_server(connection, address)
+            self.create_server(connection, address, msg[len(self.CREATESERVER_MSG)+1:])
         elif self.JOINSERVER_MSG in msg:
             self.join_server(connection, address, msg)
         elif self.QUICKJOINSERVER_MSG in msg:
