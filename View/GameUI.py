@@ -24,16 +24,25 @@ class Game:
     exit_icon = pygame.image.load("Art/exit_door.png")
     player1_banner = pygame.image.load("Art/score_player1.png")
     player2_banner = pygame.image.load("Art/score_player2.png")
-
     exit_selected = pygame.image.load("Art/exit2_highlight.png")
     rules_selected = pygame.image.load("Art/question_highlight.png")
     chat_selected = pygame.image.load("Art/chat_selected.png")
-    chat1 = pygame.image.load("Art/well_played.png")
-    chat2 = pygame.image.load("Art/nice_move.png")
-    chat3 = pygame.image.load("Art/good_luck.png")
-    chat1Selected = pygame.image.load("Art/well_played_selected.png")
-    chat2Selected = pygame.image.load("Art/nice_move_selected.png")
-    chat3Selected = pygame.image.load("Art/good_luck_selected.png")
+    chat1 = pygame.image.load("Art/chat_wp.png")
+    chat2 = pygame.image.load("Art/chat_hi.png")
+    chat3 = pygame.image.load("Art/chat_bye.png")
+    chat4 = pygame.image.load("Art/chat_gl.png")
+    chat1Selected = pygame.image.load("Art/chat_wp_selected.png")
+    chat2Selected = pygame.image.load("Art/chat_hi_selected.png")
+    chat3Selected = pygame.image.load("Art/chat_bye_selected.png")
+    chat4Selected = pygame.image.load("Art/chat_gl_selected.png")
+    chat1_left = pygame.image.load("Art/chat_wp.png")
+    chat2_left = pygame.image.load("Art/chat_hi.png")
+    chat3_left = pygame.image.load("Art/chat_bye.png")
+    chat4_left = pygame.image.load("Art/chat_gl.png")
+    chat1_right = pygame.image.load("Art/chat_wp.png")
+    chat2_right = pygame.image.load("Art/chat_hi.png")
+    chat3_right = pygame.image.load("Art/chat_bye.png")
+    chat4_right = pygame.image.load("Art/chat_gl.png")
     exit_chat = pygame.image.load("Art/cross2.png")
     font = pygame.font.SysFont('arialbold', 30)
 
@@ -45,6 +54,8 @@ class Game:
         # Chat state temp
         self.chat_player_id = 0
         self.chat_opponent_id = 0
+        self.chat_timer = 0
+        self.chat_duration = 60
 
         # Context
         self.screen = controller.screen
@@ -65,7 +76,12 @@ class Game:
         self.chat_button1_rect = self.chat1.get_rect()
         self.chat_button2_rect = self.chat2.get_rect()
         self.chat_button3_rect = self.chat3.get_rect()
+        self.chat_button4_rect = self.chat4.get_rect()
         self.exit_chat_rect = self.exit_chat.get_rect()
+
+        # Chat messages
+        self.chat_left_rect = self.chat1_left.get_rect()
+        self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
         self.board_lines_rect = self.boardImg.get_rect()
@@ -133,14 +149,22 @@ class Game:
                 if self.chat_button1_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 1))
                     self.chat_player_id = 1
+                    self.chat_timer = self.chat_duration
                     self.chat_active = False
                 if self.chat_button2_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 2))
                     self.chat_player_id = 2
+                    self.chat_timer = self.chat_duration
                     self.chat_active = False
                 if self.chat_button3_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 3))
                     self.chat_player_id = 3
+                    self.chat_timer = self.chat_duration
+                    self.chat_active = False
+                if self.chat_button4_rect.collidepoint(mouse_pos):
+                    self.controller.client.send_to_server(("!CHAT", 4))
+                    self.chat_player_id = 4
+                    self.chat_timer = self.chat_duration
                     self.chat_active = False
 
                 # Game logic
@@ -191,6 +215,7 @@ class Game:
         self.chat_button1_rect.bottomleft = (100, sh - 8)
         self.chat_button2_rect.bottomleft = (250, sh - 8)
         self.chat_button3_rect.bottomleft = (400, sh - 8)
+        self.chat_button4_rect.bottomleft = (550, sh - 8)
         self.exit_chat_rect.bottomleft = (50, sh-45)
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
@@ -245,7 +270,18 @@ class Game:
             particle.tick()
 
         # Update chat messages
-        self.chat_opponent_id = self.controller.client.chat_id
+        if self.chat_timer > 0:
+            self.chat_timer -= 1
+        else:
+            self.chat_player_id = 0
+            self.chat_opponent_id = 0
+
+        if self.controller.client.chat_id != 0:
+            self.chat_timer = self.chat_duration
+            self.chat_opponent_id = self.controller.client.chat_id
+            self.controller.client.chat_id = 0
+        self.chat_left_rect.topleft = self.player1_banner_rect.bottomleft
+        self.chat_right_rect.topright = self.player2_banner_rect.bottomright
 
     def render(self):
         # Clear screen
@@ -311,22 +347,27 @@ class Game:
             self.screen.blit(self.chat1, self.chat_button1_rect)
             self.screen.blit(self.chat2, self.chat_button2_rect)
             self.screen.blit(self.chat3, self.chat_button3_rect)
+            self.screen.blit(self.chat4, self.chat_button4_rect)
             self.screen.blit(self.exit_chat, self.exit_chat_rect)
 
         # Chat Player1
         if self.chat_player_id == 1:
-            draw_text('Well Played', self.font, Colours.WHITE, self.screen, 40, 160)
+            self.screen.blit(self.chat1, self.chat_left_rect)
         if self.chat_player_id == 2:
-            draw_text('Nice Move!', self.font, Colours.WHITE, self.screen, 40, 160)
+            self.screen.blit(self.chat2, self.chat_left_rect)
         if self.chat_player_id == 3:
-            draw_text('Good Luck', self.font, Colours.WHITE, self.screen, 40, 160)
+            self.screen.blit(self.chat3, self.chat_left_rect)
+        if self.chat_player_id == 4:
+            self.screen.blit(self.chat4, self.chat_left_rect)
         # Chat Player2
         if self.chat_opponent_id == 1:
-            draw_text('Well Played', self.font, Colours.WHITE, self.screen, 780, 160)
+            self.screen.blit(self.chat1, self.chat_right_rect)
         if self.chat_opponent_id == 2:
-            draw_text('Nice Move!', self.font, Colours.WHITE, self.screen, 780, 160)
+            self.screen.blit(self.chat2, self.chat_right_rect)
         if self.chat_opponent_id == 3:
-            draw_text('Good Luck', self.font, Colours.WHITE, self.screen, 780, 160)
+            self.screen.blit(self.chat3, self.chat_right_rect)
+        if self.chat_opponent_id == 4:
+            self.screen.blit(self.chat4, self.chat_right_rect)
 
         # Button select highlights
         mouse_pos = pygame.mouse.get_pos()
