@@ -104,6 +104,7 @@ class Client:
         elif self.CHAT_MSG in msg:
             chat = msg[1]
             self.chat_id = chat
+            print("received it")
 
     # server joining requests
     def create_server(self):

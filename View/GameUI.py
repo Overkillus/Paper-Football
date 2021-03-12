@@ -12,6 +12,7 @@ from Point import Point
 
 pygame.font.init()
 
+
 class Game:
 
     # Art
@@ -39,12 +40,11 @@ class Game:
     def __init__(self, controller):
         # State
         self.is_running = False
-        self.chatActive = False
+        self.chat_active = False
 
-        # chat state temp
-        self.chat1Active = False
-        self.chat2Active = False
-        self.chat3Active = False
+        # Chat state temp
+        self.chat_player_id = 0
+        self.chat_opponent_id = 0
 
         # Context
         self.screen = controller.screen
@@ -116,13 +116,13 @@ class Game:
 
                 # Button
                 mouse_pos = pygame.mouse.get_pos()
+                # Rules
                 if self.rules_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.rulesUI)
+                # Chat toggle
                 if self.chat_rect.collidepoint(mouse_pos):
-                    self.chatActive = True
-                    self.chat1Active = False # testing
-                    self.chat2Active = False
-                    self.chat3Active = False
+                    self.chat_active = not self.chat_active
+                # Exit
                 if self.exit_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.menuUI)
                     self.myBoard = Board()
@@ -130,21 +130,18 @@ class Game:
                     self.players[0].score = 0
                     self.players[0].turn = True
                     self.players[1].score = 0
-                if self.exit_chat_rect.collidepoint(mouse_pos) and self.chatActive:
-                    self.chatActive = False
-
                 if self.chat_button1_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 1))
-                    self.chat1Active = True # temp
-                    self.chatActive = False
+                    self.chat_player_id = 1
+                    self.chat_active = False
                 if self.chat_button2_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 2))
-                    self.chat2Active = True # temp
-                    self.chatActive = False
+                    self.chat_player_id = 2
+                    self.chat_active = False
                 if self.chat_button3_rect.collidepoint(mouse_pos):
                     self.controller.client.send_to_server(("!CHAT", 3))
-                    self.chat3Active = True # temp
-                    self.chatActive = False
+                    self.chat_player_id = 3
+                    self.chat_active = False
 
                 # Game logic
                 for i in range(self.myBoard.width):
@@ -247,6 +244,9 @@ class Game:
         for particle in self.particles:
             particle.tick()
 
+        # Update chat messages
+        self.chat_opponent_id = self.controller.client.chat_id
+
     def render(self):
         # Clear screen
         self.screen.fill((0, 0, 0))
@@ -307,27 +307,25 @@ class Game:
         self.screen.blit(self.exit_icon, self.exit_rect)
 
         # Chat buttons
-        if self.chatActive:
+        if self.chat_active:
             self.screen.blit(self.chat1, self.chat_button1_rect)
             self.screen.blit(self.chat2, self.chat_button2_rect)
             self.screen.blit(self.chat3, self.chat_button3_rect)
             self.screen.blit(self.exit_chat, self.exit_chat_rect)
 
-        # chat temp
-        if self.chat1Active:
+        # Chat Player1
+        if self.chat_player_id == 1:
             draw_text('Well Played', self.font, Colours.WHITE, self.screen, 40, 160)
-        if self.chat2Active:
+        if self.chat_player_id == 2:
             draw_text('Nice Move!', self.font, Colours.WHITE, self.screen, 40, 160)
-        if self.chat3Active:
+        if self.chat_player_id == 3:
             draw_text('Good Luck', self.font, Colours.WHITE, self.screen, 40, 160)
-
-        if self.controller.client.chat_id == 1:
+        # Chat Player2
+        if self.chat_opponent_id == 1:
             draw_text('Well Played', self.font, Colours.WHITE, self.screen, 780, 160)
-
-        if self.controller.client.chat_id == 2:
+        if self.chat_opponent_id == 2:
             draw_text('Nice Move!', self.font, Colours.WHITE, self.screen, 780, 160)
-
-        if self.controller.client.chat_id == 3:
+        if self.chat_opponent_id == 3:
             draw_text('Good Luck', self.font, Colours.WHITE, self.screen, 780, 160)
 
         # Button select highlights
@@ -336,13 +334,13 @@ class Game:
             self.screen.blit(self.exit_selected, (self.exit_rect.x, self.exit_rect.y))
         if self.rules_rect.collidepoint(mouse_pos):
             self.screen.blit(self.rules_selected, (self.rules_rect.x, self.rules_rect.y))
-        if self.chat_rect.collidepoint(mouse_pos) and not self.chatActive:
+        if self.chat_rect.collidepoint(mouse_pos) and not self.chat_active:
             self.screen.blit(self.chat_selected, (self.chat_rect.x, self.chat_rect.y))
-        if self.chat_button1_rect.collidepoint(mouse_pos) and self.chatActive:
+        if self.chat_button1_rect.collidepoint(mouse_pos) and self.chat_active:
             self.screen.blit(self.chat1Selected, (self.chat_button1_rect.x, self.chat_button1_rect.y))
-        if self.chat_button2_rect.collidepoint(mouse_pos) and self.chatActive:
+        if self.chat_button2_rect.collidepoint(mouse_pos) and self.chat_active:
             self.screen.blit(self.chat2Selected, (self.chat_button2_rect.x, self.chat_button2_rect.y))
-        if self.chat_button3_rect.collidepoint(mouse_pos) and self.chatActive:
+        if self.chat_button3_rect.collidepoint(mouse_pos) and self.chat_active:
             self.screen.blit(self.chat3Selected, (self.chat_button3_rect.x, self.chat_button3_rect.y))
 
         # Show new frame
