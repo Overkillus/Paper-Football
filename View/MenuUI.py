@@ -93,9 +93,7 @@ class MenuUI:
                 elif self.button_1.collidepoint(mouse_pos):
                     # Ensure connection, host server, join hosted server
                     if not self.controller.client.connected:
-                        self.controller.client.start()
-                        if self.controller.client.connected:
-                            self.controller.client.quick_join()
+                        self.controller.change_view(self.controller.lobbyUI)
                     # Swap to game
                     if self.controller.client.connected:
                         self.controller.change_view(self.controller.gameUI)
