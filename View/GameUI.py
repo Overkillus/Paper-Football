@@ -101,7 +101,6 @@ class Game:
                 self.players[0].turn = True
                 self.players[1].score = 0
             elif event.type == pygame.MOUSEBUTTONUP:
-
                 # Particle effect on click
                 for i in range(80):
                     loc = [pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]]
@@ -115,12 +114,7 @@ class Game:
                 if self.chat_rect.collidepoint(mouse_pos):
                     self.chatActive = True
                 if self.exit_rect.collidepoint(mouse_pos):
-                    self.controller.change_view(self.controller.menuUI)
-                    self.myBoard = Board()
-                    self.controller.client.disconnect()
-                    self.players[0].score = 0
-                    self.players[0].turn = True
-                    self.players[1].score = 0
+                    self.exit_lobby()
                 if self.exit_chat_rect.collidepoint(mouse_pos) and self.chatActive:
                     self.chatActive = False
                 #if self.chat_button1_rect.collidepoint(mouse_pos):
@@ -168,6 +162,11 @@ class Game:
                                 point.is_selected = True
 
     def update(self):
+
+        # Update to current resolution
+        # new_scale = self.screen.get_width() / Settings.default_screen_width
+        # self.rescale(new_scale)
+
         # Layout helper variables
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -314,3 +313,20 @@ class Game:
         # Show new frame
         pygame.display.flip()
 
+    def exit_lobby(self):
+        self.controller.change_view(self.controller.menuUI)
+        self.myBoard = Board()
+        self.controller.client.disconnect()
+        self.players[0].score = 0
+        self.players[0].turn = True
+        self.players[1].score = 0
+
+    def rescale(self, scale):
+        self.scale = scale
+        self.board_distance = int(50 * self.scale)
+        self.myBoard.set_board_distance(self.board_distance)
+        for player in self.players:
+            player.lineHImg = pygame.transform.scale(player.lineHImg,(self.board_distance + 15, player.lineHImg.get_height()))
+            player.lineVImg = pygame.transform.scale(player.lineVImg, (player.lineVImg.get_width(), self.board_distance + 15))
+            player.lineDLImg = pygame.transform.scale(player.lineDLImg, (self.board_distance + 15, self.board_distance + 15))
+            player.lineDRImg = pygame.transform.scale(player.lineDRImg, (self.board_distance + 15, self.board_distance + 15))
