@@ -19,6 +19,7 @@ class Server:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATION_MSG = "!POPULATION"
+        self.CHAT_MSG = "!CHAT"
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.

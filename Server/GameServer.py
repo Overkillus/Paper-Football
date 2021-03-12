@@ -29,6 +29,8 @@ class GameServer(Server):
             self.send_to_all_clients(msg)
         if self.POPULATION_MSG in msg:
             self.send_to_all_clients((self.POPULATION_MSG, len(self.all_connections)))
+        if self.CHAT_MSG in msg:
+            self.send_to_all_clients_except(msg, connection)
 
     # Overrides the OG close_connection().
     def close_connection(self, connection):

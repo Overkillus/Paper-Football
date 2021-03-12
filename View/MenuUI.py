@@ -152,7 +152,6 @@ class MenuUI:
         # Show new frame
         pygame.display.flip()
 
-
 # Helper function
 def draw_text(text, font, color, surface, x, y):
     text_object = font.render(text, 1, color)
