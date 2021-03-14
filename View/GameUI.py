@@ -35,14 +35,14 @@ class Game:
     chat2Selected = pygame.image.load("Art/chat_hi_selected.png")
     chat3Selected = pygame.image.load("Art/chat_bye_selected.png")
     chat4Selected = pygame.image.load("Art/chat_gl_selected.png")
-    chat1_left = pygame.image.load("Art/chat_wp.png")
-    chat2_left = pygame.image.load("Art/chat_hi.png")
-    chat3_left = pygame.image.load("Art/chat_bye.png")
-    chat4_left = pygame.image.load("Art/chat_gl.png")
-    chat1_right = pygame.image.load("Art/chat_wp.png")
-    chat2_right = pygame.image.load("Art/chat_hi.png")
-    chat3_right = pygame.image.load("Art/chat_bye.png")
-    chat4_right = pygame.image.load("Art/chat_gl.png")
+    chat1_left = pygame.image.load("Art/left/left_chat_wp.png")
+    chat2_left = pygame.image.load("Art/left/left_chat_hi.png")
+    chat3_left = pygame.image.load("Art/left/left_chat_bye.png")
+    chat4_left = pygame.image.load("Art/left/left_chat_gl.png")
+    chat1_right = pygame.image.load("Art/right/right_chat_wp.png")
+    chat2_right = pygame.image.load("Art/right/right_chat_hi.png")
+    chat3_right = pygame.image.load("Art/right/right_chat_bye.png")
+    chat4_right = pygame.image.load("Art/right/right_chat_gl.png")
     exit_chat = pygame.image.load("Art/cross2.png")
     font = pygame.font.SysFont('arialbold', 30)
 
@@ -352,22 +352,22 @@ class Game:
 
         # Chat Player1
         if self.chat_player_id == 1:
-            self.screen.blit(self.chat1, self.chat_left_rect)
+            self.screen.blit(self.chat1_left, self.chat_left_rect)
         if self.chat_player_id == 2:
-            self.screen.blit(self.chat2, self.chat_left_rect)
+            self.screen.blit(self.chat2_left, self.chat_left_rect)
         if self.chat_player_id == 3:
-            self.screen.blit(self.chat3, self.chat_left_rect)
+            self.screen.blit(self.chat3_left, self.chat_left_rect)
         if self.chat_player_id == 4:
-            self.screen.blit(self.chat4, self.chat_left_rect)
+            self.screen.blit(self.chat4_left, self.chat_left_rect)
         # Chat Player2
         if self.chat_opponent_id == 1:
-            self.screen.blit(self.chat1, self.chat_right_rect)
+            self.screen.blit(self.chat1_right, self.chat_right_rect)
         if self.chat_opponent_id == 2:
-            self.screen.blit(self.chat2, self.chat_right_rect)
+            self.screen.blit(self.chat2_right, self.chat_right_rect)
         if self.chat_opponent_id == 3:
-            self.screen.blit(self.chat3, self.chat_right_rect)
+            self.screen.blit(self.chat3_right, self.chat_right_rect)
         if self.chat_opponent_id == 4:
-            self.screen.blit(self.chat4, self.chat_right_rect)
+            self.screen.blit(self.chat4_right, self.chat_right_rect)
 
         # Button select highlights
         mouse_pos = pygame.mouse.get_pos()
