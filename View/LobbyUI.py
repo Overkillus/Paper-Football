@@ -49,13 +49,13 @@ class LobbyUI:
 
     # options buttons.
     boardsize_1 = pygame.image.load('Art/boardsize_9x7.png')
-    boardsize_1_highlight = pygame.image.load('Art/boardsize_9x7.png') # no highlight version yet
+    boardsize_1_highlight = pygame.image.load('Art/boardsize_9x7_selected.png')
     boardsize_2 = pygame.image.load('Art/boardsize_13x9.png')
-    boardsize_2_highlight = pygame.image.load('Art/boardsize_13x9.png')  # no highlight version yet
+    boardsize_2_highlight = pygame.image.load('Art/boardsize_13x9_selected.png')
     boardsize_3 = pygame.image.load('Art/boardsize_17x7.png')
-    boardsize_3_highlight = pygame.image.load('Art/boardsize_17x7.png')  # no highlight version yet
+    boardsize_3_highlight = pygame.image.load('Art/boardsize_17x7_selected.png')
     boardsize_4 = pygame.image.load('Art/boardsize_19x15.png')
-    boardsize_4_highlight = pygame.image.load('Art/boardsize_19x15.png')  # no highlight version yet
+    boardsize_4_highlight = pygame.image.load('Art/boardsize_19x15_selected.png')
 
     font = pygame.font.SysFont('arialbold', 50)
 
@@ -105,7 +105,8 @@ class LobbyUI:
 
         self.keycode = "" # new LobbyUI variables I just added
         self.server_creation_type = "public"
-
+        self.boardsize_options = [(9,7),(13,9),(17,7),(19,15)]
+        self.chosen_boardsize = self.boardsize_options[1]
 
     def main(self):
         self.event_handler()
@@ -147,12 +148,12 @@ class LobbyUI:
             if self.waitUntilInGame(1):
                 self.controller.change_view(self.controller.gameUI)
         elif action == "join-randoms" and self.isConnected():
-            self.controller.client.quick_join()
+            self.controller.client.quick_join(self.chosen_boardsize)
             self.controller.change_view(self.controller.gameUI)
         elif action == "public-private":
             self.server_creation_type = arg1
         elif action == "create-server" and self.isConnected():
-            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE, (13,9)) # REPLACE with custom board size
+            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE, self.chosen_boardsize)
             self.controller.change_view(self.controller.gameUI)
         print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
 
@@ -206,13 +207,13 @@ class LobbyUI:
                 #if self.private_button.collidepoint(mouse_pos):
                     #self.lobby_buttons("public-private", "private")
                 if self.boardsize_1_button.collidepoint(mouse_pos):
-                    pass
+                    self.chosen_boardsize = (9,7)
                 if self.boardsize_2_button.collidepoint(mouse_pos):
-                    pass
+                    self.chosen_boardsize = (13,9)
                 if self.boardsize_3_button.collidepoint(mouse_pos):
-                    pass
+                    self.chosen_boardsize = (17,7)
                 if self.boardsize_4_button.collidepoint(mouse_pos):
-                    pass
+                    self.chosen_boardsize = (19,15)
 
     def update(self):
         display_x = self.screen.get_width()/7
@@ -329,18 +330,16 @@ class LobbyUI:
         if self.create_game_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.create_game_highlight, (self.create_game_button.x, self.create_game_button.y))
 
-
-        if self.boardsize_1_button.collidepoint(pygame.mouse.get_pos()):
+        if self.chosen_boardsize == self.boardsize_options[0]:
             self.screen.blit(self.boardsize_1_highlight, (self.boardsize_1_button.x, self.boardsize_1_button.y))
-        if self.boardsize_2_button.collidepoint(pygame.mouse.get_pos()):
+        elif self.chosen_boardsize == self.boardsize_options[1]:
             self.screen.blit(self.boardsize_2_highlight, (self.boardsize_2_button.x, self.boardsize_2_button.y))
-        if self.boardsize_3_button.collidepoint(pygame.mouse.get_pos()):
+        elif self.chosen_boardsize == self.boardsize_options[2]:
             self.screen.blit(self.boardsize_3_highlight, (self.boardsize_3_button.x, self.boardsize_3_button.y))
-        if self.boardsize_4_button.collidepoint(pygame.mouse.get_pos()):
+        elif self.chosen_boardsize == self.boardsize_options[3]:
             self.screen.blit(self.boardsize_4_highlight, (self.boardsize_4_button.x, self.boardsize_4_button.y))
 
         pygame.display.flip()
-
 
 # Helper Function
 def draw_text(text, font, color, surface, x, y):

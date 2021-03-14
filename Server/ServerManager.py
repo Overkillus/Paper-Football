@@ -56,7 +56,7 @@ class ServerManager(Server):
         else:
             self.console(f"server NOT found for player: {key}")
 
-    def quickjoin_server(self, connection, address, msg):
+    def quickjoin_server(self, connection, address, boardSize):
         # send server !QUICKJOIN, and server looks for non-full games. send first one found.
         # if none found, create new server.
 
@@ -70,7 +70,7 @@ class ServerManager(Server):
         if server_to_join != 0:
             self.send_to_client(connection, f"{self.ENTERGAME_MSG} {server_to_join}")
         else:
-            self.create_server(connection, address, self.GAMETYPE_PUBLIC, (13, 9)) # REPLACE with custom board size
+            self.create_server(connection, address, self.GAMETYPE_PUBLIC, boardSize)
 
     # any other specific messages. this overrides the parent one.
     def handle_client_messages(self, connection, address, msg):
@@ -81,7 +81,7 @@ class ServerManager(Server):
         elif self.JOINSERVER_MSG in msg:
             self.join_server(connection, address, msg)
         elif self.QUICKJOINSERVER_MSG in msg:
-            self.quickjoin_server(connection, address, msg)
+            self.quickjoin_server(connection, address, msg[1]) # 1 = boardsize. if no game found, it uses this for creation.
 
 # - your code after here! -
 server = ServerManager('', 2000)

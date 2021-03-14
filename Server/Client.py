@@ -123,10 +123,10 @@ class Client:
         # ask ServerManager to join server with given key. it returns to you the port.
         # you auto join with that port.
 
-    def quick_join(self):
+    def quick_join(self, boardSize):
         #Joins first available server or creates a new server
         self.console("quick joining server. will find one available or make a new one...")
-        self.send_to_server(self.QUICKJOINSERVER_MSG)
+        self.send_to_server((self.QUICKJOINSERVER_MSG, boardSize))
         self.send_to_server(self.POPULATUION_MSG)  # Update pop
 
     def exchange_server(self, new_port): # eh, i cba changing function names and stuff
