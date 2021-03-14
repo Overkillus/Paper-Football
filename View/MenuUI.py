@@ -22,6 +22,7 @@ class MenuUI:
     button1_glow = pygame.image.load("Art/start_glow.png")
     button2_glow = pygame.image.load("Art/quit_glow.png")
     credits = pygame.image.load("Art/credits.png")
+    credits_button = pygame.image.load("Art/credits_button.png")
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
@@ -41,6 +42,8 @@ class MenuUI:
         self.settings_rect = self.settings_icon.get_rect()
         # Credits
         self.credits_rect = self.credits.get_rect()
+        # Credits button
+        self.credits_button_rect = self.credits_button.get_rect()
 
         # Start and exit buttons
         button_w = 100
@@ -86,6 +89,9 @@ class MenuUI:
                 # Open settings
                 elif self.settings_rect.collidepoint(mouse_pos):
                     self.controller.change_view(self.controller.settingsUI)
+                # Open Credits
+                elif self.credits_button_rect.collidepoint(mouse_pos):
+                    self.controller.change_view(self.controller.creditsUI)
                 # Exit button
                 elif self.button_2.collidepoint(mouse_pos):
                     self.controller.close_game()
@@ -114,6 +120,8 @@ class MenuUI:
         self.button_2.center = (sw/2 + self.button_2.width, sh/3)
         # Credits
         self.credits_rect.bottomright = (sw - 20, sh-20)
+        # Credits button
+        self.credits_button_rect.topleft = (self.sound_rect.x + 60, self.sound_rect.y)
 
 
     def render(self):
@@ -135,6 +143,8 @@ class MenuUI:
         self.screen.blit(self.settings_icon, self.settings_rect)
         # Credits
         self.screen.blit(self.credits, self.credits_rect)
+        # Credits button
+        self.screen.blit(self.credits_button, self.credits_button_rect)
         # Mute toggle
         if Settings.sound_muted:
             self.screen.blit(self.sound_icon_off, self.sound_rect)

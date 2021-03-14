@@ -1,24 +1,22 @@
-import sys
 import pygame
-import Colours
-from pygame import mixer
 import Settings
-import View.MenuUI
-# import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
+
+
+
 
 pygame.init()
 
 
-class RulesUI:
+class CreditsUI:
     """
-    Class representing Rules view
+    Class representing Credits view
     """
 
     # Art
     title = pygame.font.SysFont('comicsansms', 50)
     font = pygame.font.SysFont('comicsansms', 18)
     exit_icon = pygame.image.load("Art/exit2.png")
-    rules = pygame.image.load("Art/game_rules.png")
+    credits = pygame.image.load("Art/credits_screen.png")
 
     def __init__(self, controller):
         # State
@@ -28,7 +26,7 @@ class RulesUI:
         self.screen = controller.screen
         self.controller = controller
         self.exit_icon_rect = self.exit_icon.get_rect()
-        self.rules_rect = self.rules.get_rect()
+        self.credits_rect = self.credits.get_rect()
 
     def main(self):
         self.event_handler()
@@ -44,10 +42,10 @@ class RulesUI:
             if event.type == pygame.QUIT:
                 self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.controller.change_view(self.controller.gameUI)
+                self.controller.change_view(self.controller.menuUI)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if self.exit_icon_rect.collidepoint(pygame.mouse.get_pos()):
-                    self.controller.change_view(self.controller.gameUI)
+                    self.controller.change_view(self.controller.menuUI)
 
     def update(self):
         # Layout helper variables
@@ -55,18 +53,17 @@ class RulesUI:
         sh = self.screen.get_height()
 
         self.exit_icon_rect.bottomright = (sw - 20, sh - 20)
-        self.rules_rect.center = (sw/2, sh/2)
+        self.credits_rect.center = (sw/2, sh/2)
 
     def render(self):
         # Clear screen
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((3, 15, 56))
 
-        # Background
-        self.screen.blit(self.rules, self.rules_rect)
+        # Credits Screen
+        self.screen.blit(self.credits, self.credits_rect)
 
         # Button
         self.screen.blit(self.exit_icon, self.exit_icon_rect)
 
         # Show new frame
         pygame.display.flip()
-
