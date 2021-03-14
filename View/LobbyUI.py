@@ -152,7 +152,7 @@ class LobbyUI:
         elif action == "public-private":
             self.server_creation_type = arg1
         elif action == "create-server" and self.isConnected():
-            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE)
+            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE, (13,9)) # REPLACE with custom board size
             self.controller.change_view(self.controller.gameUI)
         print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
 

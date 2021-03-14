@@ -77,7 +77,7 @@ class ServerManager(Server):
         #print("serverManager client message handling. ")
         if self.CREATESERVER_MSG in msg:
             #self.create_server(connection, address, msg[len(self.CREATESERVER_MSG)+1:], (13, 9)) # REPLACE with custom board size
-            self.create_server(connection, address, msg[2], msg[3]) # 2 = gameType, 3 = boardsize
+            self.create_server(connection, address, msg[1], msg[2]) # 1 = gameType, 2 = boardsize
         elif self.JOINSERVER_MSG in msg:
             self.join_server(connection, address, msg)
         elif self.QUICKJOINSERVER_MSG in msg:
