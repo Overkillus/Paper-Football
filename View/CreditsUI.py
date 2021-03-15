@@ -15,8 +15,8 @@ class CreditsUI:
     # Art
     title = pygame.font.SysFont('comicsansms', 50)
     font = pygame.font.SysFont('comicsansms', 18)
-    exit_icon = pygame.image.load("Art/exit2.png")
-    credits = pygame.image.load("Art/credits_screen.png")
+    exit_icon = pygame.image.load("Art/Neon/exit2.png")
+    credits = pygame.image.load("Art/Neon/credits_screen.png")
 
     def __init__(self, controller):
         # State

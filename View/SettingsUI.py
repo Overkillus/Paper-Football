@@ -13,29 +13,30 @@ class SettingsUI:
     """
     Class representing settings ui
     """
+
     # Art
-    exitIcon = pygame.image.load('Art/exit2.png')
-    default_screen = pygame.image.load('Art/default_b.png')
-    default_screen_selected = pygame.image.load('Art/default_b_selected.png')
-    medium_screen = pygame.image.load('Art/medium_screen_b.png')
-    medium_screen_selected = pygame.image.load('Art/medium_screen_b_selected.png')
-    large_screen = pygame.image.load('Art/large_screen_b.png')
-    large_screen_selected = pygame.image.load('Art/large_screen_b_selected.png')
-    native_screen = pygame.image.load('Art/native.png')
-    native_screen_selected = pygame.image.load('Art/native_selected.png')
-    football_theme = pygame.image.load('Art/football_b.png')
-    football_theme_selected = pygame.image.load('Art/football_b_selected.png')
-    neon_theme = pygame.image.load('Art/neon_b.png')
-    neon_theme_selected = pygame.image.load('Art/neon_b_selected.png')
-    paper_theme = pygame.image.load('Art/paper_b.png')
-    paper_theme_selected = pygame.image.load('Art/paper_b_selected.png')
-    small_board = pygame.image.load('Art/board_size_s.png')
-    small_board_selected = pygame.image.load('Art/board_size_s_selected.png')
-    medium_board = pygame.image.load('Art/board_size_m.png')
-    medium_board_selected = pygame.image.load('Art/board_size_m_selected.png')
-    sound_off = pygame.image.load('Art/sound_off.png')
-    sound_reduce = pygame.image.load('Art/sound_reduce.png')
-    sound_increase = pygame.image.load('Art/sound_increase.png')
+    exitIcon = pygame.image.load('Art/Neon/exit2.png')
+    default_screen = pygame.image.load('Art/Neon/default_b.png')
+    default_screen_selected = pygame.image.load('Art/Neon/default_b_selected.png')
+    medium_screen = pygame.image.load('Art/Neon/medium_screen_b.png')
+    medium_screen_selected = pygame.image.load('Art/Neon/medium_screen_b_selected.png')
+    large_screen = pygame.image.load('Art/Neon/large_screen_b.png')
+    large_screen_selected = pygame.image.load('Art/Neon/large_screen_b_selected.png')
+    native_screen = pygame.image.load('Art/Neon/native.png')
+    native_screen_selected = pygame.image.load('Art/Neon/native_selected.png')
+    football_theme = pygame.image.load('Art/Neon/football_b.png')
+    football_theme_selected = pygame.image.load('Art/Neon/football_b_selected.png')
+    neon_theme = pygame.image.load('Art/Neon/neon_b.png')
+    neon_theme_selected = pygame.image.load('Art/Neon/neon_b_selected.png')
+    paper_theme = pygame.image.load('Art/Neon/paper_b.png')
+    paper_theme_selected = pygame.image.load('Art/Neon/paper_b_selected.png')
+    small_board = pygame.image.load('Art/Neon/board_size_s.png')
+    small_board_selected = pygame.image.load('Art/Neon/board_size_s_selected.png')
+    medium_board = pygame.image.load('Art/Neon/board_size_m.png')
+    medium_board_selected = pygame.image.load('Art/Neon/board_size_m_selected.png')
+    sound_off = pygame.image.load('Art/Neon/sound_off.png')
+    sound_reduce = pygame.image.load('Art/Neon/sound_reduce.png')
+    sound_increase = pygame.image.load('Art/Neon/sound_increase.png')
 
 
     fontTitle = pygame.font.SysFont('arialbold', 45)
@@ -57,6 +58,7 @@ class SettingsUI:
         # Color Buttons
         color_button = pygame.Rect(0, 0, 25, 25)
         color_button_selected = pygame.Rect(0, 0, 34, 34)
+
         # Colors player 1
         self.yellow_button_p1 = color_button.copy()
         self.yellow_button_selected_p1 = color_button_selected.copy()

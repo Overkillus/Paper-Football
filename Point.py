@@ -11,7 +11,7 @@ class Point:
     """
     circle_radius = 5
     board_distance = 50
-    ball_img = pygame.image.load("Art/ball_green.png")
+    ball_img = pygame.image.load("Art/Neon/ball_green.png")
 
     def __init__(self, x=0, y=0):
         self.x = x

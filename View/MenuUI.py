@@ -14,15 +14,15 @@ class MenuUI:
     """
 
     # Art
-    background = pygame.image.load("Art/lobby.png")
-    title = pygame.image.load("Art/logo_small.png")
-    settings_icon = pygame.image.load("Art/settings.png")
-    sound_icon = pygame.image.load("Art/sound.png")
-    sound_icon_off = pygame.image.load("Art/sound_off.png")
-    button1_glow = pygame.image.load("Art/start_glow.png")
-    button2_glow = pygame.image.load("Art/quit_glow.png")
-    credits = pygame.image.load("Art/credits.png")
-    credits_button = pygame.image.load("Art/credits_button.png")
+    background = pygame.image.load("Art/Neon/lobby.png")
+    title = pygame.image.load("Art/Neon/logo_small.png")
+    settings_icon = pygame.image.load("Art/Neon/settings.png")
+    sound_icon = pygame.image.load("Art/Neon/sound.png")
+    sound_icon_off = pygame.image.load("Art/Neon/sound_off.png")
+    button1_glow = pygame.image.load("Art/Neon/start_glow.png")
+    button2_glow = pygame.image.load("Art/Neon/quit_glow.png")
+    credits = pygame.image.load("Art/Neon/credits.png")
+    credits_button = pygame.image.load("Art/Neon/credits_button.png")
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
