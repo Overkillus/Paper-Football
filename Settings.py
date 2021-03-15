@@ -9,7 +9,6 @@ max_tps = 16
 board_width = 13
 board_height = 9
 
-
 # Sound
 sound_volume = 0.1
 sound_muted = False

@@ -21,6 +21,8 @@ class Client:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATUION_MSG = "!POPULATION"
+        self.PLAYERLEFT_MSG = "!PLAYERLEFT"
+        self.BOARDSIZE_MSG = "!BOARDSIZE"
         self.CHAT_MSG = "!CHAT"
         self.GAMEOVER_STRING = "game over"
         self.GAMETYPE_PUBLIC = "public"
@@ -29,7 +31,7 @@ class Client:
         self.pending_move = None
         self.pending_board = None
         self.current_population = 1
-
+        self.board_size = None
         self.chat_id = 0
 
         self.IN_GAME = False
@@ -105,15 +107,21 @@ class Client:
         elif self.POPULATUION_MSG in msg:
             pop = msg[1]
             self.current_population = pop
+        elif self.BOARDSIZE_MSG in msg:
+            size = msg[1]
+            self.board_size = size
+        elif self.PLAYERLEFT_MSG in msg:
+            print("left alone")
+            pass # up to you. display message on client?
         elif self.CHAT_MSG in msg:
             chat = msg[1]
             self.chat_id = chat
-            print("received it")
 
     # server joining requests
-    def create_server(self, gameType):
+    def create_server(self, gameType, boardSize):
         self.console(f"server creation asked. you should join it automatically. TYPE: {gameType}")
-        self.send_to_server(f"{self.CREATESERVER_MSG} {gameType}")
+        # self.send_to_server(f"{self.CREATESERVER_MSG} {gameType}")
+        self.send_to_server((self.CREATESERVER_MSG, gameType, boardSize))
         # ask ServerManager to create server. have it return key to you.
         # the key is returned and join_server() runs.
 
@@ -124,10 +132,10 @@ class Client:
         # ask ServerManager to join server with given key. it returns to you the port.
         # you auto join with that port.
 
-    def quick_join(self):
+    def quick_join(self, boardSize):
         #Joins first available server or creates a new server
         self.console("quick joining server. will find one available or make a new one...")
-        self.send_to_server(self.QUICKJOINSERVER_MSG)
+        self.send_to_server((self.QUICKJOINSERVER_MSG, boardSize))
         self.send_to_server(self.POPULATUION_MSG)  # Update pop
 
     def exchange_server(self, new_port): # eh, i cba changing function names and stuff
@@ -174,85 +182,3 @@ class Client:
 
     def start(self):
         self.exchange_server_THREAD(2000)
-
-    # def choice_maker(self, options):
-    #     print(f"You have {len(options)} options:")
-    #     i = 0
-    #     for o in options:
-    #         i += 1
-    #         print(f"\t{i}. {o}")
-    #     option = input("enter your option: ")
-    #     try:
-    #         option = int(option)
-    #     except:
-    #         option = 0
-    #     return option
-    #
-    # def lobby(self):
-    #     option = self.choice_maker(["Create a server", "Join a server"])
-    #
-    #     if option == 1:
-    #         print("creating server...")
-    #         self.create_server()
-    #     elif option == 2:
-    #         print("joining server... ")
-    #         self.join_server(input("enter the key for that server: "))
-    #     else:
-    #         print("invalid option - leaving lobby.")
-    #         self.disconnect()
-    #     time.sleep(1)
-
-# # - your own code after here! -
-# client = Client(socket.gethostname(), 2000)
-# # just make ^that^ object (with right server and port) and u can do server-client stuff
-# client.start()  # you can put this wherever u like
-#
-#
-# # i'm doing a basic menu to showcase entering and leaving the server via ServerManager
-# def choice_maker(options):
-#     print(f"You have {len(options)} options:")
-#     i = 0
-#     for o in options:
-#         i += 1
-#         print(f"\t{i}. {o}")
-#     option = input("enter your option: ")
-#     try:
-#         option = int(option)
-#     except:
-#         option = 0
-#     return option
-#
-#
-# def lobby():
-#     option = choice_maker(["Create a server", "Join a server"])
-#
-#     if option == 1:
-#         print("creating server...")
-#         client.create_server()
-#     elif option == 2:
-#         print("joining server... ")
-#         client.join_server(input("enter the key for that server: "))
-#     else:
-#         print("invalid option - leaving lobby.")
-#         client.disconnect()
-#     time.sleep(1)
-#
-#
-# def game():
-#     text = input("type whatever u want: ")
-#     # if u type !leave, it runs exchange_server(2000)
-#     if text == "!leave":
-#         client.exchange_server(client.PORT)
-#     else:
-#         client.send_to_server(text)
-#
-#     time.sleep(3)
-#
-#
-# while client.connected:
-#     if client.IN_GAME:
-#         game()
-#     else:
-#         lobby()
-#
-# honestly not proud of the use of time.sleep to wait for thread to die and messages to send.

@@ -62,7 +62,8 @@ class Game:
         self.controller = controller
 
         # Entity variables
-        self.myBoard = Board(Settings.board_width, Settings.board_height)
+        self.myBoard = Board()
+        self.current_boardsize = (13, 9)
         self.scale = 1
         self.board_distance = int(50*self.scale)
         self.myBoard.set_board_distance(self.board_distance)
@@ -267,12 +268,18 @@ class Game:
                     connection_sound = pygame.mixer.Sound('Sound/goal.wav')
                     connection_sound.play()
                     connection_sound.set_volume(0.1)
-                    self.myBoard = Board()
+                    self.myBoard = Board(self.current_boardsize[0], self.current_boardsize[1])
 
         # Particles
         self.particles = [particle for particle in self.particles if particle.time > 0]
         for particle in self.particles:
             particle.tick()
+
+        # Size update
+        if self.controller.client.board_size is not None:
+            self.current_boardsize = self.controller.client.board_size
+            self.controller.client.board_size = None
+            self.myBoard = Board(self.current_boardsize[0], self.current_boardsize[1])
 
         # Update chat messages
         if self.chat_timer > 0:

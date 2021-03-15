@@ -47,6 +47,16 @@ class LobbyUI:
     create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
     central_line = pygame.image.load('Art/line_vertical.png')
 
+    # options buttons.
+    boardsize_1 = pygame.image.load('Art/boardsize_9x7.png')
+    boardsize_1_highlight = pygame.image.load('Art/boardsize_9x7_selected.png')
+    boardsize_2 = pygame.image.load('Art/boardsize_13x9.png')
+    boardsize_2_highlight = pygame.image.load('Art/boardsize_13x9_selected.png')
+    boardsize_3 = pygame.image.load('Art/boardsize_17x7.png')
+    boardsize_3_highlight = pygame.image.load('Art/boardsize_17x7_selected.png')
+    boardsize_4 = pygame.image.load('Art/boardsize_19x15.png')
+    boardsize_4_highlight = pygame.image.load('Art/boardsize_19x15_selected.png')
+
     font = pygame.font.SysFont('arialbold', 50)
 
 
@@ -87,9 +97,16 @@ class LobbyUI:
         #self.public_button = game_type_button.copy()
         #self.private_button = game_type_button.copy()
 
+        # game options
+        self.boardsize_1_button = self.boardsize_1.get_rect()
+        self.boardsize_2_button = self.boardsize_2.get_rect()
+        self.boardsize_3_button = self.boardsize_3.get_rect()
+        self.boardsize_4_button = self.boardsize_4.get_rect()
+
         self.keycode = "" # new LobbyUI variables I just added
         self.server_creation_type = "public"
-
+        self.boardsize_options = [(9,7),(13,9),(17,7),(19,15)]
+        self.chosen_boardsize = self.boardsize_options[1]
 
     def main(self):
         self.event_handler()
@@ -131,12 +148,12 @@ class LobbyUI:
             if self.waitUntilInGame(1):
                 self.controller.change_view(self.controller.gameUI)
         elif action == "join-randoms" and self.isConnected():
-            self.controller.client.quick_join()
+            self.controller.client.quick_join(self.chosen_boardsize)
             self.controller.change_view(self.controller.gameUI)
         elif action == "public-private":
             self.server_creation_type = arg1
         elif action == "create-server" and self.isConnected():
-            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE)
+            self.controller.client.create_server(self.controller.client.GAMETYPE_PRIVATE, self.chosen_boardsize)
             self.controller.change_view(self.controller.gameUI)
         print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
 
@@ -189,6 +206,14 @@ class LobbyUI:
                     #self.lobby_buttons("public-private", "public")
                 #if self.private_button.collidepoint(mouse_pos):
                     #self.lobby_buttons("public-private", "private")
+                if self.boardsize_1_button.collidepoint(mouse_pos):
+                    self.chosen_boardsize = (9,7)
+                if self.boardsize_2_button.collidepoint(mouse_pos):
+                    self.chosen_boardsize = (13,9)
+                if self.boardsize_3_button.collidepoint(mouse_pos):
+                    self.chosen_boardsize = (17,7)
+                if self.boardsize_4_button.collidepoint(mouse_pos):
+                    self.chosen_boardsize = (19,15)
 
     def update(self):
         display_x = self.screen.get_width()/7
@@ -200,7 +225,7 @@ class LobbyUI:
         rows = 5
         sf = 1.75
 
-
+        Settings.boardsize = self.chosen_boardsize
 
         # Exit
         self.exit_button.topleft = (20, 20)
@@ -226,6 +251,10 @@ class LobbyUI:
         #self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
         #self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
 
+        self.boardsize_1_button.center = (self.join_random_button.x, self.keypad_screen_image.y + 60)
+        self.boardsize_2_button.center = (self.boardsize_1_button.centerx + self.boardsize_1_button.w + 10, self.boardsize_1_button.centery)
+        self.boardsize_3_button.center = (self.boardsize_2_button.centerx + self.boardsize_2_button.w + 10, self.boardsize_1_button.centery)
+        self.boardsize_4_button.center = (self.boardsize_3_button.centerx + self.boardsize_3_button.w + 10, self.boardsize_1_button.centery)
 
     def render(self):
         sw = self.screen.get_width()
@@ -237,10 +266,13 @@ class LobbyUI:
         # Exit Icon
         self.screen.blit(self.exitIcon, self.exit_button)
 
-        # keypad
+        # texts
         draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
         draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
 
+        draw_text('Board Size', self.font, Colours.WHITE, self.screen, self.join_random_button.x + 40, self.keypad_screen_image.y)
+
+        # keypad
         draw_text(self.keycode, self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 70,
                   self.keypad_screen_image.y + 38)
 
@@ -261,6 +293,11 @@ class LobbyUI:
         self.screen.blit(self.create_game, self.create_game_button)
         self.screen.blit(self.central_line, self.central_line_image)
         self.screen.blit(self.keypad_screen, self.keypad_screen_image)
+
+        self.screen.blit(self.boardsize_1, self.boardsize_1_button)
+        self.screen.blit(self.boardsize_2, self.boardsize_2_button)
+        self.screen.blit(self.boardsize_3, self.boardsize_3_button)
+        self.screen.blit(self.boardsize_4, self.boardsize_4_button)
 
         if self.keypad_1_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.keypad_1_highlight, (self.keypad_1_button.x, self.keypad_1_button.y))
@@ -293,8 +330,16 @@ class LobbyUI:
         if self.create_game_button.collidepoint(pygame.mouse.get_pos()):
             self.screen.blit(self.create_game_highlight, (self.create_game_button.x, self.create_game_button.y))
 
-        pygame.display.flip()
+        if self.chosen_boardsize == self.boardsize_options[0]:
+            self.screen.blit(self.boardsize_1_highlight, (self.boardsize_1_button.x, self.boardsize_1_button.y))
+        elif self.chosen_boardsize == self.boardsize_options[1]:
+            self.screen.blit(self.boardsize_2_highlight, (self.boardsize_2_button.x, self.boardsize_2_button.y))
+        elif self.chosen_boardsize == self.boardsize_options[2]:
+            self.screen.blit(self.boardsize_3_highlight, (self.boardsize_3_button.x, self.boardsize_3_button.y))
+        elif self.chosen_boardsize == self.boardsize_options[3]:
+            self.screen.blit(self.boardsize_4_highlight, (self.boardsize_4_button.x, self.boardsize_4_button.y))
 
+        pygame.display.flip()
 
 # Helper Function
 def draw_text(text, font, color, surface, x, y):

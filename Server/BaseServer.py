@@ -21,6 +21,9 @@ class Server:
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATION_MSG = "!POPULATION"
         self.CHAT_MSG = "!CHAT"
+        self.PLAYERLEFT_MSG = "!PLAYERLEFT"
+        self.BOARDSIZE_MSG = "!BOARDSIZE"
+
         self.GAMEOVER_STRING = "game over"
         self.GAMETYPE_PUBLIC = "public"
         self.GAMETYPE_PRIVATE = "private"
@@ -113,6 +116,10 @@ class Server:
                     if msg != None: # useful just to clean up all_connections
                         self.send_to_client(con, msg)
 
+    # do something to the client once connected. Overriden by children.
+    def do_once_client_connected(self, connection):
+        pass
+
     # handles new connections
     def start(self):
         self.sock.listen()
@@ -126,6 +133,7 @@ class Server:
                                       , args=(connection, address))
             thread.start()
             #self.send_to_all_clients(None) # clean-up all_connections
+            self.do_once_client_connected(connection)
 
 #s = Server(socket.gethostname(), 6969)
 # you could create a server with this but idk what the point of that is
