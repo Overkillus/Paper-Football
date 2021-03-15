@@ -40,15 +40,12 @@ class Board:
         if not b.is_legal or not a.is_legal:
             return False
         elif not self.__validate_connection_length(ab):
-            print("wrong length")
             return False
         # Connection or mirror connection already exists
         elif self.get_connection(a, b) is not None:
-            print("already exists")
             return False
         # Add new connection
         else:
-            print("added new")
             self.connections.add(ab)
             a.is_used = True
             b.is_used = True

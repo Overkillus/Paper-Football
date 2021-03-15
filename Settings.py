@@ -7,7 +7,6 @@ screen_height = default_screen_height
 is_native = False
 max_tps = 16
 
-
 # Sound
 sound_volume = 0.1
 sound_muted = False

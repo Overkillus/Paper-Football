@@ -225,7 +225,7 @@ class LobbyUI:
         rows = 5
         sf = 1.75
 
-
+        Settings.boardsize = self.chosen_boardsize
 
         # Exit
         self.exit_button.topleft = (20, 20)

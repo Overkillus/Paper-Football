@@ -31,6 +31,7 @@ class Client:
         self.pending_move = None
         self.pending_board = None
         self.current_population = 1
+        self.board_size = None
 
         self.IN_GAME = False
         self.connected = False
@@ -105,7 +106,11 @@ class Client:
         elif self.POPULATUION_MSG in msg:
             pop = msg[1]
             self.current_population = pop
+        elif self.BOARDSIZE_MSG in msg:
+            size = msg[1]
+            self.board_size = size
         elif self.PLAYERLEFT_MSG in msg:
+            print("left alone")
             pass # up to you. display message on client?
 
     # server joining requests

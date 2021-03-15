@@ -41,7 +41,7 @@ class GameServer(Server):
             self.all_connections.remove(connection)
         # new additions below
         self.STATUS = self.GAMEOVER_STRING # since a player left, game is dead.
-        self.send_to_all_clients_except(self, f"{self.PLAYERLEFT_MSG} {connection}", connection)
+        self.send_to_all_clients_except(self.PLAYERLEFT_MSG, connection)
 
 
     def console(self, msg):
@@ -57,7 +57,7 @@ class GameServer(Server):
         self.STATUS = self.GAMEOVER_STRING
 
     def do_once_client_connected(self, connection): # overriding the BaseServer version
-        self.send_to_client(connection, f"{(self.BOARDSIZE_MSG, (0,0))} ")
+        self.send_to_client(connection, (self.BOARDSIZE_MSG, self.BOARDSIZE))
 
     # return functions.
     def return_port(self):
