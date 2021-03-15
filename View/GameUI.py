@@ -166,7 +166,6 @@ class Game:
                     self.chat_player_id = 4
                     self.chat_timer = self.chat_duration
                     self.chat_active = False
-                    self.exit_lobby()
 
                 # Game logic
                 for i in range(self.myBoard.width):
@@ -388,6 +387,8 @@ class Game:
             self.screen.blit(self.chat2Selected, (self.chat_button2_rect.x, self.chat_button2_rect.y))
         if self.chat_button3_rect.collidepoint(mouse_pos) and self.chat_active:
             self.screen.blit(self.chat3Selected, (self.chat_button3_rect.x, self.chat_button3_rect.y))
+        if self.chat_button4_rect.collidepoint(mouse_pos) and self.chat_active:
+            self.screen.blit(self.chat4Selected, (self.chat_button4_rect.x, self.chat_button4_rect.y))
 
         # Show new frame
         pygame.display.flip()
