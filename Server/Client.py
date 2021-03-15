@@ -34,6 +34,8 @@ class Client:
         self.board_size = None
         self.chat_id = 0
 
+        self.key = None
+
         self.IN_GAME = False
         self.connected = False
         self.changing_server = False
@@ -89,6 +91,8 @@ class Client:
         if self.JOINSERVER_MSG in msg:  # end of server creation process.
             key = msg[len(self.JOINSERVER_MSG)+1:]  # key received.
             self.console(f"you got the key: {key}")
+            self.key = key
+            print(self.key)
             self.join_server(key)
         elif self.ENTERGAME_MSG in msg:  # end of server join process
             game_port = msg[len(self.ENTERGAME_MSG)+1:]

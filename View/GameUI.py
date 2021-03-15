@@ -344,6 +344,12 @@ class Game:
         # Waiting banner
         if self.controller.client.current_population == 1:
             self.screen.blit(self.waitingPlayer, self.waiting_rect)
+
+        # Key banner
+        if self.controller.client.current_population == 1 and self.controller.client.key is not None:
+            # print(self.controller.client.key)
+            draw_text("#"+str(self.controller.client.key), self.font, Colours.WHITE, self.screen, self.screen.get_width()/2-40, 20)
+
         # Rules icon
         self.screen.blit(self.rules_icon, self.rules_rect)
 
