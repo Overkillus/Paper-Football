@@ -117,13 +117,6 @@ class Game:
                 self.controller.close_game()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.controller.change_view(self.controller.menuUI)
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q: # TODO add a button and generalize
-                self.controller.change_view(self.controller.menuUI)
-                self.myBoard = Board()
-                self.controller.client.disconnect()
-                self.players[0].score = 0
-                self.players[0].turn = True
-                self.players[1].score = 0
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Particle effect on click
                 for i in range(80):
