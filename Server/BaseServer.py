@@ -20,6 +20,7 @@ class Server:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATION_MSG = "!POPULATION"
+        self.CHAT_MSG = "!CHAT"
         self.GAMEOVER_STRING = "game over"
         self.GAMETYPE_PUBLIC = "public"
         self.GAMETYPE_PRIVATE = "private"

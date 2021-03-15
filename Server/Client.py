@@ -21,6 +21,7 @@ class Client:
         self.MOVE_MSG = "!MOVE"
         self.SYNCHRONISE_MSG = "!SYNCHRONISE"
         self.POPULATUION_MSG = "!POPULATION"
+        self.CHAT_MSG = "!CHAT"
         self.GAMEOVER_STRING = "game over"
         self.GAMETYPE_PUBLIC = "public"
         self.GAMETYPE_PRIVATE = "private"
@@ -28,6 +29,8 @@ class Client:
         self.pending_move = None
         self.pending_board = None
         self.current_population = 1
+
+        self.chat_id = 0
 
         self.IN_GAME = False
         self.connected = False
@@ -102,6 +105,10 @@ class Client:
         elif self.POPULATUION_MSG in msg:
             pop = msg[1]
             self.current_population = pop
+        elif self.CHAT_MSG in msg:
+            chat = msg[1]
+            self.chat_id = chat
+            print("received it")
 
     # server joining requests
     def create_server(self, gameType):
