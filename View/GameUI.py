@@ -19,6 +19,7 @@ class Game:
     boardImg = pygame.image.load("Art/board_lines.png")
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
+    player_left_banner = pygame.image.load("Art/quit.png")
     rules_icon = pygame.image.load("Art/question_black.png")
     chat_icon = pygame.image.load("Art/chat.png")
     exit_icon = pygame.image.load("Art/exit_door.png")
@@ -93,6 +94,7 @@ class Game:
 
         # Banners
         self.waiting_rect = self.waitingPlayer.get_rect()
+        self.player_left_banner_rect = self.player_left_banner.get_rect()
         self.player1_banner_rect = self.player1_banner.get_rect()
         self.player2_banner_rect = self.player2_banner.get_rect()
 
@@ -226,6 +228,7 @@ class Game:
 
         # Banners
         self.waiting_rect.center = (sw/2, sh/2)
+        self.player_left_banner_rect.center = (sw / 2, sh / 2)
         self.player1_banner_rect.topleft = (0, 0)
         self.player2_banner_rect.topright = (sw, 0)
 
@@ -337,6 +340,9 @@ class Game:
         # Waiting banner
         if self.controller.client.current_population == 1:
             self.screen.blit(self.waitingPlayer, self.waiting_rect)
+
+        if not self.controller.client.connected:
+            self.screen.blit(self.player_left_banner, self.player_left_banner_rect)
 
         # Key banner
         if self.controller.client.current_population == 1 and self.controller.client.key is not None:
