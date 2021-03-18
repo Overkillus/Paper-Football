@@ -146,11 +146,11 @@ class SettingsUI:
 
                 # Theme Settings
                 if self.football_theme_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "football"
                 elif self.neon_theme_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "neon"
                 elif self.paper_theme_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "paper"
 
                 # Board settings
                 if self.small_board_button.collidepoint(mouse_pos):
@@ -315,11 +315,11 @@ class SettingsUI:
             self.screen.blit(self.native_screen_selected, (self.native_screen_button.x, self.native_screen_button.y))
 
         # Theme
-        if self.football_theme_button.collidepoint(pos):
+        if self.football_theme_button.collidepoint(pos) or Settings.theme == "football":
             self.screen.blit(self.football_theme_selected, (self.football_theme_button.x, self.football_theme_button.y))
-        if self.neon_theme_button.collidepoint(pos):
+        if self.neon_theme_button.collidepoint(pos) or Settings.theme == "neon":
             self.screen.blit(self.neon_theme_selected, (self.neon_theme_button.x, self.neon_theme_button.y))
-        if self.paper_theme_button.collidepoint(pos):
+        if self.paper_theme_button.collidepoint(pos) or Settings.theme == "paper":
             self.screen.blit(self.paper_theme_selected, (self.paper_theme_button.x, self.paper_theme_button.y))
 
         # Size

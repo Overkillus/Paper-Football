@@ -160,6 +160,9 @@ class MenuUI:
         # Show new frame
         pygame.display.flip()
 
+    def load_textures(self):
+        self.background = pygame.image.load("Art/Paper/lobby.png")
+
 # Helper function
 def draw_text(text, font, color, surface, x, y):
     text_object = font.render(text, 1, color)
