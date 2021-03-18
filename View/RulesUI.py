@@ -15,12 +15,17 @@ class RulesUI:
     """
 
     # Art
-    title = pygame.font.SysFont('comicsansms', 50)
-    font = pygame.font.SysFont('comicsansms', 18)
     exit_icon = pygame.image.load("Art/Neon/exit2.png")
     rules = pygame.image.load("Art/Neon/game_rules.png")
 
+    title = pygame.font.SysFont('comicsansms', 50)
+    font = pygame.font.SysFont('comicsansms', 18)
+
     def __init__(self, controller):
+
+        # Theme
+        self.theme = Settings.theme
+
         # State
         self.is_running = False
 
@@ -50,6 +55,12 @@ class RulesUI:
                     self.controller.change_view(self.controller.gameUI)
 
     def update(self):
+
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
+
         # Layout helper variables
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -69,4 +80,12 @@ class RulesUI:
 
         # Show new frame
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Load appropriate textures
+        RulesUI.exit_icon = pygame.image.load(path+"/exit2.png")
+        RulesUI.rules = pygame.image.load(path+"/game_rules.png")
 
