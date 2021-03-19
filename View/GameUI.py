@@ -266,6 +266,15 @@ class Game:
                     connection_sound.set_volume(0.1)
                     self.myBoard = Board(self.current_boardsize[0], self.current_boardsize[1])
 
+        # Alternative goal: unavailable moves for ball
+        if self.myBoard.is_stuck():
+            for i in range(len(self.players)):
+                self.players[i].score += int(self.players[i].turn == False)
+            connection_sound = pygame.mixer.Sound('Sound/goal.wav') # repeating code. put into a new function?
+            connection_sound.play()
+            connection_sound.set_volume(0.1)
+            self.myBoard = Board(self.current_boardsize[0], self.current_boardsize[1])
+
         # Particles
         self.particles = [particle for particle in self.particles if particle.time > 0]
         for particle in self.particles:

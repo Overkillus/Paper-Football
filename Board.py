@@ -99,6 +99,17 @@ class Board:
         else:
             return False
 
+    def is_stuck(self):
+        ball = self.get_ball()
+        ball_stuck = True
+        for w in range(3):
+            for h in range(3):
+                pos_x, pos_y = (ball.x-1)+w, (ball.y-1)+h
+                point = self.points[pos_x][pos_y]
+                if not point.is_ball and point.is_legal and self.get_connection(point, ball) is None and pos_x >= 0 and pos_y >= 0:
+                    ball_stuck = False
+        return ball_stuck
+
     def get_ball(self):
         for w in range(self.width):
             for h in range(self.height):
