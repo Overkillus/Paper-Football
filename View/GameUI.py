@@ -15,39 +15,50 @@ pygame.font.init()
 
 class Game:
 
-    # Art
-
-    boardImg = pygame.image.load("Art/Neon/board_lines.png")
-    boardWalls = pygame.image.load("Art/Neon/board_walls.png")
-    waitingPlayer = pygame.image.load("Art/Neon/waiting.png")
-    rules_icon = pygame.image.load("Art/Neon/question_black.png")
-    chat_icon = pygame.image.load("Art/Neon/chat.png")
-    exit_icon = pygame.image.load("Art/Neon/exit_door.png")
-    player1_banner = pygame.image.load("Art/Neon/score_player1.png")
-    player2_banner = pygame.image.load("Art/Neon/score_player2.png")
-    exit_selected = pygame.image.load("Art/Neon/exit2_highlight.png")
-    rules_selected = pygame.image.load("Art/Neon/question_highlight.png")
-    chat_selected = pygame.image.load("Art/Neon/chat_selected.png")
-    chat1 = pygame.image.load("Art/Neon/chat_wp.png")
-    chat2 = pygame.image.load("Art/Neon/chat_hi.png")
-    chat3 = pygame.image.load("Art/Neon/chat_bye.png")
-    chat4 = pygame.image.load("Art/Neon/chat_gl.png")
-    chat1Selected = pygame.image.load("Art/Neon/chat_wp_selected.png")
-    chat2Selected = pygame.image.load("Art/Neon/chat_hi_selected.png")
-    chat3Selected = pygame.image.load("Art/Neon/chat_bye_selected.png")
-    chat4Selected = pygame.image.load("Art/Neon/chat_gl_selected.png")
-    chat1_left = pygame.image.load("Art/Neon/left/left_chat_wp.png")
-    chat2_left = pygame.image.load("Art/Neon/left/left_chat_hi.png")
-    chat3_left = pygame.image.load("Art/Neon/left/left_chat_bye.png")
-    chat4_left = pygame.image.load("Art/Neon/left/left_chat_gl.png")
-    chat1_right = pygame.image.load("Art/Neon/right/right_chat_wp.png")
-    chat2_right = pygame.image.load("Art/Neon/right/right_chat_hi.png")
-    chat3_right = pygame.image.load("Art/Neon/right/right_chat_bye.png")
-    chat4_right = pygame.image.load("Art/Neon/right/right_chat_gl.png")
-    exit_chat = pygame.image.load("Art/Neon/cross2.png")
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Background
+    boardImg = missing_texture
+    boardWalls = missing_texture
+    # Banner
+    waiting_player_banner = missing_texture
+    player1_banner = missing_texture
+    player2_banner = missing_texture
+    # Navigation
+    rules_icon = missing_texture
+    rules_selected = missing_texture
+    exit_icon = missing_texture
+    exit_selected = missing_texture
+    # Chat
+    chat_icon = missing_texture
+    chat_selected = missing_texture
+    exit_chat = missing_texture
+    chat1 = missing_texture
+    chat2 = missing_texture
+    chat3 = missing_texture
+    chat4 = missing_texture
+    chat1Selected = missing_texture
+    chat2Selected = missing_texture
+    chat3Selected = missing_texture
+    chat4Selected = missing_texture
+    chat1_left = missing_texture
+    chat2_left = missing_texture
+    chat3_left = missing_texture
+    chat4_left = missing_texture
+    chat1_right = missing_texture
+    chat2_right = missing_texture
+    chat3_right = missing_texture
+    chat4_right = missing_texture
+    # Font
     font = pygame.font.SysFont('arialbold', 30)
 
     def __init__(self, controller):
+
+        # Theme
+        self.theme = Settings.theme
+
+        self.load_textures()
+
         # State
         self.is_running = False
         self.chat_active = False
@@ -93,7 +104,7 @@ class Game:
         self.y_offset = 0
 
         # Banners
-        self.waiting_rect = self.waitingPlayer.get_rect()
+        self.waiting_rect = self.waiting_player_banner.get_rect()
         self.player1_banner_rect = self.player1_banner.get_rect()
         self.player2_banner_rect = self.player2_banner.get_rect()
 
@@ -211,6 +222,11 @@ class Game:
         # Update to current resolution
         # new_scale = self.screen.get_width() / Settings.default_screen_width
         # self.rescale(new_scale)
+
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
 
         # Layout helper variables
         sw = self.screen.get_width()
@@ -344,7 +360,7 @@ class Game:
 
         # Waiting banner
         if self.controller.client.current_population == 1:
-            self.screen.blit(self.waitingPlayer, self.waiting_rect)
+            self.screen.blit(self.waiting_player_banner, self.waiting_rect)
 
         # Key banner
         if self.controller.client.current_population == 1 and self.controller.client.key is not None:
@@ -406,6 +422,44 @@ class Game:
 
         # Show new frame
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Background
+        Game.boardImg = pygame.image.load(path+"/board_lines.png")
+        Game.boardWalls = pygame.image.load(path+"/board_walls.png")
+
+        # Banner
+        Game.waiting_player_banner = pygame.image.load(path + "/waiting.png")
+        Game.player1_banner = pygame.image.load(path+"/score_player1.png")
+        Game.player2_banner = pygame.image.load(path+"/score_player2.png")
+        # Navigation
+        Game.rules_icon = pygame.image.load(path+"/question_black.png")
+        Game.rules_selected = pygame.image.load(path+"/question_highlight.png")
+        Game.exit_icon = pygame.image.load(path+"/exit_door.png")
+        Game.exit_selected = pygame.image.load(path+"/exit2_highlight.png")
+        # Chat
+        Game.chat_icon = pygame.image.load(path+"/chat.png")
+        Game.chat_selected = pygame.image.load(path+"/chat_selected.png")
+        Game.exit_chat = pygame.image.load(path+"/cross2.png")
+        Game.chat1 = pygame.image.load(path+"/chat_wp.png")
+        Game.chat2 = pygame.image.load(path+"/chat_hi.png")
+        Game.chat3 = pygame.image.load(path+"/chat_bye.png")
+        Game.chat4 = pygame.image.load(path+"/chat_gl.png")
+        Game.chat1Selected = pygame.image.load(path+"/chat_wp_selected.png")
+        Game.chat2Selected = pygame.image.load(path+"/chat_hi_selected.png")
+        Game.chat3Selected = pygame.image.load(path+"/chat_bye_selected.png")
+        Game.chat4Selected = pygame.image.load(path+"/chat_gl_selected.png")
+        Game.chat1_left = pygame.image.load(path+"/left/left_chat_wp.png")
+        Game.chat2_left = pygame.image.load(path+"/left/left_chat_hi.png")
+        Game.chat3_left = pygame.image.load(path+"/left/left_chat_bye.png")
+        Game.chat4_left = pygame.image.load(path+"/left/left_chat_gl.png")
+        Game.chat1_right = pygame.image.load(path+"/right/right_chat_wp.png")
+        Game.chat2_right = pygame.image.load(path+"/right/right_chat_hi.png")
+        Game.chat3_right = pygame.image.load(path+"/right/right_chat_bye.png")
+        Game.chat4_right = pygame.image.load(path+"/right/right_chat_gl.png")
 
     def exit_lobby(self):
         self.controller.change_view(self.controller.menuUI)

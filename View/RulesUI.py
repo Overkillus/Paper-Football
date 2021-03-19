@@ -1,10 +1,7 @@
 import sys
 import pygame
 import Colours
-from pygame import mixer
 import Settings
-import View.MenuUI
-# import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
 pygame.init()
 
@@ -14,10 +11,13 @@ class RulesUI:
     Class representing Rules view
     """
 
-    # Art
-    exit_icon = pygame.image.load("Art/Neon/exit2.png")
-    rules = pygame.image.load("Art/Neon/game_rules.png")
-
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Buttons
+    exit_icon = missing_texture
+    # Background
+    rules = missing_texture
+    # Font
     title = pygame.font.SysFont('comicsansms', 50)
     font = pygame.font.SysFont('comicsansms', 18)
 
@@ -25,6 +25,8 @@ class RulesUI:
 
         # Theme
         self.theme = Settings.theme
+
+        self.load_textures()
 
         # State
         self.is_running = False

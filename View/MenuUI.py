@@ -13,16 +13,19 @@ class MenuUI:
     Class representing menu view
     """
 
-    # Art
-    background = title = None
-    settings_icon = None
-    sound_icon = None
-    sound_icon_off = None
-    credits_icon = None
-    button1_glow = None
-    button2_glow = None
-    credits = None
-
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Background
+    background = title = missing_texture
+    credits = missing_texture
+    # Buttons
+    settings_icon = missing_texture
+    sound_icon = missing_texture
+    sound_icon_off = missing_texture
+    credits_icon = missing_texture
+    button1_glow = missing_texture
+    button2_glow = missing_texture
+    # Font
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
@@ -176,15 +179,16 @@ class MenuUI:
         # Path based on current theme
         path = "Art/" + Settings.theme
 
-        # Load appropriate textures
+        # Background
         MenuUI.background = pygame.image.load(path+"/lobby.png")
         MenuUI.title = pygame.image.load(path+"/logo_small.png")
+        MenuUI.credits = pygame.image.load(path+"/credits.png")
+        # Buttons
         MenuUI.settings_icon = pygame.image.load(path+"/settings.png")
         MenuUI.sound_icon = pygame.image.load(path+"/sound.png")
         MenuUI.sound_icon_off = pygame.image.load(path+"/sound_off.png")
         MenuUI.button1_glow = pygame.image.load(path+"/start_glow.png")
         MenuUI.button2_glow = pygame.image.load(path+"/quit_glow.png")
-        MenuUI.credits = pygame.image.load(path+"/credits.png")
         MenuUI.credits_icon = pygame.image.load(path + "/credits_button.png")
 
 # Helper function
