@@ -142,26 +142,27 @@ class Game:
                     self.players[0].score = 0
                     self.players[0].turn = True
                     self.players[1].score = 0
-                if self.chat_button1_rect.collidepoint(mouse_pos):
-                    self.controller.client.send_to_server(("!CHAT", 1))
-                    self.chat_player_id = 1
-                    self.chat_timer = self.chat_duration
-                    self.chat_active = False
-                if self.chat_button2_rect.collidepoint(mouse_pos):
-                    self.controller.client.send_to_server(("!CHAT", 2))
-                    self.chat_player_id = 2
-                    self.chat_timer = self.chat_duration
-                    self.chat_active = False
-                if self.chat_button3_rect.collidepoint(mouse_pos):
-                    self.controller.client.send_to_server(("!CHAT", 3))
-                    self.chat_player_id = 3
-                    self.chat_timer = self.chat_duration
-                    self.chat_active = False
-                if self.chat_button4_rect.collidepoint(mouse_pos):
-                    self.controller.client.send_to_server(("!CHAT", 4))
-                    self.chat_player_id = 4
-                    self.chat_timer = self.chat_duration
-                    self.chat_active = False
+                if self.chat_active:
+                    if self.chat_button1_rect.collidepoint(mouse_pos):
+                        self.controller.client.send_to_server(("!CHAT", 1))
+                        self.chat_player_id = 1
+                        self.chat_timer = self.chat_duration
+                        self.chat_active = False
+                    if self.chat_button2_rect.collidepoint(mouse_pos):
+                        self.controller.client.send_to_server(("!CHAT", 2))
+                        self.chat_player_id = 2
+                        self.chat_timer = self.chat_duration
+                        self.chat_active = False
+                    if self.chat_button3_rect.collidepoint(mouse_pos):
+                        self.controller.client.send_to_server(("!CHAT", 3))
+                        self.chat_player_id = 3
+                        self.chat_timer = self.chat_duration
+                        self.chat_active = False
+                    if self.chat_button4_rect.collidepoint(mouse_pos):
+                        self.controller.client.send_to_server(("!CHAT", 4))
+                        self.chat_player_id = 4
+                        self.chat_timer = self.chat_duration
+                        self.chat_active = False
 
                 # Game logic
                 for i in range(self.myBoard.width):

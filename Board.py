@@ -105,9 +105,10 @@ class Board:
         for w in range(3):
             for h in range(3):
                 pos_x, pos_y = (ball.x-1)+w, (ball.y-1)+h
-                point = self.points[pos_x][pos_y]
-                if not point.is_ball and point.is_legal and self.get_connection(point, ball) is None and pos_x >= 0 and pos_y >= 0:
-                    ball_stuck = False
+                if (0 <= pos_x <= self.width-1) and (0 <= pos_y <= self.height-1):
+                    point = self.points[pos_x][pos_y]
+                    if not point.is_ball and point.is_legal and self.get_connection(point, ball) is None:
+                        ball_stuck = False
         return ball_stuck
 
     def get_ball(self):
