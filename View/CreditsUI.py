@@ -52,7 +52,7 @@ class CreditsUI:
         sw = self.screen.get_width()
         sh = self.screen.get_height()
 
-        self.exit_icon_rect.bottomright = (sw - 20, sh - 20)
+        self.exit_icon_rect.topleft = (20, 20)
         self.credits_rect.center = (sw/2, sh/2)
 
     def render(self):
