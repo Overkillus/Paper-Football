@@ -1,4 +1,3 @@
-import sys
 import pygame
 import random
 
@@ -8,7 +7,6 @@ import Settings
 from Board import Board
 from Particle import Particle
 from Player import Player
-from Point import Point
 
 pygame.font.init()
 
@@ -18,8 +16,14 @@ class Game:
     # --- Art ---
     missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
     # Background
-    boardImg = missing_texture
-    boardWalls = missing_texture
+    board_background_9x7 = missing_texture
+    board_walls_9x7 = missing_texture
+    board_background_13x9 = missing_texture
+    board_walls_13x9 = missing_texture
+    board_background_17x7 = missing_texture
+    board_walls_17x7 = missing_texture
+    board_background_19x15 = missing_texture
+    board_walls_19x15 = missing_texture
     # Banner
     waiting_player_banner = missing_texture
     player1_banner = missing_texture
@@ -98,8 +102,8 @@ class Game:
         self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
-        self.board_lines_rect = self.boardImg.get_rect()
-        self.board_walls_rect = self.boardWalls.get_rect()
+        self.board_background_rect = self.board_background_13x9.get_rect() # TODO check if bigger sizes render properly
+        self.board_walls_rect = self.board_walls_13x9.get_rect()
         self.x_offset = 0
         self.y_offset = 0
 
@@ -243,7 +247,7 @@ class Game:
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
         # Board
-        self.board_lines_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_rect.center = (sw / 2 + 5, sh / 2)
         self.board_walls_rect.center = (sw / 2 + 5, sh / 2)
         self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
         self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
@@ -316,8 +320,16 @@ class Game:
         # Clear screen
         self.screen.fill((0, 0, 0))
 
-        # Draw lines of the board
-        self.screen.blit(self.boardImg, self.board_lines_rect)
+        # Draw board background
+        if self.current_boardsize == (9,7):
+            self.screen.blit(self.board_background_9x7, self.board_background_rect)
+        elif self.current_boardsize == (13,9):
+            self.screen.blit(self.board_background_13x9, self.board_background_rect)
+        elif self.current_boardsize == (17, 7):
+            self.screen.blit(self.board_background_17x7, self.board_background_rect)
+        elif self.current_boardsize == (19, 15):
+            self.screen.blit(self.board_background_19x15, self.board_background_rect)
+
 
         # Draw connections
         for connection in self.myBoard.connections:
@@ -329,8 +341,15 @@ class Game:
                 if not point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), False, (self.x_offset, self.y_offset))
 
-        # Draw background (board walls)
-        self.screen.blit(self.boardWalls, self.board_walls_rect)
+        # Draw board walls
+        if self.current_boardsize == (9,7):
+            self.screen.blit(self.board_walls_9x7, self.board_background_rect)
+        elif self.current_boardsize == (13,9):
+            self.screen.blit(self.board_walls_13x9, self.board_background_rect)
+        elif self.current_boardsize == (17, 7):
+            self.screen.blit(self.board_walls_17x7, self.board_background_rect)
+        elif self.current_boardsize == (19, 15):
+            self.screen.blit(self.board_walls_19x15, self.board_background_rect)
 
         # Draw ball
         for row in self.myBoard.points:
@@ -428,9 +447,14 @@ class Game:
         path = "Art/" + Settings.theme
 
         # Background
-        Game.boardImg = pygame.image.load(path+"/board_lines.png")
-        Game.boardWalls = pygame.image.load(path+"/board_walls.png")
-
+        Game.board_background_9x7 = pygame.image.load(path + "/board_background_9x7.png")
+        Game.board_walls_9x7 = pygame.image.load(path + "/board_walls_9x7.png")
+        Game.board_background_13x9 = pygame.image.load(path + "/board_background_13x9.png")
+        Game.board_walls_13x9 = pygame.image.load(path + "/board_walls_13x9.png")
+        Game.board_background_17x7 = pygame.image.load(path + "/board_background_17x7.png")
+        Game.board_walls_17x7 = pygame.image.load(path + "/board_walls_17x7.png")
+        Game.board_background_19x15 = pygame.image.load(path + "/board_background_19x15.png")
+        Game.board_walls_19x15 = pygame.image.load(path + "/board_walls_19x15.png")
         # Banner
         Game.waiting_player_banner = pygame.image.load(path + "/waiting.png")
         Game.player1_banner = pygame.image.load(path+"/score_player1.png")
