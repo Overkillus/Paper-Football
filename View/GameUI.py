@@ -17,6 +17,7 @@ class Game:
     # --- Art ---
     missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
     # Background
+    background = missing_texture
     board_background_9x7 = missing_texture
     board_walls_9x7 = missing_texture
     board_background_13x9 = missing_texture
@@ -103,6 +104,7 @@ class Game:
         self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
+        self.background_rect = self.background.get_rect()
         self.board_background_9x7_rect = self.board_background_9x7.get_rect()
         self.board_walls_9x7_rect = self.board_walls_9x7.get_rect()
         self.board_background_13x9_rect = self.board_background_13x9.get_rect()
@@ -253,15 +255,18 @@ class Game:
         self.exit_chat_rect.bottomleft = (50, sh-45)
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
+        # Background
+        self.background_rect.center = (sw/2, sh/2)
+
         # Board
-        self.board_background_9x7_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_9x7_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_background_13x9_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_13x9_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_background_17x7_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_17x7_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_background_19x15_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_19x15_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_9x7_rect.center = (sw / 2, sh / 2)
+        self.board_walls_9x7_rect.center = (sw / 2, sh / 2)
+        self.board_background_13x9_rect.center = (sw / 2, sh / 2)
+        self.board_walls_13x9_rect.center = (sw / 2, sh / 2)
+        self.board_background_17x7_rect.center = (sw / 2, sh / 2)
+        self.board_walls_17x7_rect.center = (sw / 2, sh / 2)
+        self.board_background_19x15_rect.center = (sw / 2, sh / 2)
+        self.board_walls_19x15_rect.center = (sw / 2, sh / 2)
         self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
         self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
 
@@ -332,6 +337,8 @@ class Game:
     def render(self):
         # Clear screen
         self.screen.fill((0, 0, 0))
+
+        self.screen.blit(self.background, self.background_rect)
 
         # Draw board background
         if self.current_boardsize == (9,7):
@@ -459,6 +466,7 @@ class Game:
         path = "Art/" + Settings.theme
 
         # Background
+        Game.background = pygame.image.load(path + "/black_bg.png")
         Game.board_background_9x7 = pygame.image.load(path + "/board_background_9x7.png")
         Game.board_walls_9x7 = pygame.image.load(path + "/board_walls_9x7.png")
         Game.board_background_13x9 = pygame.image.load(path + "/board_background_13x9.png")
