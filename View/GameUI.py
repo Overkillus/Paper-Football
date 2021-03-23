@@ -7,6 +7,7 @@ import Settings
 from Board import Board
 from Particle import Particle
 from Player import Player
+from Point import Point
 
 pygame.font.init()
 
@@ -102,8 +103,14 @@ class Game:
         self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
-        self.board_background_rect = self.board_background_13x9.get_rect() # TODO check if bigger sizes render properly
-        self.board_walls_rect = self.board_walls_13x9.get_rect()
+        self.board_background_9x7_rect = self.board_background_9x7.get_rect()
+        self.board_walls_9x7_rect = self.board_walls_9x7.get_rect()
+        self.board_background_13x9_rect = self.board_background_13x9.get_rect()
+        self.board_walls_13x9_rect = self.board_walls_13x9.get_rect()
+        self.board_background_17x7_rect = self.board_background_17x7.get_rect()
+        self.board_walls_17x7_rect = self.board_walls_17x7.get_rect()
+        self.board_background_19x15_rect = self.board_background_19x15.get_rect()
+        self.board_walls_19x15_rect = self.board_walls_19x15.get_rect()
         self.x_offset = 0
         self.y_offset = 0
 
@@ -247,8 +254,14 @@ class Game:
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
         # Board
-        self.board_background_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_9x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_9x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_13x9_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_13x9_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_17x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_17x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_19x15_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_19x15_rect.center = (sw / 2 + 5, sh / 2)
         self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
         self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
 
@@ -322,14 +335,13 @@ class Game:
 
         # Draw board background
         if self.current_boardsize == (9,7):
-            self.screen.blit(self.board_background_9x7, self.board_background_rect)
+            self.screen.blit(self.board_background_9x7, self.board_background_9x7_rect)
         elif self.current_boardsize == (13,9):
-            self.screen.blit(self.board_background_13x9, self.board_background_rect)
+            self.screen.blit(self.board_background_13x9, self.board_background_13x9_rect)
         elif self.current_boardsize == (17, 7):
-            self.screen.blit(self.board_background_17x7, self.board_background_rect)
+            self.screen.blit(self.board_background_17x7, self.board_background_17x7_rect)
         elif self.current_boardsize == (19, 15):
-            self.screen.blit(self.board_background_19x15, self.board_background_rect)
-
+            self.screen.blit(self.board_background_19x15, self.board_background_19x15_rect)
 
         # Draw connections
         for connection in self.myBoard.connections:
@@ -343,13 +355,13 @@ class Game:
 
         # Draw board walls
         if self.current_boardsize == (9,7):
-            self.screen.blit(self.board_walls_9x7, self.board_background_rect)
+            self.screen.blit(self.board_walls_9x7, self.board_background_9x7_rect)
         elif self.current_boardsize == (13,9):
-            self.screen.blit(self.board_walls_13x9, self.board_background_rect)
+            self.screen.blit(self.board_walls_13x9, self.board_background_13x9_rect)
         elif self.current_boardsize == (17, 7):
-            self.screen.blit(self.board_walls_17x7, self.board_background_rect)
+            self.screen.blit(self.board_walls_17x7, self.board_background_17x7_rect)
         elif self.current_boardsize == (19, 15):
-            self.screen.blit(self.board_walls_19x15, self.board_background_rect)
+            self.screen.blit(self.board_walls_19x15, self.board_background_19x15_rect)
 
         # Draw ball
         for row in self.myBoard.points:
@@ -357,6 +369,9 @@ class Game:
                 if point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn, (self.x_offset, self.y_offset))
 
+        # Draw Player Banner
+        self.screen.blit(self.player1_banner, self.player1_banner_rect)
+        self.screen.blit(self.player2_banner, self.player2_banner_rect)
         # Draw Score
         font = pygame.font.Font(None, 60)
         score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
@@ -369,9 +384,6 @@ class Game:
         score2_rect.center = self.player2_banner_rect.center
         score2_rect[1] += 20
         self.screen.blit(score2, score2_rect)
-        # Draw Player Banner
-        self.screen.blit(self.player1_banner, self.player1_banner_rect)
-        self.screen.blit(self.player2_banner, self.player2_banner_rect)
 
         # Particles
         for p in self.particles:
@@ -484,6 +496,8 @@ class Game:
         Game.chat2_right = pygame.image.load(path+"/right/right_chat_hi.png")
         Game.chat3_right = pygame.image.load(path+"/right/right_chat_bye.png")
         Game.chat4_right = pygame.image.load(path+"/right/right_chat_gl.png")
+
+        Point.ball_img = pygame.image.load(path+"/ball_green.png")
 
     def exit_lobby(self):
         self.controller.change_view(self.controller.menuUI)
