@@ -102,8 +102,14 @@ class Game:
         self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
-        self.board_background_rect = self.board_background_13x9.get_rect() # TODO check if bigger sizes render properly
-        self.board_walls_rect = self.board_walls_13x9.get_rect()
+        self.board_background_9x7_rect = self.board_background_9x7.get_rect()
+        self.board_walls_9x7_rect = self.board_walls_9x7.get_rect()
+        self.board_background_13x9_rect = self.board_background_13x9.get_rect()
+        self.board_walls_13x9_rect = self.board_walls_13x9.get_rect()
+        self.board_background_17x7_rect = self.board_background_17x7.get_rect()
+        self.board_walls_17x7_rect = self.board_walls_17x7.get_rect()
+        self.board_background_19x15_rect = self.board_background_19x15.get_rect()
+        self.board_walls_19x15_rect = self.board_walls_19x15.get_rect()
         self.x_offset = 0
         self.y_offset = 0
 
@@ -247,8 +253,14 @@ class Game:
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
         # Board
-        self.board_background_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_9x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_9x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_13x9_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_13x9_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_17x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_17x7_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_19x15_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_walls_19x15_rect.center = (sw / 2 + 5, sh / 2)
         self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
         self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
 
@@ -322,13 +334,13 @@ class Game:
 
         # Draw board background
         if self.current_boardsize == (9,7):
-            self.screen.blit(self.board_background_9x7, self.board_background_rect)
+            self.screen.blit(self.board_background_9x7, self.board_background_9x7_rect)
         elif self.current_boardsize == (13,9):
-            self.screen.blit(self.board_background_13x9, self.board_background_rect)
+            self.screen.blit(self.board_background_13x9, self.board_background_13x9_rect)
         elif self.current_boardsize == (17, 7):
-            self.screen.blit(self.board_background_17x7, self.board_background_rect)
+            self.screen.blit(self.board_background_17x7, self.board_background_17x7_rect)
         elif self.current_boardsize == (19, 15):
-            self.screen.blit(self.board_background_19x15, self.board_background_rect)
+            self.screen.blit(self.board_background_19x15, self.board_background_19x15_rect)
 
 
         # Draw connections
@@ -343,13 +355,13 @@ class Game:
 
         # Draw board walls
         if self.current_boardsize == (9,7):
-            self.screen.blit(self.board_walls_9x7, self.board_background_rect)
+            self.screen.blit(self.board_walls_9x7, self.board_background_9x7_rect)
         elif self.current_boardsize == (13,9):
-            self.screen.blit(self.board_walls_13x9, self.board_background_rect)
+            self.screen.blit(self.board_walls_13x9, self.board_background_13x9_rect)
         elif self.current_boardsize == (17, 7):
-            self.screen.blit(self.board_walls_17x7, self.board_background_rect)
+            self.screen.blit(self.board_walls_17x7, self.board_background_17x7_rect)
         elif self.current_boardsize == (19, 15):
-            self.screen.blit(self.board_walls_19x15, self.board_background_rect)
+            self.screen.blit(self.board_walls_19x15, self.board_background_19x15_rect)
 
         # Draw ball
         for row in self.myBoard.points:
