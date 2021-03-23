@@ -7,6 +7,7 @@ import Settings
 from Board import Board
 from Particle import Particle
 from Player import Player
+from Point import Point
 
 pygame.font.init()
 
@@ -342,7 +343,6 @@ class Game:
         elif self.current_boardsize == (19, 15):
             self.screen.blit(self.board_background_19x15, self.board_background_19x15_rect)
 
-
         # Draw connections
         for connection in self.myBoard.connections:
             connection.draw(self.screen, (self.x_offset, self.y_offset))
@@ -369,6 +369,9 @@ class Game:
                 if point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn, (self.x_offset, self.y_offset))
 
+        # Draw Player Banner
+        self.screen.blit(self.player1_banner, self.player1_banner_rect)
+        self.screen.blit(self.player2_banner, self.player2_banner_rect)
         # Draw Score
         font = pygame.font.Font(None, 60)
         score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
@@ -381,9 +384,6 @@ class Game:
         score2_rect.center = self.player2_banner_rect.center
         score2_rect[1] += 20
         self.screen.blit(score2, score2_rect)
-        # Draw Player Banner
-        self.screen.blit(self.player1_banner, self.player1_banner_rect)
-        self.screen.blit(self.player2_banner, self.player2_banner_rect)
 
         # Particles
         for p in self.particles:
@@ -496,6 +496,8 @@ class Game:
         Game.chat2_right = pygame.image.load(path+"/right/right_chat_hi.png")
         Game.chat3_right = pygame.image.load(path+"/right/right_chat_bye.png")
         Game.chat4_right = pygame.image.load(path+"/right/right_chat_gl.png")
+
+        Point.ball_img = pygame.image.load(path+"/ball_green.png")
 
     def exit_lobby(self):
         self.controller.change_view(self.controller.menuUI)
