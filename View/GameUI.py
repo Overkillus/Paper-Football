@@ -20,6 +20,8 @@ class Game:
     boardWalls = pygame.image.load("Art/board_walls.png")
     waitingPlayer = pygame.image.load("Art/waiting.png")
     player_left_banner = pygame.image.load("Art/quit.png")
+    you_won_banner = pygame.image.load("Art/win.png")
+    you_lost_banner = pygame.image.load("Art/win.png")
     rules_icon = pygame.image.load("Art/question_black.png")
     chat_icon = pygame.image.load("Art/chat.png")
     exit_icon = pygame.image.load("Art/exit_door.png")
@@ -97,6 +99,8 @@ class Game:
         self.player_left_banner_rect = self.player_left_banner.get_rect()
         self.player1_banner_rect = self.player1_banner.get_rect()
         self.player2_banner_rect = self.player2_banner.get_rect()
+        self.you_won_banner_rect = self.you_won_banner.get_rect()
+        self.you_lost_banner_rect = self.you_lost_banner.get_rect()
 
         # Players
         self.players = []
@@ -232,6 +236,8 @@ class Game:
         self.player_left_banner_rect.center = (sw / 2, sh / 2)
         self.player1_banner_rect.topleft = (0, 0)
         self.player2_banner_rect.topright = (sw, 0)
+        self.you_won_banner_rect.center = (sw / 2, sh / 2)
+        self.you_lost_banner_rect.center = (sw / 2, sh / 2)
 
         # Update pending opponent moves
         if self.controller.client.pending_move is not None:
@@ -353,6 +359,13 @@ class Game:
 
         if not self.controller.client.connected:
             self.screen.blit(self.player_left_banner, self.player_left_banner_rect)
+
+        # Win condition
+        if self.players[0].score == 3:
+            self.screen.blit(self.you_won_banner, self.you_won_banner_rect)
+
+        if self.players[1].score == 3:
+            self.screen.blit(self.you_lost_banner, self.you_lost_banner_rect)
 
         # Key banner
         if self.controller.client.current_population == 1 and self.controller.client.key is not None:
