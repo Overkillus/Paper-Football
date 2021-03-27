@@ -13,29 +13,26 @@ class SettingsUI:
     """
     Class representing settings ui
     """
+
     # Art
-    exitIcon = pygame.image.load('Art/exit2.png')
-    default_screen = pygame.image.load('Art/default_b.png')
-    default_screen_selected = pygame.image.load('Art/default_b_selected.png')
-    medium_screen = pygame.image.load('Art/medium_screen_b.png')
-    medium_screen_selected = pygame.image.load('Art/medium_screen_b_selected.png')
-    large_screen = pygame.image.load('Art/large_screen_b.png')
-    large_screen_selected = pygame.image.load('Art/large_screen_b_selected.png')
-    native_screen = pygame.image.load('Art/native.png')
-    native_screen_selected = pygame.image.load('Art/native_selected.png')
-    football_theme = pygame.image.load('Art/football_b.png')
-    football_theme_selected = pygame.image.load('Art/football_b_selected.png')
-    neon_theme = pygame.image.load('Art/neon_b.png')
-    neon_theme_selected = pygame.image.load('Art/neon_b_selected.png')
-    paper_theme = pygame.image.load('Art/paper_b.png')
-    paper_theme_selected = pygame.image.load('Art/paper_b_selected.png')
-    small_board = pygame.image.load('Art/board_size_s.png')
-    small_board_selected = pygame.image.load('Art/board_size_s_selected.png')
-    medium_board = pygame.image.load('Art/board_size_m.png')
-    medium_board_selected = pygame.image.load('Art/board_size_m_selected.png')
-    sound_off = pygame.image.load('Art/sound_off.png')
-    sound_reduce = pygame.image.load('Art/sound_reduce.png')
-    sound_increase = pygame.image.load('Art/sound_increase.png')
+    exitIcon = pygame.image.load('Art/Neon/exit2.png')
+    default_screen = pygame.image.load('Art/Neon/default_b.png')
+    default_screen_selected = pygame.image.load('Art/Neon/default_b_selected.png')
+    medium_screen = pygame.image.load('Art/Neon/medium_screen_b.png')
+    medium_screen_selected = pygame.image.load('Art/Neon/medium_screen_b_selected.png')
+    large_screen = pygame.image.load('Art/Neon/large_screen_b.png')
+    large_screen_selected = pygame.image.load('Art/Neon/large_screen_b_selected.png')
+    native_screen = pygame.image.load('Art/Neon/native.png')
+    native_screen_selected = pygame.image.load('Art/Neon/native_selected.png')
+    football_theme = pygame.image.load('Art/Neon/football_b.png')
+    football_theme_selected = pygame.image.load('Art/Neon/football_b_selected.png')
+    neon_theme = pygame.image.load('Art/Neon/neon_b.png')
+    neon_theme_selected = pygame.image.load('Art/Neon/neon_b_selected.png')
+    paper_theme = pygame.image.load('Art/Neon/paper_b.png')
+    paper_theme_selected = pygame.image.load('Art/Neon/paper_b_selected.png')
+    sound_off = pygame.image.load('Art/Neon/sound_off.png')
+    sound_reduce = pygame.image.load('Art/Neon/sound_reduce.png')
+    sound_increase = pygame.image.load('Art/Neon/sound_increase.png')
 
 
     fontTitle = pygame.font.SysFont('arialbold', 45)
@@ -57,6 +54,7 @@ class SettingsUI:
         # Color Buttons
         color_button = pygame.Rect(0, 0, 25, 25)
         color_button_selected = pygame.Rect(0, 0, 34, 34)
+
         # Colors player 1
         self.yellow_button_p1 = color_button.copy()
         self.yellow_button_selected_p1 = color_button_selected.copy()
@@ -92,9 +90,6 @@ class SettingsUI:
         self.football_theme_button = self.football_theme.get_rect()
         self.neon_theme_button = self.neon_theme.get_rect()
         self.paper_theme_button = self.paper_theme.get_rect()
-        # Size
-        self.small_board_button = self.small_board.get_rect()
-        self.medium_board_button = self.medium_board.get_rect()
         # Sound
         self.sound_off_button = self.sound_off.get_rect()
         self.sound_reduce_button = self.sound_reduce.get_rect()
@@ -144,17 +139,11 @@ class SettingsUI:
 
                 # Theme Settings
                 if self.football_theme_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "football"
                 elif self.neon_theme_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "neon"
                 elif self.paper_theme_button.collidepoint(mouse_pos):
-                    ...
-
-                # Board settings
-                if self.small_board_button.collidepoint(mouse_pos):
-                    ...
-                elif self.medium_board_button.collidepoint(mouse_pos):
-                    ...
+                    Settings.theme = "paper"
 
                 # Colour player 1 Settings
                 if self.yellow_button_p1.collidepoint(mouse_pos):
@@ -191,7 +180,7 @@ class SettingsUI:
     def update(self):
         sw = self.screen.get_width()
         sh = self.screen.get_height()
-        rows = 8
+        rows = 7
         y_offset = 40
 
         # Exit
@@ -208,42 +197,38 @@ class SettingsUI:
         self.neon_theme_button.center = (sw / 2 + 25, 2*sh/rows + y_offset)
         self.paper_theme_button.center = (sw / 2 + 125, 2*sh/rows + y_offset)
 
-        # Size
-        self.small_board_button.center = (sw / 2 - 65, 3*sh/rows + y_offset)
-        self.medium_board_button.center = (sw / 2 + 5, 3*sh/rows + y_offset)
-
         # Colors player 1
-        self.yellow_button_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
-        self.yellow_button_selected_p1.center = (20 + sw / 2, 4 * sh / rows + y_offset)
-        self.pink_button_p1.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
-        self.pink_button_selected_p1.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
-        self.cyan_button_p1.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
-        self.cyan_button_selected_p1.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
-        self.red_button_p1.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
-        self.red_button_selected_p1.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
-        self.green_button_p1.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
-        self.green_button_selected_p1.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
-        self.orange_button_p1.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
-        self.orange_button_selected_p1.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
+        self.yellow_button_p1.center = (20 + sw / 2, 3 * sh / rows + y_offset)
+        self.yellow_button_selected_p1.center = (20 + sw / 2, 3 * sh / rows + y_offset)
+        self.pink_button_p1.center = (20 + sw / 2 + 40, 3 * sh / rows + y_offset)
+        self.pink_button_selected_p1.center = (20 + sw / 2 + 40, 3 * sh / rows + y_offset)
+        self.cyan_button_p1.center = (20 + sw / 2 + 40 * 2, 3 * sh / rows + y_offset)
+        self.cyan_button_selected_p1.center = (20 + sw / 2 + 40 * 2, 3 * sh / rows + y_offset)
+        self.red_button_p1.center = (20 + sw / 2 + 40 * 3, 3 * sh / rows + y_offset)
+        self.red_button_selected_p1.center = (20 + sw / 2 + 40 * 3, 3 * sh / rows + y_offset)
+        self.green_button_p1.center = (20 + sw / 2 + 40 * 4, 3 * sh / rows + y_offset)
+        self.green_button_selected_p1.center = (20 + sw / 2 + 40 * 4, 3 * sh / rows + y_offset)
+        self.orange_button_p1.center = (20 + sw / 2 + 40 * 5, 3 * sh / rows + y_offset)
+        self.orange_button_selected_p1.center = (20 + sw / 2 + 40 * 5, 3 * sh / rows + y_offset)
 
         # Colors player 2
-        self.yellow_button_p2.center = (20 + sw / 2, 5 * sh / rows + y_offset)
-        self.yellow_button_selected_p2.center = (20 + sw / 2, 5 * sh / rows + y_offset)
-        self.pink_button_p2.center = (20 + sw / 2 + 40, 5 * sh / rows + y_offset)
-        self.pink_button_selected_p2.center = (20 + sw / 2 + 40, 5 * sh / rows + y_offset)
-        self.cyan_button_p2.center = (20 + sw / 2 + 40 * 2, 5 * sh / rows + y_offset)
-        self.cyan_button_selected_p2.center = (20 + sw / 2 + 40 * 2, 5 * sh / rows + y_offset)
-        self.red_button_p2.center = (20 + sw / 2 + 40 * 3, 5 * sh / rows + y_offset)
-        self.red_button_selected_p2.center = (20 + sw / 2 + 40 * 3, 5 * sh / rows + y_offset)
-        self.green_button_p2.center = (20 + sw / 2 + 40 * 4, 5 * sh / rows + y_offset)
-        self.green_button_selected_p2.center = (20 + sw / 2 + 40 * 4, 5 * sh / rows + y_offset)
-        self.orange_button_p2.center = (20 + sw / 2 + 40 * 5, 5 * sh / rows + y_offset)
-        self.orange_button_selected_p2.center = (20 + sw / 2 + 40 * 5, 5 * sh / rows + y_offset)
+        self.yellow_button_p2.center = (20 + sw / 2, 4 * sh / rows + y_offset)
+        self.yellow_button_selected_p2.center = (20 + sw / 2, 4 * sh / rows + y_offset)
+        self.pink_button_p2.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
+        self.pink_button_selected_p2.center = (20 + sw / 2 + 40, 4 * sh / rows + y_offset)
+        self.cyan_button_p2.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
+        self.cyan_button_selected_p2.center = (20 + sw / 2 + 40 * 2, 4 * sh / rows + y_offset)
+        self.red_button_p2.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
+        self.red_button_selected_p2.center = (20 + sw / 2 + 40 * 3, 4 * sh / rows + y_offset)
+        self.green_button_p2.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
+        self.green_button_selected_p2.center = (20 + sw / 2 + 40 * 4, 4 * sh / rows + y_offset)
+        self.orange_button_p2.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
+        self.orange_button_selected_p2.center = (20 + sw / 2 + 40 * 5, 4 * sh / rows + y_offset)
 
         # Sound
-        self.sound_off_button.center = (sw / 2 - 100, 6 * sh / rows + y_offset)
-        self.sound_reduce_button.center = (sw / 2 - 50, 6 * sh / rows + y_offset)
-        self.sound_increase_button.center = (sw / 2, 6 * sh / rows + y_offset)
+        self.sound_off_button.center = (sw / 2 - 100, 5 * sh / rows + y_offset)
+        self.sound_reduce_button.center = (sw / 2 - 50, 5 * sh / rows + y_offset)
+        self.sound_increase_button.center = (sw / 2, 5 * sh / rows + y_offset)
 
     def render(self):
         sw = self.screen.get_width()
@@ -270,11 +255,6 @@ class SettingsUI:
         self.screen.blit(self.football_theme, self.football_theme_button)
         self.screen.blit(self.neon_theme, self.neon_theme_button)
         self.screen.blit(self.paper_theme, self.paper_theme_button)
-
-        # Board size
-        draw_text('Board Size:', self.font, Colours.WHITE, self.screen, self.small_board_button.x - 125, self.small_board_button.y + 5)
-        self.screen.blit(self.small_board, self.small_board_button)
-        self.screen.blit(self.medium_board, self.medium_board_button)
 
         # Colours player 1
         draw_text('Select your colour:', self.font, Colours.WHITE, self.screen, self.yellow_button_p1.x - 230, self.yellow_button_p1.y)
@@ -313,18 +293,12 @@ class SettingsUI:
             self.screen.blit(self.native_screen_selected, (self.native_screen_button.x, self.native_screen_button.y))
 
         # Theme
-        if self.football_theme_button.collidepoint(pos):
+        if self.football_theme_button.collidepoint(pos) or Settings.theme == "football":
             self.screen.blit(self.football_theme_selected, (self.football_theme_button.x, self.football_theme_button.y))
-        if self.neon_theme_button.collidepoint(pos):
+        if self.neon_theme_button.collidepoint(pos) or Settings.theme == "neon":
             self.screen.blit(self.neon_theme_selected, (self.neon_theme_button.x, self.neon_theme_button.y))
-        if self.paper_theme_button.collidepoint(pos):
+        if self.paper_theme_button.collidepoint(pos) or Settings.theme == "paper":
             self.screen.blit(self.paper_theme_selected, (self.paper_theme_button.x, self.paper_theme_button.y))
-
-        # Size
-        if self.small_board_button.collidepoint(pos):
-            self.screen.blit(self.small_board_selected, (self.small_board_button.x, self.small_board_button.y))
-        if self.medium_board_button.collidepoint(pos):
-            self.screen.blit(self.medium_board_selected, (self.medium_board_button.x, self.medium_board_button.y))
 
         # Color player 1
         if self.yellow_button_p1.collidepoint(pos) or self.controller.gameUI.players[0].get_color() == Colours.YELLOW:

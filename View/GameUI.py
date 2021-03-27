@@ -1,4 +1,3 @@
-import sys
 import pygame
 import random
 
@@ -15,39 +14,57 @@ pygame.font.init()
 
 class Game:
 
-    # Art
-    boardImg = pygame.image.load("Art/board_lines.png")
-    boardWalls = pygame.image.load("Art/board_walls.png")
-    waitingPlayer = pygame.image.load("Art/waiting.png")
-    player_left_banner = pygame.image.load("Art/quit.png")
-    rules_icon = pygame.image.load("Art/question_black.png")
-    chat_icon = pygame.image.load("Art/chat.png")
-    exit_icon = pygame.image.load("Art/exit_door.png")
-    player1_banner = pygame.image.load("Art/score_player1.png")
-    player2_banner = pygame.image.load("Art/score_player2.png")
-    exit_selected = pygame.image.load("Art/exit2_highlight.png")
-    rules_selected = pygame.image.load("Art/question_highlight.png")
-    chat_selected = pygame.image.load("Art/chat_selected.png")
-    chat1 = pygame.image.load("Art/chat_wp.png")
-    chat2 = pygame.image.load("Art/chat_hi.png")
-    chat3 = pygame.image.load("Art/chat_bye.png")
-    chat4 = pygame.image.load("Art/chat_gl.png")
-    chat1Selected = pygame.image.load("Art/chat_wp_selected.png")
-    chat2Selected = pygame.image.load("Art/chat_hi_selected.png")
-    chat3Selected = pygame.image.load("Art/chat_bye_selected.png")
-    chat4Selected = pygame.image.load("Art/chat_gl_selected.png")
-    chat1_left = pygame.image.load("Art/left/left_chat_wp.png")
-    chat2_left = pygame.image.load("Art/left/left_chat_hi.png")
-    chat3_left = pygame.image.load("Art/left/left_chat_bye.png")
-    chat4_left = pygame.image.load("Art/left/left_chat_gl.png")
-    chat1_right = pygame.image.load("Art/right/right_chat_wp.png")
-    chat2_right = pygame.image.load("Art/right/right_chat_hi.png")
-    chat3_right = pygame.image.load("Art/right/right_chat_bye.png")
-    chat4_right = pygame.image.load("Art/right/right_chat_gl.png")
-    exit_chat = pygame.image.load("Art/cross2.png")
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Background
+    background = missing_texture
+    board_background_9x7 = missing_texture
+    board_walls_9x7 = missing_texture
+    board_background_13x9 = missing_texture
+    board_walls_13x9 = missing_texture
+    board_background_17x7 = missing_texture
+    board_walls_17x7 = missing_texture
+    board_background_19x15 = missing_texture
+    board_walls_19x15 = missing_texture
+    # Banner
+    waiting_player_banner = missing_texture
+    player1_banner = missing_texture
+    player2_banner = missing_texture
+    # Navigation
+    rules_icon = missing_texture
+    rules_selected = missing_texture
+    exit_icon = missing_texture
+    exit_selected = missing_texture
+    # Chat
+    chat_icon = missing_texture
+    chat_selected = missing_texture
+    exit_chat = missing_texture
+    chat1 = missing_texture
+    chat2 = missing_texture
+    chat3 = missing_texture
+    chat4 = missing_texture
+    chat1Selected = missing_texture
+    chat2Selected = missing_texture
+    chat3Selected = missing_texture
+    chat4Selected = missing_texture
+    chat1_left = missing_texture
+    chat2_left = missing_texture
+    chat3_left = missing_texture
+    chat4_left = missing_texture
+    chat1_right = missing_texture
+    chat2_right = missing_texture
+    chat3_right = missing_texture
+    chat4_right = missing_texture
+    # Font
     font = pygame.font.SysFont('arialbold', 30)
 
     def __init__(self, controller):
+
+        # Theme
+        self.theme = Settings.theme
+
+        self.load_textures()
+
         # State
         self.is_running = False
         self.chat_active = False
@@ -87,14 +104,21 @@ class Game:
         self.chat_right_rect = self.chat1_right.get_rect()
 
         # Board
-        self.board_lines_rect = self.boardImg.get_rect()
-        self.board_walls_rect = self.boardWalls.get_rect()
+        self.background_rect = self.background.get_rect()
+        self.board_background_9x7_rect = self.board_background_9x7.get_rect()
+        self.board_walls_9x7_rect = self.board_walls_9x7.get_rect()
+        self.board_background_13x9_rect = self.board_background_13x9.get_rect()
+        self.board_walls_13x9_rect = self.board_walls_13x9.get_rect()
+        self.board_background_17x7_rect = self.board_background_17x7.get_rect()
+        self.board_walls_17x7_rect = self.board_walls_17x7.get_rect()
+        self.board_background_19x15_rect = self.board_background_19x15.get_rect()
+        self.board_walls_19x15_rect = self.board_walls_19x15.get_rect()
         self.x_offset = 0
         self.y_offset = 0
 
         # Banners
-        self.waiting_rect = self.waitingPlayer.get_rect()
         self.player_left_banner_rect = self.player_left_banner.get_rect()
+        self.waiting_rect = self.waiting_player_banner.get_rect()
         self.player1_banner_rect = self.player1_banner.get_rect()
         self.player2_banner_rect = self.player2_banner.get_rect()
 
@@ -207,6 +231,11 @@ class Game:
         # new_scale = self.screen.get_width() / Settings.default_screen_width
         # self.rescale(new_scale)
 
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
+
         # Layout helper variables
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -221,9 +250,18 @@ class Game:
         self.exit_chat_rect.bottomleft = (50, sh-45)
         self.exit_rect.bottomright = (sw-10, sh-20-self.rules_rect.height-20)
 
+        # Background
+        self.background_rect.center = (sw/2, sh/2)
+
         # Board
-        self.board_lines_rect.center = (sw / 2 + 5, sh / 2)
-        self.board_walls_rect.center = (sw / 2 + 5, sh / 2)
+        self.board_background_9x7_rect.center = (sw / 2, sh / 2)
+        self.board_walls_9x7_rect.center = (sw / 2, sh / 2)
+        self.board_background_13x9_rect.center = (sw / 2, sh / 2)
+        self.board_walls_13x9_rect.center = (sw / 2, sh / 2)
+        self.board_background_17x7_rect.center = (sw / 2, sh / 2)
+        self.board_walls_17x7_rect.center = (sw / 2, sh / 2)
+        self.board_background_19x15_rect.center = (sw / 2, sh / 2)
+        self.board_walls_19x15_rect.center = (sw / 2, sh / 2)
         self.x_offset = sw/2 - ((self.myBoard.width-1)/2)*self.board_distance # offset to center the board
         self.y_offset = sh/2 - ((self.myBoard.height-1)/2)*self.board_distance # offset to center the board
 
@@ -305,8 +343,17 @@ class Game:
         # Clear screen
         self.screen.fill((0, 0, 0))
 
-        # Draw lines of the board
-        self.screen.blit(self.boardImg, self.board_lines_rect)
+        self.screen.blit(self.background, self.background_rect)
+
+        # Draw board background
+        if self.current_boardsize == (9,7):
+            self.screen.blit(self.board_background_9x7, self.board_background_9x7_rect)
+        elif self.current_boardsize == (13,9):
+            self.screen.blit(self.board_background_13x9, self.board_background_13x9_rect)
+        elif self.current_boardsize == (17, 7):
+            self.screen.blit(self.board_background_17x7, self.board_background_17x7_rect)
+        elif self.current_boardsize == (19, 15):
+            self.screen.blit(self.board_background_19x15, self.board_background_19x15_rect)
 
         # Draw connections
         for connection in self.myBoard.connections:
@@ -318,8 +365,15 @@ class Game:
                 if not point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), False, (self.x_offset, self.y_offset))
 
-        # Draw background (board walls)
-        self.screen.blit(self.boardWalls, self.board_walls_rect)
+        # Draw board walls
+        if self.current_boardsize == (9,7):
+            self.screen.blit(self.board_walls_9x7, self.board_background_9x7_rect)
+        elif self.current_boardsize == (13,9):
+            self.screen.blit(self.board_walls_13x9, self.board_background_13x9_rect)
+        elif self.current_boardsize == (17, 7):
+            self.screen.blit(self.board_walls_17x7, self.board_background_17x7_rect)
+        elif self.current_boardsize == (19, 15):
+            self.screen.blit(self.board_walls_19x15, self.board_background_19x15_rect)
 
         # Draw ball
         for row in self.myBoard.points:
@@ -327,6 +381,9 @@ class Game:
                 if point.is_ball:
                     point.draw(self.screen, pygame.mouse.get_pos(), self.players[0].turn, (self.x_offset, self.y_offset))
 
+        # Draw Player Banner
+        self.screen.blit(self.player1_banner, self.player1_banner_rect)
+        self.screen.blit(self.player2_banner, self.player2_banner_rect)
         # Draw Score
         font = pygame.font.Font(None, 60)
         score1 = font.render(str(self.players[0].score), True, self.players[0].get_color())
@@ -339,9 +396,6 @@ class Game:
         score2_rect.center = self.player2_banner_rect.center
         score2_rect[1] += 20
         self.screen.blit(score2, score2_rect)
-        # Draw Player Banner
-        self.screen.blit(self.player1_banner, self.player1_banner_rect)
-        self.screen.blit(self.player2_banner, self.player2_banner_rect)
 
         # Particles
         for p in self.particles:
@@ -349,7 +403,7 @@ class Game:
 
         # Waiting banner
         if self.controller.client.current_population == 1:
-            self.screen.blit(self.waitingPlayer, self.waiting_rect)
+            self.screen.blit(self.waiting_player_banner, self.waiting_rect)
 
         if not self.controller.client.connected:
             self.screen.blit(self.player_left_banner, self.player_left_banner_rect)
@@ -414,6 +468,52 @@ class Game:
 
         # Show new frame
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Background
+        Game.background = pygame.image.load(path + "/black_bg.png")
+        Game.board_background_9x7 = pygame.image.load(path + "/board_background_9x7.png")
+        Game.board_walls_9x7 = pygame.image.load(path + "/board_walls_9x7.png")
+        Game.board_background_13x9 = pygame.image.load(path + "/board_background_13x9.png")
+        Game.board_walls_13x9 = pygame.image.load(path + "/board_walls_13x9.png")
+        Game.board_background_17x7 = pygame.image.load(path + "/board_background_17x7.png")
+        Game.board_walls_17x7 = pygame.image.load(path + "/board_walls_17x7.png")
+        Game.board_background_19x15 = pygame.image.load(path + "/board_background_19x15.png")
+        Game.board_walls_19x15 = pygame.image.load(path + "/board_walls_19x15.png")
+        # Banner
+        Game.waiting_player_banner = pygame.image.load(path + "/waiting.png")
+        Game.player1_banner = pygame.image.load(path+"/score_player1.png")
+        Game.player2_banner = pygame.image.load(path+"/score_player2.png")
+        # Navigation
+        Game.rules_icon = pygame.image.load(path+"/question_black.png")
+        Game.rules_selected = pygame.image.load(path+"/question_highlight.png")
+        Game.exit_icon = pygame.image.load(path+"/exit_door.png")
+        Game.exit_selected = pygame.image.load(path+"/exit2_highlight.png")
+        # Chat
+        Game.chat_icon = pygame.image.load(path+"/chat.png")
+        Game.chat_selected = pygame.image.load(path+"/chat_selected.png")
+        Game.exit_chat = pygame.image.load(path+"/cross2.png")
+        Game.chat1 = pygame.image.load(path+"/chat_wp.png")
+        Game.chat2 = pygame.image.load(path+"/chat_hi.png")
+        Game.chat3 = pygame.image.load(path+"/chat_bye.png")
+        Game.chat4 = pygame.image.load(path+"/chat_gl.png")
+        Game.chat1Selected = pygame.image.load(path+"/chat_wp_selected.png")
+        Game.chat2Selected = pygame.image.load(path+"/chat_hi_selected.png")
+        Game.chat3Selected = pygame.image.load(path+"/chat_bye_selected.png")
+        Game.chat4Selected = pygame.image.load(path+"/chat_gl_selected.png")
+        Game.chat1_left = pygame.image.load(path+"/left/left_chat_wp.png")
+        Game.chat2_left = pygame.image.load(path+"/left/left_chat_hi.png")
+        Game.chat3_left = pygame.image.load(path+"/left/left_chat_bye.png")
+        Game.chat4_left = pygame.image.load(path+"/left/left_chat_gl.png")
+        Game.chat1_right = pygame.image.load(path+"/right/right_chat_wp.png")
+        Game.chat2_right = pygame.image.load(path+"/right/right_chat_hi.png")
+        Game.chat3_right = pygame.image.load(path+"/right/right_chat_bye.png")
+        Game.chat4_right = pygame.image.load(path+"/right/right_chat_gl.png")
+
+        Point.ball_img = pygame.image.load(path+"/ball_green.png")
 
     def exit_lobby(self):
         self.controller.change_view(self.controller.menuUI)

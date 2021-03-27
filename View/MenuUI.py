@@ -13,22 +13,32 @@ class MenuUI:
     Class representing menu view
     """
 
-    # Art
-    background = pygame.image.load("Art/lobby.png")
-    title = pygame.image.load("Art/logo_small.png")
-    settings_icon = pygame.image.load("Art/settings.png")
-    sound_icon = pygame.image.load("Art/sound.png")
-    sound_icon_off = pygame.image.load("Art/sound_off.png")
-    button1_glow = pygame.image.load("Art/start_glow.png")
-    button2_glow = pygame.image.load("Art/quit_glow.png")
-    credits = pygame.image.load("Art/credits.png")
-    credits_button = pygame.image.load("Art/credits_button.png")
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Background
+    background = title = missing_texture
+    credits = missing_texture
+    # Buttons
+    settings_icon = missing_texture
+    sound_icon = missing_texture
+    sound_icon_off = missing_texture
+    credits_icon = missing_texture
+    button1_glow = missing_texture
+    button2_glow = missing_texture
+    # Font
     font = pygame.font.SysFont('arialbold', 30)
 
     # Sound
     mixer.music.load('Sound/background.wav')
 
     def __init__(self, controller):
+
+        # Theme
+        self.theme = Settings.theme
+
+        # Load textures from disc
+        self.load_textures()
+
         # State
         self.is_running = False
 
@@ -43,7 +53,7 @@ class MenuUI:
         # Credits
         self.credits_rect = self.credits.get_rect()
         # Credits button
-        self.credits_button_rect = self.credits_button.get_rect()
+        self.credits_button_rect = self.credits_icon.get_rect()
 
         # Start and exit buttons
         button_w = 100
@@ -105,6 +115,11 @@ class MenuUI:
                         self.controller.change_view(self.controller.gameUI)
 
     def update(self):
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
+
         # Layout helper variables
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -142,7 +157,7 @@ class MenuUI:
         # Credits
         self.screen.blit(self.credits, self.credits_rect)
         # Credits button
-        self.screen.blit(self.credits_button, self.credits_button_rect)
+        self.screen.blit(self.credits_icon, self.credits_button_rect)
         # Mute toggle
         if Settings.sound_muted:
             self.screen.blit(self.sound_icon_off, self.sound_rect)
@@ -159,6 +174,22 @@ class MenuUI:
             self.screen.blit(self.button2_glow, (self.button_2[0]-5, self.button_2[1]-5))
         # Show new frame
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Background
+        MenuUI.background = pygame.image.load(path+"/lobby.png")
+        MenuUI.title = pygame.image.load(path+"/logo_small.png")
+        MenuUI.credits = pygame.image.load(path+"/credits.png")
+        # Buttons
+        MenuUI.settings_icon = pygame.image.load(path+"/settings.png")
+        MenuUI.sound_icon = pygame.image.load(path+"/sound.png")
+        MenuUI.sound_icon_off = pygame.image.load(path+"/sound_off.png")
+        MenuUI.button1_glow = pygame.image.load(path+"/start_glow.png")
+        MenuUI.button2_glow = pygame.image.load(path+"/quit_glow.png")
+        MenuUI.credits_icon = pygame.image.load(path + "/credits_button.png")
 
 # Helper function
 def draw_text(text, font, color, surface, x, y):

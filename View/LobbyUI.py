@@ -12,56 +12,62 @@ class LobbyUI:
     Class representing Lobby view
     """
 
-    # Art
-    exitIcon = pygame.image.load('Art/exit2.png')
-    keypad_1 = pygame.image.load('Art/1.png')
-    keypad_1_highlight = pygame.image.load('Art/1_highlight.png')
-    keypad_2 = pygame.image.load('Art/2.png')
-    keypad_2_highlight = pygame.image.load('Art/2_highlight.png')
-    keypad_3 = pygame.image.load('Art/3.png')
-    keypad_3_highlight = pygame.image.load('Art/3_highlight.png')
-    keypad_4 = pygame.image.load('Art/4.png')
-    keypad_4_highlight = pygame.image.load('Art/4_highlight.png')
-    keypad_5 = pygame.image.load('Art/5.png')
-    keypad_5_highlight = pygame.image.load('Art/5_highlight.png')
-    keypad_6 = pygame.image.load('Art/6.png')
-    keypad_6_highlight = pygame.image.load('Art/6_highlight.png')
-    keypad_7 = pygame.image.load('Art/7.png')
-    keypad_7_highlight = pygame.image.load('Art/7_highlight.png')
-    keypad_8 = pygame.image.load('Art/8.png')
-    keypad_8_highlight = pygame.image.load('Art/8_highlight.png')
-    keypad_9 = pygame.image.load('Art/9.png')
-    keypad_9_highlight = pygame.image.load('Art/9_highlight.png')
-    keypad_0 = pygame.image.load('Art/0.png')
-    keypad_0_highlight = pygame.image.load('Art/0_highlight.png')
-    keypad_dash = pygame.image.load('Art/dash.png')
-    keypad_dash_highlight = pygame.image.load('Art/dash-highlight.png')
-    keypad_cancel = pygame.image.load('Art/c.png')
-    keypad_cancel_highlight = pygame.image.load('Art/c_highlight.png')
-    keypad_join_game = pygame.image.load('Art/join_bigger.png')
-    keypad_join_game_highlight = pygame.image.load('Art/join_bigger_highlight.png')
-    keypad_screen = pygame.image.load('Art/keypad_screen_small.png')
-    join_random = pygame.image.load('Art/randomgame.png')
-    join_random_highlight = pygame.image.load('Art/randomgame_highlight.png')
-    create_game = pygame.image.load('Art/createprivate.png')
-    create_game_highlight = pygame.image.load('Art/createprivate_highlight.png')
-    central_line = pygame.image.load('Art/line_vertical.png')
-
-    # options buttons.
-    boardsize_1 = pygame.image.load('Art/boardsize_9x7.png')
-    boardsize_1_highlight = pygame.image.load('Art/boardsize_9x7_selected.png')
-    boardsize_2 = pygame.image.load('Art/boardsize_13x9.png')
-    boardsize_2_highlight = pygame.image.load('Art/boardsize_13x9_selected.png')
-    boardsize_3 = pygame.image.load('Art/boardsize_17x7.png')
-    boardsize_3_highlight = pygame.image.load('Art/boardsize_17x7_selected.png')
-    boardsize_4 = pygame.image.load('Art/boardsize_19x15.png')
-    boardsize_4_highlight = pygame.image.load('Art/boardsize_19x15_selected.png')
-
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Keypad
+    keypad_1 = missing_texture
+    keypad_1_highlight = missing_texture
+    keypad_2 = missing_texture
+    keypad_2_highlight = missing_texture
+    keypad_3 = missing_texture
+    keypad_3_highlight = missing_texture
+    keypad_4 = missing_texture
+    keypad_4_highlight = missing_texture
+    keypad_5 = missing_texture
+    keypad_5_highlight = missing_texture
+    keypad_6 = missing_texture
+    keypad_6_highlight = missing_texture
+    keypad_7 = missing_texture
+    keypad_7_highlight = missing_texture
+    keypad_8 = missing_texture
+    keypad_8_highlight = missing_texture
+    keypad_9 = missing_texture
+    keypad_9_highlight = missing_texture
+    keypad_0 = missing_texture
+    keypad_0_highlight = missing_texture
+    keypad_dash = missing_texture
+    keypad_dash_highlight = missing_texture
+    keypad_cancel = missing_texture
+    keypad_cancel_highlight = missing_texture
+    keypad_join_game = missing_texture
+    keypad_join_game_highlight = missing_texture
+    keypad_screen = missing_texture
+    # Navigation
+    exitIcon = missing_texture
+    join_random = missing_texture
+    join_random_highlight = missing_texture
+    create_game = missing_texture
+    create_game_highlight = missing_texture
+    # Background
+    central_line = missing_texture
+    # Settings
+    boardsize_1 = missing_texture
+    boardsize_1_highlight = missing_texture
+    boardsize_2 = missing_texture
+    boardsize_2_highlight = missing_texture
+    boardsize_3 = missing_texture
+    boardsize_3_highlight = missing_texture
+    boardsize_4 = missing_texture
+    boardsize_4_highlight = missing_texture
+    # Font
     font = pygame.font.SysFont('arialbold', 50)
 
-
-
     def __init__(self, controller):
+        # Theme
+        self.theme = Settings.theme
+
+        self.load_textures()
+
         # State
         self.is_running = False
 
@@ -157,8 +163,6 @@ class LobbyUI:
             self.controller.change_view(self.controller.gameUI)
         print(f"[BUTTON PRESSED] action: {action}, argument: {arg1} | keycode: {self.keycode}, server-creation-type: {self.server_creation_type}")
 
-
-
     def event_handler(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -216,6 +220,12 @@ class LobbyUI:
                     self.chosen_boardsize = (19,15)
 
     def update(self):
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
+
+        # Layout helper variables
         display_x = self.screen.get_width()/7
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -340,6 +350,57 @@ class LobbyUI:
             self.screen.blit(self.boardsize_4_highlight, (self.boardsize_4_button.x, self.boardsize_4_button.y))
 
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Keypad
+        LobbyUI.keypad_1 = pygame.image.load(path+'/1.png')
+        LobbyUI.keypad_1_highlight = pygame.image.load(path+'/1_highlight.png')
+        LobbyUI.keypad_2 = pygame.image.load(path+'/2.png')
+        LobbyUI.keypad_2_highlight = pygame.image.load(path+'/2_highlight.png')
+        LobbyUI.keypad_3 = pygame.image.load(path+'/3.png')
+        LobbyUI.keypad_3_highlight = pygame.image.load(path+'/3_highlight.png')
+        LobbyUI.keypad_4 = pygame.image.load(path+'/4.png')
+        LobbyUI.keypad_4_highlight = pygame.image.load(path+'/4_highlight.png')
+        LobbyUI.keypad_5 = pygame.image.load(path+'/5.png')
+        LobbyUI.keypad_5_highlight = pygame.image.load(path+'/5_highlight.png')
+        LobbyUI.keypad_6 = pygame.image.load(path+'/6.png')
+        LobbyUI.keypad_6_highlight = pygame.image.load(path+'/6_highlight.png')
+        LobbyUI.keypad_7 = pygame.image.load(path+'/7.png')
+        LobbyUI.keypad_7_highlight = pygame.image.load(path+'/7_highlight.png')
+        LobbyUI.keypad_8 = pygame.image.load(path+'/8.png')
+        LobbyUI.keypad_8_highlight = pygame.image.load(path+'/8_highlight.png')
+        LobbyUI.keypad_9 = pygame.image.load(path+'/9.png')
+        LobbyUI.keypad_9_highlight = pygame.image.load(path+'/9_highlight.png')
+        LobbyUI.keypad_0 = pygame.image.load(path+'/0.png')
+        LobbyUI.keypad_0_highlight = pygame.image.load(path+'/0_highlight.png')
+        LobbyUI.keypad_dash = pygame.image.load(path+'/dash.png')
+        LobbyUI.keypad_dash_highlight = pygame.image.load(path+'/dash-highlight.png')
+        LobbyUI.keypad_cancel = pygame.image.load(path+'/c.png')
+        LobbyUI.keypad_cancel_highlight = pygame.image.load(path+'/c_highlight.png')
+        LobbyUI.keypad_join_game = pygame.image.load(path+'/join_bigger.png')
+        LobbyUI.keypad_join_game_highlight = pygame.image.load(path+'/join_bigger_highlight.png')
+        LobbyUI.keypad_screen = pygame.image.load(path+'/keypad_screen_small.png')
+        # Navigation
+        LobbyUI.exitIcon = pygame.image.load(path+'/exit2.png')
+        LobbyUI.join_random = pygame.image.load(path+'/randomgame.png')
+        LobbyUI.join_random_highlight = pygame.image.load(path+'/randomgame_highlight.png')
+        LobbyUI.create_game = pygame.image.load(path+'/createprivate.png')
+        LobbyUI.create_game_highlight = pygame.image.load(path+'/createprivate_highlight.png')
+        # Background
+        LobbyUI.central_line = pygame.image.load(path+'/line_vertical.png')
+        # Settings
+        LobbyUI.boardsize_1 = pygame.image.load(path+'/boardsize_9x7.png')
+        LobbyUI.boardsize_1_highlight = pygame.image.load(path+'/boardsize_9x7_selected.png')
+        LobbyUI.boardsize_2 = pygame.image.load(path+'/boardsize_13x9.png')
+        LobbyUI.boardsize_2_highlight = pygame.image.load(path+'/boardsize_13x9_selected.png')
+        LobbyUI.boardsize_3 = pygame.image.load(path+'/boardsize_17x7.png')
+        LobbyUI.boardsize_3_highlight = pygame.image.load(path+'/boardsize_17x7_selected.png')
+        LobbyUI.boardsize_4 = pygame.image.load(path+'/boardsize_19x15.png')
+        LobbyUI.boardsize_4_highlight = pygame.image.load(path+'/boardsize_19x15_selected.png')
+
 
 # Helper Function
 def draw_text(text, font, color, surface, x, y):

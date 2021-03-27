@@ -1,10 +1,7 @@
 import sys
 import pygame
 import Colours
-from pygame import mixer
 import Settings
-import View.MenuUI
-# import tkinter as tk  # tkinter is used for GUI. Probably will have to use it at some point for any input
 
 pygame.init()
 
@@ -14,13 +11,23 @@ class RulesUI:
     Class representing Rules view
     """
 
-    # Art
+    # --- Art ---
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    # Buttons
+    exit_icon = missing_texture
+    # Background
+    rules = missing_texture
+    # Font
     title = pygame.font.SysFont('comicsansms', 50)
     font = pygame.font.SysFont('comicsansms', 18)
-    exit_icon = pygame.image.load("Art/exit2.png")
-    rules = pygame.image.load("Art/game_rules.png")
 
     def __init__(self, controller):
+
+        # Theme
+        self.theme = Settings.theme
+
+        self.load_textures()
+
         # State
         self.is_running = False
 
@@ -50,6 +57,12 @@ class RulesUI:
                     self.controller.change_view(self.controller.gameUI)
 
     def update(self):
+
+        # Check for theme change
+        if self.theme != Settings.theme:
+            self.load_textures()
+            self.theme = Settings.theme
+
         # Layout helper variables
         sw = self.screen.get_width()
         sh = self.screen.get_height()
@@ -69,4 +82,12 @@ class RulesUI:
 
         # Show new frame
         pygame.display.flip()
+
+    def load_textures(self):
+        # Path based on current theme
+        path = "Art/" + Settings.theme
+
+        # Load appropriate textures
+        RulesUI.exit_icon = pygame.image.load(path+"/exit2.png")
+        RulesUI.rules = pygame.image.load(path+"/game_rules.png")
 

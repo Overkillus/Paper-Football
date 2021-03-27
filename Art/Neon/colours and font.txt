@@ -1,0 +1,4 @@
+Default dark blue BG colour - RGB (3, 15, 56)
+Game Rules BG colour - RGB (0, 0, 0)
+
+Font - Arial Bold
