@@ -15,6 +15,13 @@ class Player:
         self.score = score
 
         # Player unique sprites
+        self.lineHImg = None
+        self.lineVImg = None
+        self.lineDLImg = None
+        self.lineDRImg = None
+        self.load_textures()
+
+    def load_textures(self):
         self.lineHImg = Connection.lineHImg.copy()
         self.lineVImg = pygame.transform.rotate(self.lineHImg, 90)
         self.lineDLImg = Connection.lineDLImg.copy()
