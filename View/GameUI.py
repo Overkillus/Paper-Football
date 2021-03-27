@@ -15,7 +15,7 @@ pygame.font.init()
 class Game:
 
     # --- Art ---
-    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture (actual textures loaded later based on theme)
+    missing_texture = pygame.image.load("Art/missing-texture.png") # Placeholder texture
     # Background
     background = missing_texture
     board_background_9x7 = missing_texture
@@ -27,6 +27,7 @@ class Game:
     board_background_19x15 = missing_texture
     board_walls_19x15 = missing_texture
     # Banner
+    player_left_banner = missing_texture
     waiting_player_banner = missing_texture
     player1_banner = missing_texture
     player2_banner = missing_texture
@@ -484,6 +485,7 @@ class Game:
         Game.board_background_19x15 = pygame.image.load(path + "/board_background_19x15.png")
         Game.board_walls_19x15 = pygame.image.load(path + "/board_walls_19x15.png")
         # Banner
+        Game.player_left_banner = pygame.image.load(path+"/quit.png")
         Game.waiting_player_banner = pygame.image.load(path + "/waiting.png")
         Game.player1_banner = pygame.image.load(path+"/score_player1.png")
         Game.player2_banner = pygame.image.load(path+"/score_player2.png")
