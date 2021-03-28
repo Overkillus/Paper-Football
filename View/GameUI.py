@@ -503,7 +503,7 @@ class Game:
         Game.player1_banner = pygame.image.load(path+"/score_player1.png")
         Game.player2_banner = pygame.image.load(path+"/score_player2.png")
         Game.you_won_banner = pygame.image.load(path+"/win.png")
-        Game.you_lost_banner = pygame.image.load(path+"/win.png")
+        Game.you_lost_banner = pygame.image.load(path+"/lost.png")
         # Navigation
         Game.rules_icon = pygame.image.load(path+"/question_black.png")
         Game.rules_selected = pygame.image.load(path+"/question_highlight.png")

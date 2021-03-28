@@ -72,7 +72,12 @@ class RulesUI:
 
     def render(self):
         # Clear screen
-        self.screen.fill((0, 0, 0))
+        if Settings.theme == "neon":
+            self.screen.fill((3, 15, 56))
+        elif Settings.theme == "paper":
+            self.screen.fill((236, 214, 192))
+        elif Settings.theme == "football":
+            self.screen.fill((19, 7, 0))
 
         # Background
         self.screen.blit(self.rules, self.rules_rect)

@@ -254,14 +254,15 @@ class LobbyUI:
         self.keypad_dash_button.center = (sw / sf + display_x, 2 * sh / rows + 3 * bh)
         self.keypad_cancel_button.center = (sw / sf + bw*3 + x_offset*2, 2 * sh / rows + 3 * bh)
         self.keypad_join_game_button.center = (sw / sf + display_x*2 + x_offset, 2 * sh / rows + 4 * bh)
-        self.join_random_button.center = (sw/4, sh / 1.75)
-        self.create_game_button.center = (sw / 4, sh / 1.5)
-        self.central_line_image.center = (sw / 2, sh / 2)
+
         self.keypad_screen_image.center = (sw / sf + bw*2 + x_offset, 2 * sh / rows - (self.keypad_screen.get_height() * 0.75))
+        self.join_random_button.center = (sw/4, self.keypad_screen_image.centery)
+        self.create_game_button.center = (sw / 4, self.keypad_join_game_button.centery)
+        self.central_line_image.center = (sw / 2, sh / 2)
         #self.public_button.center = (sw / 4 - self.create_game.width/4 - 3, sh / 1.5)
         #self.private_button.center = (sw / 4 + self.create_game.width/4 + 2, sh / 1.5)
 
-        self.boardsize_1_button.center = (self.join_random_button.x, self.keypad_screen_image.y + 60)
+        self.boardsize_1_button.center = (self.join_random_button.x, self.create_game_button.centery - 60)
         self.boardsize_2_button.center = (self.boardsize_1_button.centerx + self.boardsize_1_button.w + 10, self.boardsize_1_button.centery)
         self.boardsize_3_button.center = (self.boardsize_2_button.centerx + self.boardsize_2_button.w + 10, self.boardsize_1_button.centery)
         self.boardsize_4_button.center = (self.boardsize_3_button.centerx + self.boardsize_3_button.w + 10, self.boardsize_1_button.centery)
@@ -279,7 +280,7 @@ class LobbyUI:
         # texts
         draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
         draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
-        draw_text('Board Size', self.font, Colours.WHITE, self.screen, self.join_random_button.x + 40, self.keypad_screen_image.y)
+        draw_text('Board Size', self.font, Colours.WHITE, self.screen, self.join_random_button.x + 40, self.boardsize_1_button.centery - 60)
 
         # keypad
         draw_text(self.keycode, self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 70,
