@@ -2,6 +2,8 @@ import math
 
 import pygame
 
+import Settings
+
 
 class Connection:
     """
@@ -86,4 +88,3 @@ class Connection:
         image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
         # add in new RGB values
         image.fill(color[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
-

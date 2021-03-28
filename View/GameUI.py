@@ -5,6 +5,7 @@ import random
 import Colours
 import Settings
 from Board import Board
+from Connection import Connection
 from Particle import Particle
 from Player import Player
 from Point import Point
@@ -62,6 +63,12 @@ class Game:
     font = pygame.font.SysFont('arialbold', 30)
 
     def __init__(self, controller):
+
+        # Players
+        self.players = []
+        self.players.append(Player("Player One", Colours.PINK))
+        self.players[0].turn = True
+        self.players.append(Player("Player Two", Colours.YELLOW))
 
         # Theme
         self.theme = Settings.theme
@@ -126,12 +133,6 @@ class Game:
         self.player2_banner_rect = self.player2_banner.get_rect()
         self.you_won_banner_rect = self.you_won_banner.get_rect()
         self.you_lost_banner_rect = self.you_lost_banner.get_rect()
-
-        # Players
-        self.players = []
-        self.players.append(Player("Player One", Colours.PINK))
-        self.players[0].turn = True
-        self.players.append(Player("Player Two", Colours.YELLOW))
 
     def main(self):
         self.event_handler()
@@ -530,7 +531,17 @@ class Game:
         Game.chat3_right = pygame.image.load(path+"/right/right_chat_bye.png")
         Game.chat4_right = pygame.image.load(path+"/right/right_chat_gl.png")
 
+        # Ball
         Point.ball_img = pygame.image.load(path+"/ball_green.png")
+        # Connections
+        Connection.lineHImg = pygame.image.load(path+"/white_neon_hor.png")
+        Connection.lineVImg = pygame.transform.rotate(Connection.lineHImg, 90)
+        Connection.lineDLImg = pygame.image.load(path+"/white_neon_dia.png")
+        Connection.lineDRImg = pygame.transform.flip(Connection.lineDLImg, False, True)
+        # Player
+        if self.players:
+            for player in self.players:
+                player.load_textures()
 
     def exit_lobby(self):
         self.controller.change_view(self.controller.menuUI)
