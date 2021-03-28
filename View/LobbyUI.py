@@ -279,7 +279,6 @@ class LobbyUI:
         # texts
         draw_text('GAME SELECTION', self.font, Colours.WHITE, self.screen, self.join_random_button.x - 20, self.keypad_screen_image.y - 60)
         draw_text('JOIN LOBBY', self.font, Colours.WHITE, self.screen, self.keypad_screen_image.x + 20, self.keypad_screen_image.y - 60)
-
         draw_text('Board Size', self.font, Colours.WHITE, self.screen, self.join_random_button.x + 40, self.keypad_screen_image.y)
 
         # keypad
