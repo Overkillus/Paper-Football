@@ -31,6 +31,8 @@ class Game:
     waiting_player_banner = missing_texture
     player1_banner = missing_texture
     player2_banner = missing_texture
+    you_won_banner = missing_texture
+    you_lost_banner = missing_texture
     # Navigation
     rules_icon = missing_texture
     rules_selected = missing_texture
@@ -122,6 +124,8 @@ class Game:
         self.waiting_rect = self.waiting_player_banner.get_rect()
         self.player1_banner_rect = self.player1_banner.get_rect()
         self.player2_banner_rect = self.player2_banner.get_rect()
+        self.you_won_banner_rect = self.you_won_banner.get_rect()
+        self.you_lost_banner_rect = self.you_lost_banner.get_rect()
 
         # Players
         self.players = []
@@ -271,6 +275,8 @@ class Game:
         self.player_left_banner_rect.center = (sw / 2, sh / 2)
         self.player1_banner_rect.topleft = (0, 0)
         self.player2_banner_rect.topright = (sw, 0)
+        self.you_won_banner_rect.center = (sw / 2, sh / 2)
+        self.you_lost_banner_rect.center = (sw / 2, sh / 2)
 
         # Update pending opponent moves
         if self.controller.client.pending_move is not None:
@@ -409,6 +415,13 @@ class Game:
         if not self.controller.client.connected:
             self.screen.blit(self.player_left_banner, self.player_left_banner_rect)
 
+        # Win condition
+        if self.players[0].score == 3:
+            self.screen.blit(self.you_won_banner, self.you_won_banner_rect)
+
+        if self.players[1].score == 3:
+            self.screen.blit(self.you_lost_banner, self.you_lost_banner_rect)
+
         # Key banner
         if self.controller.client.current_population == 1 and self.controller.client.key is not None:
             # print(self.controller.client.key)
@@ -489,6 +502,8 @@ class Game:
         Game.waiting_player_banner = pygame.image.load(path + "/waiting.png")
         Game.player1_banner = pygame.image.load(path+"/score_player1.png")
         Game.player2_banner = pygame.image.load(path+"/score_player2.png")
+        Game.you_won_banner = pygame.image.load(path+"/win.png")
+        Game.you_lost_banner = pygame.image.load(path+"/win.png")
         # Navigation
         Game.rules_icon = pygame.image.load(path+"/question_black.png")
         Game.rules_selected = pygame.image.load(path+"/question_highlight.png")
