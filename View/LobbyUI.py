@@ -354,6 +354,20 @@ class LobbyUI:
         elif self.chosen_boardsize == self.boardsize_options[3]:
             self.screen.blit(self.boardsize_4_highlight, (self.boardsize_4_button.x, self.boardsize_4_button.y))
 
+        mouse_pos = pygame.mouse.get_pos()
+        txt = ["", ""]
+
+        if self.join_random_button.collidepoint(pygame.mouse.get_pos()):
+            txt = ["Join any available game.", "(board size will depend on host player's settings)"]
+        elif self.boardsize_1_button.collidepoint(mouse_pos) or self.boardsize_2_button.collidepoint(mouse_pos)\
+                or self.boardsize_3_button.collidepoint(mouse_pos) or self.boardsize_4_button.collidepoint(mouse_pos):
+            txt = ["Pick preferred game board size.", "(for RANDOMS (if no available games) and PRIVATE)"]
+
+        if txt[0] != "":
+            pygame.draw.rect(self.screen, (0,0,0), (mouse_pos[0]+13, mouse_pos[1]+13, 520, 50))
+            draw_text(txt[0], pygame.font.SysFont('arialbold', 30), Colours.WHITE, self.screen, mouse_pos[0]+15, mouse_pos[1]+15)
+            draw_text(txt[1], pygame.font.SysFont('arialbold', 30), Colours.WHITE, self.screen, mouse_pos[0]+15, mouse_pos[1]+40)
+
         pygame.display.flip()
 
     def load_textures(self):
