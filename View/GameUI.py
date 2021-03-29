@@ -34,6 +34,9 @@ class Game:
     player2_banner = missing_texture
     you_won_banner = missing_texture
     you_lost_banner = missing_texture
+    # Banner buttons
+    rematch_button = missing_texture
+    leave_button = missing_texture
     # Navigation
     rules_icon = missing_texture
     rules_selected = missing_texture
@@ -133,6 +136,9 @@ class Game:
         self.player2_banner_rect = self.player2_banner.get_rect()
         self.you_won_banner_rect = self.you_won_banner.get_rect()
         self.you_lost_banner_rect = self.you_lost_banner.get_rect()
+        # Banner buttons
+        self.rematch_button_rect = self.rematch_button.get_rect()
+        self.leave_button_rect = self.leave_button.get_rect()
 
     def main(self):
         self.event_handler()
@@ -142,6 +148,7 @@ class Game:
             self.controller.delta_time -= 1 / Settings.max_tps
             self.update()
             self.render()
+            # print(f"TICK: {self.controller.delta_time}")
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -166,12 +173,18 @@ class Game:
                     self.chat_active = not self.chat_active
                 # Exit
                 if self.exit_rect.collidepoint(mouse_pos):
-                    self.controller.change_view(self.controller.menuUI)
-                    self.myBoard = Board()
-                    self.controller.client.disconnect()
-                    self.players[0].score = 0
-                    self.players[0].turn = True
-                    self.players[1].score = 0
+                    self.exit_lobby()
+                # Game Over screen
+                if self.players[0].score == 3 or self.players[1].score == 3:
+                    # Exit
+                    if self.leave_button_rect.collidepoint(mouse_pos):
+                        self.exit_lobby()
+                    # Rematch
+                    if self.rematch_button_rect.collidepoint(mouse_pos):
+                        self.players[0].score = 0 # eugh, idk, whatever.
+                        self.players[1].score = 0 # it just about works since if one quits, the game ends.
+
+                # Chat buttons
                 if self.chat_active:
                     if self.chat_button1_rect.collidepoint(mouse_pos):
                         self.controller.client.send_to_server(("!CHAT", 1))
@@ -278,6 +291,10 @@ class Game:
         self.player2_banner_rect.topright = (sw, 0)
         self.you_won_banner_rect.center = (sw / 2, sh / 2)
         self.you_lost_banner_rect.center = (sw / 2, sh / 2)
+
+        # Banner buttons
+        self.rematch_button_rect.center = (sw / 2 - 150, sh / 2 + 150)
+        self.leave_button_rect.center = (sw / 2 + 150, sh / 2 + 150)
 
         # Update pending opponent moves
         if self.controller.client.pending_move is not None:
@@ -423,6 +440,12 @@ class Game:
         if self.players[1].score == 3:
             self.screen.blit(self.you_lost_banner, self.you_lost_banner_rect)
 
+        # either way, display Rematch and Exit buttons.
+        if self.players[0].score == 3 or self.players[1].score == 3:
+            self.screen.blit(self.rematch_button, self.rematch_button_rect)
+            self.screen.blit(self.leave_button, self.leave_button_rect)
+
+
         # Key banner
         if self.controller.client.current_population == 1 and self.controller.client.key is not None:
             # print(self.controller.client.key)
@@ -505,6 +528,9 @@ class Game:
         Game.player2_banner = pygame.image.load(path+"/score_player2.png")
         Game.you_won_banner = pygame.image.load(path+"/win.png")
         Game.you_lost_banner = pygame.image.load(path+"/lost.png")
+        # Banner buttons
+        Game.rematch_button = pygame.image.load(path + "/rematch.png")
+        Game.leave_button = pygame.image.load(path + "/quit2.png")
         # Navigation
         Game.rules_icon = pygame.image.load(path+"/question_black.png")
         Game.rules_selected = pygame.image.load(path+"/question_highlight.png")

@@ -113,6 +113,7 @@ class LobbyUI:
         self.server_creation_type = "public"
         self.boardsize_options = [(9,7),(13,9),(17,7),(19,15)]
         self.chosen_boardsize = self.boardsize_options[1]
+        self.waiting = False # prevent repeat presses
 
     def main(self):
         self.event_handler()
@@ -136,8 +137,10 @@ class LobbyUI:
 
     def waitUntilInGame(self, timeout): # better way on waiting until connected?
         lasttime = time.time()
+        self.waiting = True
         while not self.controller.client.IN_GAME and (time.time() - lasttime) < timeout:
             time.sleep(0)  # variable wait, with a max of 2s (aka. timeout)
+        self.waiting = False
         return self.controller.client.IN_GAME
 
     # temporarily slapping LobbyUI function here. it's 6:30am and i cba making new script
@@ -149,10 +152,12 @@ class LobbyUI:
             self.keycode = self.keycode[:-1]
         elif action == "keycode-reset":
             self.keycode = ""
-        elif action == "keycode-join" and self.isConnected():
+        elif action == "keycode-join" and self.isConnected() and not self.waiting:
             self.controller.client.join_server(self.keycode)
-            if self.waitUntilInGame(1):
+            if self.waitUntilInGame(2):
                 self.controller.change_view(self.controller.gameUI)
+            else:
+                self.controller.client.disconnect()
         elif action == "join-randoms" and self.isConnected():
             self.controller.client.quick_join(self.chosen_boardsize)
             self.controller.change_view(self.controller.gameUI)
