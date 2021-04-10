@@ -2,7 +2,7 @@ import pickle
 import socket
 import threading
 import time
-
+import ssl
 
 class Client:
     def __init__(self, server, port):
@@ -149,14 +149,23 @@ class Client:
     def exchange_server_THREAD(self, new_port):
         self.changing_server = True
 
+
         if self.connected:
             self.disconnect()
             # ima keep for now, cuz of weird python message bug when u print after thread
             while self.connected:
                 time.sleep(.01)  # wait for the disconnect message from server.
 
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.check_hostname = False
+        context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1
+        context.verify_mode=ssl.CERT_NONE
+        host = '139.162.219.137'
         self.IN_GAME = False
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        with context.wrap_socket(self.sock, server_hostname=host) as ssock:
+            print(ssock.version)
+
 
         self.console(f"attempt to join server: {new_port}")
         connect_state = "connecting"

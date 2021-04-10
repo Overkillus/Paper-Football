@@ -1,6 +1,7 @@
 import pickle
 import socket
 import threading
+import ssl
 
 class Server:
 
@@ -30,6 +31,7 @@ class Server:
 
         self.all_connections = []
         self.SERVER_ON = True # when False, start() stops running.
+
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((self.SERVER, self.PORT))
@@ -122,10 +124,12 @@ class Server:
 
     # handles new connections
     def start(self):
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         self.sock.listen()
         self.console(f"Hello world! Listening on {self.SERVER}.")
         while self.SERVER_ON:
-            connection, address = self.sock.accept()
+            with context.wrap_socket(self.sock, server_side=True) as ssock:
+                connection, address = ssock.accept()
             self.all_connections.append(connection)
             self.console(f"new connection = {address}")
             self.console(f"connected clients = {len(self.all_connections)}")
