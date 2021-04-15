@@ -8,5 +8,5 @@ BLOCK_SIZE = 65536  # The size of each read from the file
 hash_obj = hashlib.md5(open(files[0], 'rb').read(BLOCK_SIZE))
 for filename in files[1:]:
     hash_obj.update(open(filename, 'rb').read(BLOCK_SIZE))
-checksum = hash_obj.digest()
+checksum = hash_obj.hexdigest()
 print(checksum)
